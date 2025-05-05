@@ -14,10 +14,10 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 # Movement vars
 const base_accel : float = 250.0
 const max_speed : float = 300.0
-@export var jump_velocity: float = -300.0
+@export var jump_velocity: float = -350.0
 @export var knockback_speed_x : float = - base_accel * 0.4
 var jump_y_start : float = 0
-var jump_height_max : float = 60
+var jump_height_max : float = 50
 
 # Flags
 var has_double_jumped : bool = false
@@ -26,22 +26,21 @@ var has_landed : bool = false
 var in_knockback: bool = false
 var hangtime : bool = false
 
-var angle_factor : float = 1
 var hearts : int = 3
 
 # Raycast vars
-const RAY_LEN = 60
+const RAY_LEN = 500
 
 func _ready():
 	print("player loaded")
 
 func _physics_process(delta):
-	velocity.y += gravity * delta
 	velocity.x += base_accel * delta
 	velocity.x = minf(velocity.x, max_speed)
-	
-	
-		# Raycasting to detect the angle to the floor
+
+	# angle to rotate towards
+	var angle = 0
+	# Raycasting to detect the angle to the floor
 	var space_rid = get_world_2d().space
 	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
 	var end = position + Vector2.DOWN * RAY_LEN
@@ -49,22 +48,25 @@ func _physics_process(delta):
 	var result = space_state.intersect_ray(query)
 	if result:
 		var normal = result.get("normal")
-		var angle = -normal.angle_to(Vector2.UP)
+		angle = -normal.angle_to(Vector2.UP)
 		#print(str(rad_to_deg(angle)))
-		rotation = angle
-	
+		
 	if is_on_floor():
 		if not anim_sprite.is_playing():
 			anim_sprite.play("skike")
+		rotation = angle
 	else:
 		# Jump logic
-		if hangtime:
-			if position.y < jump_y_start - jump_height_max:
-				velocity.y = 0
+		# If in the air, rotate angle more slowly
+		rotation = rotate_toward(rotation, angle, delta)
+		if position.y < jump_y_start - jump_height_max:
+			velocity.y = 0
+
+		if not hangtime:
+				velocity.y += gravity * delta
 
 	has_landed = check_if_landing()
 	move_and_slide()
-
 
 func check_if_landing():
 	return (not is_on_floor() and velocity.y > 50)
