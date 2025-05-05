@@ -92,6 +92,22 @@ text = "
 "
 icon = ExtResource("7_katum")
 
+[node name="LevelNameLabel" type="RichTextLabel" parent="Levels/Level2Button"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = 188.0
+offset_right = 198.0
+offset_bottom = 243.0
+theme = ExtResource("3_fybug")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("7_p67ok")
+theme_override_font_sizes/normal_font_size = 40
+text = "Testlvl
+"
+fit_content = true
+visible_characters = 8
+
 [node name="Level3Button" type="Button" parent="Levels"]
 layout_mode = 0
 offset_left = 97.0

@@ -15,4 +15,5 @@ func _on_area_2d_body_entered(body):
 		$"../../HUD/RightContainer/PauseButton".hide() #Hide the pause button from player on win
 		$"../../HUD/CenterContainer/you_died".show()
 		await get_tree().create_timer(2).timeout
-		get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+		#get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+		get_tree().reload_current_scene()

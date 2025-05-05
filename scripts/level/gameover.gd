@@ -14,7 +14,8 @@ func _on_player_death(body):
 	get_node("HUD/RightContainer/PauseButton").queue_free()
 	$HUD/CenterContainer/you_died.show()
 	await get_tree().create_timer(2).timeout
-	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	#get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+	get_tree().reload_current_scene()
 
 
 func _on_hit(from, to):

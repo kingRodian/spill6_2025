@@ -31,13 +31,13 @@
 [ext_resource type="PackedScene" uid="uid://dwndrgcj3y84g" path="res://scenes/game/obstacles/trestump_2.tscn" id="26_8kc67"]
 [ext_resource type="PackedScene" uid="uid://ca0sgptcycpnk" path="res://scenes/game/obstacles/trestump_3.tscn" id="27_3n8ku"]
 
-[sub_resource type="Gradient" id="Gradient_5ykpq"]
+[sub_resource type="Gradient" id="Gradient_38v6w"]
 interpolation_mode = 2
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_4roej"]
-gradient = SubResource("Gradient_5ykpq")
+gradient = SubResource("Gradient_38v6w")
 width = 100
 height = 195
 fill = 1
@@ -92,9 +92,9 @@ width = 1.0
 
 [sub_resource type="Resource" id="Resource_hu1ve"]
 script = ExtResource("7_35r8q")
-position = Vector2(-46563.2, -6154.01)
-point_in = Vector2(-710.501, 40.7292)
-point_out = Vector2(710.501, -40.7292)
+position = Vector2(-46543.7, -6205.49)
+point_in = Vector2(-645.57, 259.504)
+point_out = Vector2(645.566, -182.29)
 properties = SubResource("Resource_48nnd")
 
 [sub_resource type="Resource" id="Resource_1l25g"]
@@ -118,9 +118,9 @@ width = 1.0
 
 [sub_resource type="Resource" id="Resource_72x37"]
 script = ExtResource("7_35r8q")
-position = Vector2(-31105.3, -3728.7)
-point_in = Vector2(-1932.43, -524.415)
-point_out = Vector2(1061.54, 1115.76)
+position = Vector2(-31118.3, -3638.62)
+point_in = Vector2(-1841.53, -762.494)
+point_out = Vector2(2339.8, 822.023)
 properties = SubResource("Resource_y4x8x")
 
 [sub_resource type="Resource" id="Resource_rfovj"]
@@ -132,7 +132,7 @@ width = 1.0
 [sub_resource type="Resource" id="Resource_wgyya"]
 script = ExtResource("7_35r8q")
 position = Vector2(-49384.3, -4613.03)
-point_in = Vector2(-328.784, 418.354)
+point_in = Vector2(-302.813, 212.448)
 point_out = Vector2(544.518, -516.009)
 properties = SubResource("Resource_rfovj")
 
@@ -210,7 +210,7 @@ width = 1.0
 [sub_resource type="Resource" id="Resource_lfltj"]
 script = ExtResource("7_35r8q")
 position = Vector2(-50490, -4253.28)
-point_in = Vector2(-414.394, 269.087)
+point_in = Vector2(-459.848, 243.348)
 point_out = Vector2(570.464, -290.614)
 properties = SubResource("Resource_uav1m")
 
@@ -236,8 +236,8 @@ width = 1.0
 [sub_resource type="Resource" id="Resource_gd0tb"]
 script = ExtResource("7_35r8q")
 position = Vector2(-35648.1, -6647.28)
-point_in = Vector2(-2823.9, -18.1021)
-point_out = Vector2(2823.9, 18.1021)
+point_in = Vector2(-1265.56, -372.003)
+point_out = Vector2(1747.7, 818.135)
 properties = SubResource("Resource_u6r7r")
 
 [sub_resource type="Resource" id="Resource_r3rrd"]
@@ -417,7 +417,7 @@ width = 1.0
 
 [sub_resource type="Resource" id="Resource_b4rcs"]
 script = ExtResource("7_35r8q")
-position = Vector2(72574.1, -8558.43)
+position = Vector2(71936.2, -8402.99)
 point_in = Vector2(-985.891, -95.7852)
 point_out = Vector2(-911.012, 679.097)
 properties = SubResource("Resource_ros3w")
@@ -543,7 +543,7 @@ _point_order = Array[int]([0, 24, 36, 27, 35, 28, 23, 32, 33, 34, 37, 38, 26, 94
 _constraints = {
 Array[int]([0, 4]): 15
 }
-_next_key = 98
+_next_key = 101
 _material_overrides = {}
 
 [sub_resource type="Resource" id="Resource_sdmna"]
@@ -806,7 +806,7 @@ _point_order = Array[int]([11, 13, 40, 41, 32, 30, 33, 47, 42, 39, 36, 37, 1, 10
 _constraints = {
 Array[int]([11, 0]): 15
 }
-_next_key = 52
+_next_key = 53
 _material_overrides = {}
 
 [sub_resource type="Resource" id="Resource_ot3xa"]
@@ -1653,7 +1653,7 @@ color = Color(0.109804, 0.109804, 0.109804, 1)
 blend_mode = 2
 
 [node name="PointLight2D" type="PointLight2D" parent="LIGHT"]
-position = Vector2(9051, -1250)
+position = Vector2(9304, -1083)
 rotation = -0.122892
 scale = Vector2(270.23, 22.8594)
 shadow_enabled = true
@@ -1862,10 +1862,10 @@ collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 visible = false
 modulate = Color(1, 1, 1, 0.3)
-polygon = PackedVector2Array(-2086.34, -147.204, -1884.59, -149.514, -1884.22, -149.478, -1883.13, -149.47, -1881.31, -149.635, -1878.78, -150.123, -1875.52, -151.079, -1871.56, -152.653, -1866.88, -154.99, -1861.51, -158.239, -1857.71, -160.001, -1854.21, -161.28, -1850.97, -162.156, -1847.97, -162.703, -1842.56, -163.122, -1837.78, -163.149, -1833.42, -163.4, -1831.33, -163.8, -1830.3, -164.103, -1829.27, -164.487, -1828.23, -164.961, -1827.2, -165.535, -1826.16, -166.22, -1825.11, -167.023, -1822.96, -169.027, -1820.74, -171.624, -1807.32, -183.293, -1797.38, -190.248, -1791.2, -193.604, -1789.08, -194.475, -1787.62, -195.526, -1782.95, -198.298, -1774.64, -202.22, -1762.23, -206.718, -1757.77, -207.423, -1753.97, -208.433, -1750.73, -209.703, -1747.96, -211.187, -1745.57, -212.838, -1743.45, -214.612, -1735.86, -222.007, -1733.71, -223.702, -1731.28, -225.243, -1728.45, -226.585, -1725.15, -227.681, -1721.27, -228.486, -1716.73, -228.954, -1698.42, -228.77, -1666.57, -225.062, -1658.81, -224.553, -1650.85, -224.594, -1642.86, -225.346, -1634.97, -226.669, -1618.75, -229.988, -1600.74, -232.464, -1590.6, -232.734, -1579.47, -232.011, -1528.76, -224.783, -1511.19, -223.757, -1500.86, -224.056, -1490.26, -225.175, -1470.29, -228.815, -1449.45, -234.274, -1442.98, -236.405, -1420.92, -241.043, -1379.34, -245.554, -1314.3, -247.306, -1296.05, -246.19, -1280.14, -243.247, -1266.29, -238.707, -1254.23, -232.8, -1243.67, -225.753, -1234.34, -217.798, -1218.23, -200.078, -1188.4, -163.825, -1179.81, -155.931, -1170.2, -148.963, -1164.92, -145.898, -1159.29, -143.15, -1153.27, -140.749, -1146.81, -138.723, -1139.07, -131.463, -1130.61, -125.202, -1121.61, -119.867, -1112.24, -115.383, -1093.03, -108.68, -1074.33, -104.508, -1043.76, -101.417, -1031.2, -101.427, -961.759, -73.538, -944.363, -65.5129, -893.729, -34.2616, -889.397, -31.4857, -884.73, -28.9577, -874.515, -24.603, -863.332, -21.114, -851.43, -18.4067, -826.457, -15.0024, -801.579, -13.72, -742.667, -16.4048, -695.961, -7.02253, -489.371, 10.7264, -211.681, -22.8255, 150.2, -11.4474, 190.742, -11.8695, 225.688, -16.0716, 256.416, -23.0578, 284.306, -31.832, 337.088, -50.7603, 364.738, -58.9223, 395.068, -64.888, 556.881, -93.102, 645.308, -119.925, 686.311, -138.021, 723.233, -159.815, 763.994, -185.865, 812.762, -211.088, 929.168, -255.882, 1062.14, -287.843, 1131.63, -297.027, 1201.39, -300.622, 1307.46, -307.35, 1341.83, -313.67, 1418.06, -334.145, 1447.81, -338.614, 1486.35, -340.472, 1507.4, -341.782, 1526.5, -345.244, 1543.97, -350.555, 1560.16, -357.413, 1590.04, -374.562, 1649.19, -414.125, 1665.82, -423.35, 1683.85, -431.705, 1703.63, -438.886, 1725.48, -444.592, 1749.76, -448.521, 1776.78, -450.371, 1803.6, -449.895, 1827.3, -447.26, 1848.23, -442.777, 1866.79, -436.757, 1883.35, -429.512, 1898.28, -421.355, 1949.27, -385.834, 1961.71, -377.79, 1974.79, -370.704, 1988.87, -364.888, 2004.33, -360.653, 2021.55, -358.311, 2040.91, -358.175, 2060.53, -360.297, 2078.47, -364.328, 2094.95, -369.978, 2110.22, -376.958, 2138.07, -393.748, 2189.72, -430.524, 2203.17, -438.693, 2217.33, -445.873, 2232.41, -451.773, 2248.67, -456.103, 2266.34, -458.573, 2285.67, -458.894, 2391.12, -459.366, 2406.72, -458.747, 2414.03, -457.83, 2421.29, -456.388, 2428.7, -454.331, 2436.47, -451.568, 2453.92, -443.562, 2570.31, -372.483, 2632.9, -335.778, 2657.85, -323.733, 2667.8, -320.113, 2672.03, -319.007, 2675.73, -318.411, 2663.73, -308.413, 2658.26, -302.711, 2653.21, -296.26, 2648.64, -288.853, 2644.58, -280.279, 2641.09, -270.33, 2638.22, -258.797, 2634.54, -230.143, 2633.94, -192.645, 2643.59, -84.4317, 2629.09, -1.26643, 2626.16, 7.61822, 2624.74, 10.9048, 2623.33, 13.5738, 2621.92, 15.7396, 2620.5, 17.5171, 2617.59, 20.3647, 2614.5, 23.0336, 2611.15, 26.4405, 2609.34, 28.7071, 2607.43, 31.5019, 2603.26, 39.1352, 2593.21, 65.7833, 2580.26, 113.719, 2571.94, 142.098, 2561.85, 166.416, 2550.31, 186.981, 2537.64, 204.101, 2524.15, 218.083, 2510.16, 229.235, 2495.99, 237.865, 2481.96, 244.28, 2468.39, 248.788, 2455.6, 251.697, 2443.9, 253.314, 2433.61, 253.947, 2418.55, 253.492, 2412.97, 252.793, -2085.07, 244.678)
+polygon = PackedVector2Array(-2086.34, -147.204, -1884.59, -149.514, -1884.29, -149.518, -1883.36, -149.604, -1881.75, -149.888, -1879.4, -150.482, -1872.26, -153.057, -1861.51, -158.239, -1854.17, -161.595, -1847.83, -163.781, -1828.86, -167.718, -1826.85, -168.38, -1824.83, -169.223, -1822.81, -170.29, -1820.74, -171.624, -1807.32, -183.293, -1797.38, -190.248, -1791.2, -193.604, -1789.08, -194.475, -1787.62, -195.526, -1782.95, -198.298, -1774.64, -202.22, -1762.23, -206.718, -1753.84, -208.181, -1750.46, -209.182, -1747.51, -210.341, -1744.92, -211.643, -1742.59, -213.072, -1738.41, -216.247, -1729.66, -223.425, -1723.78, -227.177, -1716.01, -230.87, -1711.59, -231.906, -1707.26, -232.506, -1703.01, -232.722, -1698.83, -232.608, -1690.63, -231.598, -1682.61, -229.896, -1666.8, -226.102, -1658.87, -224.852, -1654.88, -224.572, -1650.85, -224.594, -1642.86, -225.346, -1634.97, -226.669, -1618.75, -229.988, -1600.74, -232.464, -1590.6, -232.734, -1579.47, -232.011, -1528.76, -224.783, -1511.19, -223.757, -1500.86, -224.056, -1490.26, -225.175, -1470.29, -228.815, -1449.45, -234.274, -1399.38, -245.98, -1355.1, -251.109, -1333.51, -250.72, -1323.51, -249.441, -1314.3, -247.306, -1291.41, -234.921, -1270.57, -220.965, -1192.97, -160.549, -1171.32, -147.077, -1147.29, -135.371, -1056.9, -106.931, -1031.2, -101.427, -961.759, -73.538, -944.363, -65.5129, -893.729, -34.2616, -889.397, -31.4857, -884.73, -28.9577, -874.515, -24.603, -863.332, -21.114, -851.43, -18.4067, -826.457, -15.0024, -801.579, -13.72, -742.667, -16.4048, -695.961, -7.02253, -489.371, 10.7264, -211.681, -22.8255, 150.2, -11.4474, 190.742, -11.8695, 225.688, -16.0716, 256.416, -23.0578, 284.306, -31.832, 337.088, -50.7603, 364.738, -58.9223, 395.068, -64.888, 556.881, -93.102, 645.308, -119.925, 686.311, -138.021, 723.233, -159.815, 763.994, -185.865, 812.762, -211.088, 929.168, -255.882, 1062.14, -287.843, 1131.63, -297.027, 1201.39, -300.622, 1307.46, -307.35, 1341.83, -313.67, 1418.06, -334.145, 1447.81, -338.614, 1486.35, -340.472, 1507.4, -341.782, 1526.5, -345.244, 1543.97, -350.555, 1560.16, -357.413, 1590.04, -374.562, 1649.19, -414.125, 1665.82, -423.35, 1683.85, -431.705, 1703.63, -438.886, 1725.48, -444.592, 1749.76, -448.521, 1776.78, -450.371, 1803.6, -449.895, 1827.3, -447.26, 1848.23, -442.777, 1866.79, -436.757, 1883.35, -429.512, 1898.28, -421.355, 1949.27, -385.834, 1961.71, -377.79, 1974.79, -370.704, 1988.87, -364.888, 2004.33, -360.653, 2021.55, -358.311, 2040.91, -358.175, 2060.53, -360.297, 2078.47, -364.328, 2094.95, -369.978, 2110.22, -376.958, 2138.07, -393.748, 2189.72, -430.524, 2203.17, -438.693, 2217.33, -445.873, 2232.41, -451.773, 2248.67, -456.103, 2266.34, -458.573, 2285.67, -458.894, 2391.12, -459.366, 2406.72, -458.747, 2414.03, -457.83, 2421.29, -456.388, 2428.7, -454.331, 2436.47, -451.568, 2453.92, -443.562, 2475.59, -430.55, 2613.06, -330.898, 2635.34, -318.199, 2644.54, -314.395, 2648.58, -313.24, 2652.21, -312.628, 2646.31, -307.858, 2641.22, -302.878, 2636.91, -297.461, 2635.05, -294.518, 2633.37, -291.381, 2631.88, -288.021, 2630.57, -284.411, 2628.5, -276.325, 2627.13, -266.899, 2626.46, -255.905, 2643.59, -84.4317, 2629.09, -1.26643, 2626.16, 7.61822, 2624.74, 10.9048, 2623.33, 13.5738, 2621.92, 15.7396, 2620.5, 17.5171, 2617.59, 20.3647, 2614.5, 23.0336, 2611.15, 26.4405, 2609.34, 28.7071, 2607.43, 31.5019, 2603.26, 39.1352, 2593.21, 65.7833, 2580.26, 113.719, 2571.94, 142.098, 2561.85, 166.416, 2550.31, 186.981, 2537.64, 204.101, 2524.15, 218.083, 2510.16, 229.235, 2495.99, 237.865, 2481.96, 244.28, 2468.39, 248.788, 2455.6, 251.697, 2443.9, 253.314, 2433.61, 253.947, 2418.55, 253.492, 2412.97, 252.793, -2085.07, 244.678)
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
-position = Vector2(1230, -219)
+position = Vector2(1231, -219)
 
 [node name="MAP-GEOMATRY02" type="Node2D" parent="StaticBody2D2"]
 texture_repeat = 2
@@ -1933,21 +1933,21 @@ polygon = PackedVector2Array(-1099.54, 410.333, -1099.61, 410.329, -1099.83, 410
 [node name="hindere" type="Node2D" parent="."]
 
 [node name="trestump_1" parent="hindere" instance=ExtResource("22_ynf4l")]
-position = Vector2(329, -101)
+position = Vector2(376, -96)
 
 [node name="stein" parent="hindere" instance=ExtResource("24_v3hyq")]
 position = Vector2(722, -121)
 
 [node name="stein_1" parent="hindere" instance=ExtResource("23_r6x8q")]
-position = Vector2(1650, 126)
+position = Vector2(1650, 129)
 rotation = -0.179705
 
 [node name="stein_2" parent="hindere" instance=ExtResource("24_v3hyq")]
-position = Vector2(1450, 127)
+position = Vector2(1494, 134)
 rotation = 0.0473944
 
 [node name="stein_3" parent="hindere" instance=ExtResource("25_r2e6v")]
-position = Vector2(2148, 111)
+position = Vector2(2146, 114)
 rotation = -0.228902
 
 [node name="stein_4" parent="hindere" instance=ExtResource("24_v3hyq")]
@@ -1959,11 +1959,11 @@ position = Vector2(7004, -266)
 rotation = 0.427062
 
 [node name="stein_6" parent="hindere" instance=ExtResource("24_v3hyq")]
-position = Vector2(7451, -133)
+position = Vector2(7511, -132)
 rotation = -0.0102335
 
 [node name="stein_7" parent="hindere" instance=ExtResource("25_r2e6v")]
-position = Vector2(7625, -147)
+position = Vector2(7674, -153)
 rotation = -0.281813
 
 [node name="stein_8" parent="hindere" instance=ExtResource("24_v3hyq")]
@@ -1971,7 +1971,7 @@ position = Vector2(8464, -255)
 rotation = 0.189577
 
 [node name="stein_9" parent="hindere" instance=ExtResource("23_r6x8q")]
-position = Vector2(9417, -360)
+position = Vector2(9418, -355)
 rotation = -0.295417
 
 [node name="stein_10" parent="hindere" instance=ExtResource("24_v3hyq")]
@@ -1983,15 +1983,15 @@ position = Vector2(9054, -194)
 rotation = -0.512653
 
 [node name="stein_12" parent="hindere" instance=ExtResource("25_r2e6v")]
-position = Vector2(446, -108)
-rotation = -0.282743
+position = Vector2(531, -100)
+rotation = -0.130846
 
 [node name="stein_13" parent="hindere" instance=ExtResource("23_r6x8q")]
-position = Vector2(1840, 106)
+position = Vector2(1841, 108)
 rotation = 0.0122173
 
 [node name="stein_14" parent="hindere" instance=ExtResource("24_v3hyq")]
-position = Vector2(2409, 66)
+position = Vector2(2479, 58)
 rotation = -0.289725
 
 [node name="stein_15" parent="hindere" instance=ExtResource("24_v3hyq")]
@@ -2007,19 +2007,15 @@ position = Vector2(8741, -198)
 rotation = -2.39983
 
 [node name="trestump_5" parent="hindere" instance=ExtResource("22_ynf4l")]
-position = Vector2(2806, -61)
+position = Vector2(3002, -136)
 rotation = -0.384232
 
 [node name="trestump_6" parent="hindere" instance=ExtResource("26_8kc67")]
-position = Vector2(2972, -133)
+position = Vector2(2683, 9)
 rotation = -0.209926
 
-[node name="trestump_7" parent="hindere" instance=ExtResource("27_3n8ku")]
-position = Vector2(596, -108)
-rotation = 0.253217
-
 [node name="trestump_8" parent="hindere" instance=ExtResource("26_8kc67")]
-position = Vector2(3546, -217)
+position = Vector2(3549, -213)
 rotation = -0.0781052
 
 [node name="trestump_9" parent="hindere" instance=ExtResource("27_3n8ku")]
@@ -2035,7 +2031,7 @@ position = Vector2(9956, -516)
 rotation = 0.44311
 
 [node name="trestump_12" parent="hindere" instance=ExtResource("22_ynf4l")]
-position = Vector2(974, 24)
+position = Vector2(1012, 31)
 rotation = 0.151844
 
 [node name="trestump_13" parent="hindere" instance=ExtResource("26_8kc67")]
@@ -2043,11 +2039,11 @@ position = Vector2(9654, -407)
 rotation = -0.149068
 
 [node name="trestump_14" parent="hindere" instance=ExtResource("27_3n8ku")]
-position = Vector2(1235, 114)
+position = Vector2(1296, 116)
 rotation = 0.637045
 
 [node name="trestump_15" parent="hindere" instance=ExtResource("26_8kc67")]
-position = Vector2(2280, 106)
+position = Vector2(2283, 106)
 rotation = -0.209926
 
 [node name="trestump_16" parent="hindere" instance=ExtResource("27_3n8ku")]
@@ -2069,11 +2065,11 @@ position = Vector2(6791, -327)
 rotation = 0.767945
 
 [node name="trestump_21" parent="hindere" instance=ExtResource("22_ynf4l")]
-position = Vector2(7227, -157)
+position = Vector2(7300, -143)
 rotation = 0.230383
 
 [node name="trestump_22" parent="hindere" instance=ExtResource("22_ynf4l")]
-position = Vector2(10076, -530)
+position = Vector2(10100, -529)
 rotation = -0.153589
 
 [node name="PLAYER" type="Node2D" parent="."]
@@ -2081,7 +2077,6 @@ rotation = -0.153589
 [node name="Raskeladden" parent="PLAYER" instance=ExtResource("4_5c7x7")]
 position = Vector2(28, -43)
 scale = Vector2(1.03282, 1.03282)
-scroll_speed = 150.0
 
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="PLAYER/Raskeladden"]
 position = Vector2(-1.44632, -3.07678)
@@ -2091,7 +2086,7 @@ remote_path = NodePath("../../../Camera2D")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(26.5062, -46.1778)
 scale = Vector2(0.611646, 0.611646)
-zoom = Vector2(3, 3)
+zoom = Vector2(2.5, 2.5)
 process_callback = 0
 limit_left = -45
 limit_right = 10600
@@ -2126,7 +2121,6 @@ drag_vertical_offset = -0.36
 [connection signal="hit" from="hindere/stein_17" to="PLAYER/Raskeladden" method="_on_hit"]
 [connection signal="hit" from="hindere/trestump_5" to="PLAYER/Raskeladden" method="_on_hit"]
 [connection signal="hit" from="hindere/trestump_6" to="PLAYER/Raskeladden" method="_on_hit"]
-[connection signal="hit" from="hindere/trestump_7" to="PLAYER/Raskeladden" method="_on_hit"]
 [connection signal="hit" from="hindere/trestump_8" to="PLAYER/Raskeladden" method="_on_hit"]
 [connection signal="hit" from="hindere/trestump_9" to="PLAYER/Raskeladden" method="_on_hit"]
 [connection signal="hit" from="hindere/trestump_10" to="PLAYER/Raskeladden" method="_on_hit"]

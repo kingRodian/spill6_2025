@@ -1,0 +1,209 @@
+[gd_scene load_steps=31 format=3 uid="uid://lbt2ufbit10a"]
+
+[ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
+[ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
+[ext_resource type="PackedScene" uid="uid://csx4wtb8pnvma" path="res://scenes/game/characters/raskeladden.tscn" id="3_mqgqp"]
+[ext_resource type="Script" uid="uid://cvjqi8nvwok8t" path="res://addons/rmsmartshape/shapes/shape.gd" id="4_5yrek"]
+[ext_resource type="Script" uid="uid://bfki4vmjdvaab" path="res://addons/rmsmartshape/vertex_properties.gd" id="5_mqgqp"]
+[ext_resource type="Script" uid="uid://c0uayofvg3lhk" path="res://addons/rmsmartshape/shapes/point_array.gd" id="5_q32om"]
+[ext_resource type="Script" uid="uid://cp50yoa81upfj" path="res://addons/rmsmartshape/shapes/point.gd" id="6_5yrek"]
+[ext_resource type="Script" uid="uid://5vtnn0028d0v" path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" id="6_piwj7"]
+[ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
+[ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
+
+[sub_resource type="Gradient" id="Gradient_5ykpq"]
+interpolation_mode = 2
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rbirq"]
+gradient = SubResource("Gradient_5ykpq")
+width = 100
+height = 195
+fill = 1
+fill_from = Vector2(0.4, 0.6)
+fill_to = Vector2(0.5, 0.1)
+metadata/_snap_enabled = true
+
+[sub_resource type="Resource" id="Resource_5yrek"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_q32om"]
+script = ExtResource("6_5yrek")
+position = Vector2(-27.7672, 37.7844)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_5yrek")
+
+[sub_resource type="Resource" id="Resource_piwj7"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_lvjd2"]
+script = ExtResource("6_5yrek")
+position = Vector2(200.845, 37.22)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_piwj7")
+
+[sub_resource type="Resource" id="Resource_rbirq"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_vbb8y"]
+script = ExtResource("6_5yrek")
+position = Vector2(620.362, 43.3163)
+point_in = Vector2(-126.442, 163.133)
+point_out = Vector2(126.442, -163.133)
+properties = SubResource("Resource_rbirq")
+
+[sub_resource type="Resource" id="Resource_d8cqg"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_qjtnr"]
+script = ExtResource("6_5yrek")
+position = Vector2(921.96, 33.8896)
+point_in = Vector2(-54.1331, -75.6395)
+point_out = Vector2(173.971, 254.578)
+properties = SubResource("Resource_d8cqg")
+
+[sub_resource type="Resource" id="Resource_iqbj7"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_0e30d"]
+script = ExtResource("6_5yrek")
+position = Vector2(1416.67, 132.165)
+point_in = Vector2(-68.3014, 97.3153)
+point_out = Vector2(-4.00781, 35.5619)
+properties = SubResource("Resource_iqbj7")
+
+[sub_resource type="Resource" id="Resource_cmb26"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_sywuj"]
+script = ExtResource("6_5yrek")
+position = Vector2(1426.6, 327.36)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_cmb26")
+
+[sub_resource type="Resource" id="Resource_6kch6"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_wgrxj"]
+script = ExtResource("6_5yrek")
+position = Vector2(-35.0026, 330.186)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_6kch6")
+
+[sub_resource type="Resource" id="Resource_x4re2"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
+[sub_resource type="Resource" id="Resource_0t1b6"]
+script = ExtResource("6_5yrek")
+position = Vector2(-27.7672, 37.7844)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_x4re2")
+
+[sub_resource type="Resource" id="Resource_lhay1"]
+script = ExtResource("5_q32om")
+_points = {
+0: SubResource("Resource_0t1b6"),
+26: SubResource("Resource_q32om"),
+27: SubResource("Resource_lvjd2"),
+33: SubResource("Resource_vbb8y"),
+34: SubResource("Resource_qjtnr"),
+37: SubResource("Resource_0e30d"),
+40: SubResource("Resource_sywuj"),
+43: SubResource("Resource_wgrxj")
+}
+_point_order = Array[int]([26, 27, 33, 34, 37, 40, 43, 0])
+_constraints = {
+Array[int]([26, 0]): 15
+}
+_next_key = 45
+_material_overrides = {}
+
+[sub_resource type="Resource" id="Resource_fy0jb"]
+script = ExtResource("7_lvjd2")
+_edge_meta_materials = Array[ExtResource("6_piwj7")]([])
+fill_textures = Array[Texture2D]([ExtResource("9_5yrek")])
+fill_texture_z_index = -10
+fill_texture_show_behind_parent = false
+fill_texture_scale = 0.67
+fill_texture_absolute_position = false
+fill_texture_absolute_rotation = false
+fill_texture_offset = Vector2(0, 0)
+fill_texture_angle_offset = 3.8
+fill_mesh_offset = 0.0
+render_offset = 0.0
+
+[node name="Testlevel" type="Node2D"]
+
+[node name="HUD" parent="." instance=ExtResource("1_dxtel")]
+
+[node name="CanvasLayer" parent="." instance=ExtResource("2_q0ewa")]
+
+[node name="LIGHT" type="Node2D" parent="."]
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="LIGHT"]
+color = Color(0.109804, 0.109804, 0.109804, 1)
+blend_mode = 2
+
+[node name="PointLight2D" type="PointLight2D" parent="LIGHT"]
+position = Vector2(9051, -1250)
+rotation = -0.122892
+scale = Vector2(270.23, 22.8594)
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_rbirq")
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="TestPlayer" parent="Player" instance=ExtResource("3_mqgqp")]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player/TestPlayer"]
+remote_path = NodePath("../../../Camera2D")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="SS2D_Shape" type="Node2D" parent="StaticBody2D"]
+script = ExtResource("4_5yrek")
+_points = SubResource("Resource_lhay1")
+shape_material = SubResource("Resource_fy0jb")
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+metadata/_custom_type_script = "uid://cvjqi8nvwok8t"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+visible = false
+polygon = PackedVector2Array(-27.8663, 37.6832, 200.848, 37.2068, 248.613, 61.1128, 300.243, 82.162, 363.188, 101.443, 397.219, 108.583, 432.059, 113.076, 467.033, 114.188, 501.469, 111.185, 518.275, 107.91, 534.694, 103.331, 550.641, 97.3549, 566.033, 89.8908, 580.785, 80.8468, 594.813, 70.1308, 608.033, 57.6512, 620.362, 43.3163, 643.991, 15.4956, 667.403, -7.02877, 690.508, -24.6137, 713.216, -37.6157, 724.394, -42.5097, 735.438, -46.3921, 746.337, -49.3073, 757.081, -51.3, 767.659, -52.4147, 778.058, -52.696, 788.268, -52.1886, 798.277, -50.9374, 817.649, -46.3806, 836.083, -39.3821, 853.49, -30.2992, 869.779, -19.4889, 884.861, -7.30799, 898.645, 5.88662, 911.042, 19.738, 921.96, 33.8896, 955.435, 78.0151, 990.365, 115.195, 1026.36, 145.832, 1063.05, 170.329, 1100.03, 189.09, 1136.93, 202.518, 1173.36, 211.015, 1208.94, 214.986, 1243.28, 214.833, 1275.99, 210.959, 1306.7, 203.768, 1335.02, 193.663, 1360.56, 181.047, 1382.93, 166.323, 1392.82, 158.297, 1401.76, 149.895, 1409.73, 141.167, 1416.76, 131.853, 1426.71, 327.466, -35.1107, 330.292)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+
+[connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
+
+[editable path="HUD"]
