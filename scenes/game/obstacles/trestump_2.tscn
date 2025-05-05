@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwndrgcj3y84g"]
 
-[ext_resource type="Script" path="res://scripts/entities/boar.gd" id="1_7o3yk"]
+[ext_resource type="Script" uid="uid://cxj870uoctjpk" path="res://scripts/entities/boar.gd" id="1_7o3yk"]
 [ext_resource type="Texture2D" uid="uid://csn835as52ctc" path="res://assets/art/environments/skogbane_hinder/Trestump_hinder02.PNG" id="2_mudnc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3bp1"]

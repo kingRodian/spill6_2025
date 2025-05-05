@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b003u3f21kj54"]
 
-[ext_resource type="Script" path="res://scripts/controllers/goal.gd" id="1_aed86"]
-[ext_resource type="Texture2D" uid="uid://elfehputdtwg" path="res://assets/art/ui/ui_knapp_skilt_tekstur10.png" id="2_5goai"]
+[ext_resource type="Script" uid="uid://cdwovbnxjcc3d" path="res://scripts/controllers/goal.gd" id="1_aed86"]
+[ext_resource type="Texture2D" uid="uid://buocg065dwjp6" path="res://assets/art/ui/ui_knapp_skilt_tekstur10.png" id="2_5goai"]
 [ext_resource type="FontFile" uid="uid://b2k2qqu8sk8oe" path="res://assets/fonts/AR_One_Sans/static/AROneSans-Bold.ttf" id="3_t6q0r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwrv5"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://csx4wtb8pnvma"]
 
-[ext_resource type="Script" path="res://scripts/entities/player.gd" id="1_yh366"]
+[ext_resource type="Script" uid="uid://r74wnuu6ud12" path="res://scripts/entities/player.gd" id="1_yh366"]
 [ext_resource type="Texture2D" uid="uid://bqn006171fyls" path="res://assets/art/character/skike/raskeladden_skiking_0001.png" id="2_laut3"]
 [ext_resource type="Texture2D" uid="uid://b8uqp5550jaqn" path="res://assets/art/character/skike/raskeladden_skiking_0002.png" id="3_vonc6"]
 [ext_resource type="Texture2D" uid="uid://dfae8x470hjcq" path="res://assets/art/character/skike/raskeladden_skiking_0003.png" id="4_6syje"]
