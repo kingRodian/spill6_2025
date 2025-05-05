@@ -15,4 +15,3 @@ func _on_area_2d_body_entered(body):
 	if body.name == "Raskeladden":
 	# Spilleren treffer hinderet
 		emit_signal('hit', self, body)
-		SoundManager.skade_lyd_tromme()

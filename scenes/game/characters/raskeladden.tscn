@@ -96,9 +96,10 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cqh81"]
+radius = 8.0
 
-[node name="TestPlayer" type="CharacterBody2D"]
-floor_max_angle = 1.51495
+[node name="Raskeladden" type="CharacterBody2D"]
+floor_max_angle = 1.41895
 floor_snap_length = 20.0
 script = ExtResource("1_yh366")
 
@@ -112,7 +113,7 @@ animation = &"jump"
 autoplay = "skike"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 4)
+position = Vector2(1, 9)
 scale = Vector2(0.852, 1)
 shape = SubResource("CapsuleShape2D_cqh81")
 
@@ -121,6 +122,10 @@ wait_time = 0.4
 
 [node name="HangTimer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+
+[node name="Line2D" type="Line2D" parent="."]
 
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="HangTimer" to="." method="_on_hang_timer_timeout"]

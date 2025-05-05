@@ -7,6 +7,11 @@ signal lost_health(new_health)
 # Clean up code and add documentation
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@onready var anim_sprite = $"Sprites/AnimatedSprite2D"
+@onready var orig_color = anim_sprite.modulate
+
+# Movement vars
 const base_accel : float = 250.0
 const max_speed : float = 300.0
 @export var jump_velocity: float = -300.0
@@ -14,7 +19,7 @@ const max_speed : float = 300.0
 var jump_y_start : float = 0
 var jump_height_max : float = 60
 
-
+# Flags
 var has_double_jumped : bool = false
 var has_landed : bool = false
 #var animation_locked : bool = false
@@ -24,8 +29,8 @@ var hangtime : bool = false
 var angle_factor : float = 1
 var hearts : int = 3
 
-@onready var anim_sprite = $"Sprites/AnimatedSprite2D"
-@onready var orig_color = anim_sprite.modulate
+# Raycast vars
+const RAY_LEN = 60
 
 func _ready():
 	print("player loaded")
@@ -35,12 +40,22 @@ func _physics_process(delta):
 	velocity.x += base_accel * delta
 	velocity.x = minf(velocity.x, max_speed)
 	
+	
+		# Raycasting to detect the angle to the floor
+	var space_rid = get_world_2d().space
+	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
+	var end = position + Vector2.DOWN * RAY_LEN
+	var query = PhysicsRayQueryParameters2D.create(position, end)
+	var result = space_state.intersect_ray(query)
+	if result:
+		var normal = result.get("normal")
+		var angle = -normal.angle_to(Vector2.UP)
+		#print(str(rad_to_deg(angle)))
+		rotation = angle
+	
 	if is_on_floor():
 		if not anim_sprite.is_playing():
 			anim_sprite.play("skike")
-		# TODO: Extra speed from sliding
-		#var angle = get_floor_angle(Vector2.DOWN) 
-		# Gives angle in radians
 	else:
 		# Jump logic
 		if hangtime:
@@ -49,8 +64,6 @@ func _physics_process(delta):
 
 	has_landed = check_if_landing()
 	move_and_slide()
-
-	#$DebugLabel.text = 'vel_x: ' + str(velocity.x) + ', vel_y: ' + str(velocity.y)
 
 
 func check_if_landing():

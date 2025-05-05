@@ -14,4 +14,3 @@ func _on_area_2d_area_entered(body):
 	# Spilleren treffer hinderet
 	emit_signal('hit', self, body)
 	SoundManager.skade_piano()
-
