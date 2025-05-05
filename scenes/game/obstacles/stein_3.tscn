@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ccf267x2qoktm"]
 
-[ext_resource type="Script" path="res://scripts/entities/boar.gd" id="1_61cw6"]
+[ext_resource type="Script" uid="uid://cxj870uoctjpk" path="res://scripts/entities/boar.gd" id="1_61cw6"]
 [ext_resource type="Texture2D" uid="uid://bhpwfepnvbcof" path="res://assets/art/environments/skogbane_hinder/Stein_hinder03.PNG" id="2_6igv8"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p3bp1"]

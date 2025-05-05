@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://ummqddlik17r"]
 
-[ext_resource type="Script" path="res://scripts/ui/menu.gd" id="1_lm4ab"]
+[ext_resource type="Script" uid="uid://dxioa2yci1cu2" path="res://scripts/ui/menu.gd" id="1_lm4ab"]
 [ext_resource type="Texture2D" uid="uid://bwmqf17eymmwg" path="res://assets/art/environments/bakgrunner/bakgrunn_meny/bakgrunn_startskjerm_placeholder.png" id="2_rrtjx"]
 [ext_resource type="Theme" uid="uid://dhcc0oot5rr60" path="res://materials/menu_theme.tres" id="3_ey2nd"]
 [ext_resource type="PackedScene" uid="uid://cdfm7gydy8nie" path="res://scenes/menus/raskeladden_sportsmate_weblink.tscn" id="3_gd6eg"]

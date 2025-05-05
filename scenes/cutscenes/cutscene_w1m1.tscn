@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://bsnms81ofqaps"]
 
-[ext_resource type="Script" path="res://scenes/cutscenes/cutscene_w1m1.gd" id="1_itv6g"]
+[ext_resource type="Script" uid="uid://veptvh2cxc8f" path="res://scenes/cutscenes/cutscene_w1m1.gd" id="1_itv6g"]
 [ext_resource type="Texture2D" uid="uid://7alal666nvve" path="res://assets/art/cutscenes/storyboard-03.jpg" id="2_t0nbd"]
 [ext_resource type="Theme" uid="uid://dhcc0oot5rr60" path="res://materials/menu_theme.tres" id="3_v30p6"]
 [ext_resource type="Texture2D" uid="uid://dc2auk836vvsv" path="res://assets/art/cutscenes/storyboard-04.jpg" id="3_xs3jg"]
@@ -80,7 +80,7 @@ Men rapporter gjerne tanker og innspill om tekst, visningstid, farger, feil o.l.
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6cje2"]
 _data = {
-"intro": SubResource("Animation_gueuh")
+&"intro": SubResource("Animation_gueuh")
 }
 
 [node name="CutsceneW1m1" type="Node2D"]

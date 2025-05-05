@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://clgosqujy66ek"]
 
 [ext_resource type="PackedScene" uid="uid://y3wbw06ky8ck" path="res://scenes/HUD/pause_button.tscn" id="1_ikbeo"]
-[ext_resource type="Script" path="res://scripts/ui/health.gd" id="1_qp5mj"]
+[ext_resource type="Script" uid="uid://bonv1w1x516bh" path="res://scripts/ui/health.gd" id="1_qp5mj"]
 [ext_resource type="PackedScene" uid="uid://dmtavcoe2qlxt" path="res://scenes/HUD/jump_button.tscn" id="2_j5fn2"]
 [ext_resource type="Texture2D" uid="uid://d0ipet2uqdskf" path="res://assets/art/ui/ui_ikon_helse_fylt_tekstur.png" id="2_vtm5c"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://b362dxgf8xwdb"]
 
-[ext_resource type="Script" path="res://scripts/controllers/sound_manager.gd" id="1_ehfbi"]
+[ext_resource type="Script" uid="uid://scqct0xbb50l" path="res://scripts/controllers/sound_manager.gd" id="1_ehfbi"]
 [ext_resource type="AudioStream" uid="uid://csqr5ndtqic8d" path="res://assets/sounds/sfx/skadePiano.ogg" id="2_8pwwn"]
 [ext_resource type="AudioStream" uid="uid://dvol0x04k4mt4" path="res://assets/sounds/music/Vind + fuglekvitter 2.ogg" id="2_n6e1t"]
 [ext_resource type="AudioStream" uid="uid://bvp3d3xmmgdss" path="res://assets/sounds/sfx/SkiltDempV2.ogg" id="3_omwvp"]

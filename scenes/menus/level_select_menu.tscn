@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://bxvbcus4651uf"]
 
-[ext_resource type="Script" path="res://scripts/ui/level_select.gd" id="1_n0ap1"]
+[ext_resource type="Script" uid="uid://wi3ei7pfikci" path="res://scripts/ui/level_select.gd" id="1_n0ap1"]
 [ext_resource type="Texture2D" uid="uid://cr2au6104hwt3" path="res://assets/art/ui/bakgrunn_kart.png" id="2_lxt8a"]
 [ext_resource type="PackedScene" uid="uid://ccw8nj7luquqr" path="res://scenes/save_manager.tscn" id="3_0lr5j"]
 [ext_resource type="Theme" uid="uid://dhcc0oot5rr60" path="res://materials/menu_theme.tres" id="3_fybug"]
