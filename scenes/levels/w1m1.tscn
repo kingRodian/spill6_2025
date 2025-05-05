@@ -1,4 +1,4 @@
-[gd_scene load_steps=250 format=3 uid="uid://eofl5wch2vi6"]
+[gd_scene load_steps=248 format=3 uid="uid://eofl5wch2vi6"]
 
 [ext_resource type="Script" uid="uid://cjjuiqv8shgcj" path="res://scripts/level/gameover.gd" id="1_1i43x"]
 [ext_resource type="PackedScene" uid="uid://1ehcmr0xs6rd" path="res://scenes/levels/map_triggers/death_pit.tscn" id="2_6jqgv"]
@@ -24,7 +24,6 @@
 [ext_resource type="Texture2D" uid="uid://b373xdjef6xho" path="res://assets/art/environments/texture/grass_texture_256.png" id="17_jbjem"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="20_bc4im"]
 [ext_resource type="PackedScene" uid="uid://vkngktkkeu73" path="res://scenes/game/obstacles/trestump_1.tscn" id="22_ynf4l"]
-[ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="23_5i62i"]
 [ext_resource type="PackedScene" uid="uid://btsfbq02rjs4l" path="res://scenes/game/obstacles/stein_1.tscn" id="23_r6x8q"]
 [ext_resource type="PackedScene" uid="uid://dl2w5twnsch60" path="res://scenes/game/obstacles/stein_2.tscn" id="24_v3hyq"]
 [ext_resource type="PackedScene" uid="uid://ccf267x2qoktm" path="res://scenes/game/obstacles/stein_3.tscn" id="25_r2e6v"]
@@ -1641,12 +1640,6 @@ fill_texture_angle_offset = 0.0
 fill_mesh_offset = 0.0
 render_offset = 0.0
 
-[sub_resource type="Curve2D" id="Curve2D_5xlkm"]
-_data = {
-"points": PackedVector2Array(-4.20593, 0, 4.20593, 0, -120, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 86, -8)
-}
-point_count = 3
-
 [node name="THE-MAP" type="Node2D"]
 script = ExtResource("1_1i43x")
 
@@ -1950,18 +1943,6 @@ collision_polygon_node_path = NodePath("../CollisionPolygon2D")
 visible = false
 modulate = Color(1, 1, 1, 0.3)
 polygon = PackedVector2Array(-1099.54, 410.333, -1099.61, 410.329, -1099.83, 410.293, -1100.19, 410.189, -1100.66, 409.983, -1101.25, 409.64, -1101.94, 409.124, -1102.73, 408.4, -1103.59, 407.433, -1104.53, 406.188, -1105.53, 404.629, -1107.67, 400.431, -1109.93, 394.557, -1112.22, 386.725, -1116.59, 364.063, -1120.12, 330.194, -1121.97, 219.826, -1093.53, 180.429, -1072.74, 145.859, -1053.67, 116.181, -1042.93, 103.198, -1030.41, 91.4631, -1023.25, 86.0663, -1015.36, 80.9845, -997.052, 71.7706, -974.737, 63.8298, -947.68, 57.1703, -876.379, 47.7284, -777.237, 43.5113, -683.511, 37.5499, -650.063, 31.7322, -623.278, 24.4205, -601.447, 15.9127, -582.859, 6.50706, -548.575, -13.8061, -529.458, -24.1175, -506.745, -34.1348, -478.726, -43.5599, -443.69, -52.0948, -345.73, -65.302, -199.185, -71.3722, 44.831, -60.2799, 79.3443, -53.9959, 106.562, -46.7982, 128.136, -38.9323, 145.715, -30.6434, 175.494, -13.7782, 190.995, -5.69262, 209.104, 1.83453, 231.471, 8.55788, 259.748, 14.232, 340.632, 21.4515, 613.676, 38.0655, 637.131, 41.82, 659.418, 47.4208, 680.898, 55.3097, 701.933, 65.9287, 722.883, 79.72, 744.111, 97.1255, 765.976, 118.587, 788.842, 144.546, 788.03, 244.839, 781.479, 321.965, 770.454, 388.99, 644.184, 391.51, 482.204, 394.608, 536.554, 399.005, 545.413, 399.466, 545.761, 399.447, 545.897, 399.407, 545.839, 399.35, 545.548, 399.269, 541.952, 398.706, 477.212, 391.59, 416.241, 380.95, 189.344, 320.474, 101.309, 302.573, 8.20328, 291.689, -89.2974, 291.355, -190.515, 305.104, -291.321, 291.155, -373.179, 287.78, -439.588, 292.879, -494.051, 304.356, -540.066, 320.111, -662.438, 372.07, -772.745, 403.768, -790.997, 406.796, -794.394, 406.941, -795.098, 406.901, -795.305, 406.873, -927.803, 413.452)
-
-[node name="NPCs" type="Node" parent="."]
-
-[node name="fotgjenger" parent="NPCs" node_paths=PackedStringArray("path") instance=ExtResource("23_5i62i")]
-position = Vector2(1562, 120)
-path = NodePath("Path2D/PathFollow2D")
-
-[node name="Path2D" type="Path2D" parent="NPCs/fotgjenger"]
-curve = SubResource("Curve2D_5xlkm")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/fotgjenger/Path2D"]
-position = Vector2(-120, -8)
 
 [node name="hindere" type="Node2D" parent="."]
 
