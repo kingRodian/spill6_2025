@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=32 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://5vtnn0028d0v" path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" id="6_piwj7"]
 [ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
+[ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="11_q32om"]
 
 [sub_resource type="Gradient" id="Gradient_5ykpq"]
 interpolation_mode = 2
@@ -203,6 +204,9 @@ polygon = PackedVector2Array(-27.8663, 37.6832, 200.848, 37.2068, 248.613, 61.11
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
+
+[node name="GameStateManager" type="Node" parent="."]
+script = ExtResource("11_q32om")
 
 [connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
 

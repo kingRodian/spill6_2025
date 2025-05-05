@@ -3,9 +3,10 @@ extends CharacterBody2D
 signal has_died(body)
 signal lost_health(new_health)
 # TODO
-# Legg til relevant bevegelse
-# Ask if doublejump is something we should add
+# Doublejump? is something we should add
 # Clean up code and add documentation
+
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const base_accel : float = 250.0
 const max_speed : float = 300.0
 @export var jump_velocity: float = -300.0
@@ -13,7 +14,7 @@ const max_speed : float = 300.0
 var jump_y_start : float = 0
 var jump_height_max : float = 60
 
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 var has_double_jumped : bool = false
 var has_landed : bool = false
 #var animation_locked : bool = false
@@ -39,16 +40,12 @@ func _physics_process(delta):
 			anim_sprite.play("skike")
 		# TODO: Extra speed from sliding
 		#var angle = get_floor_angle(Vector2.DOWN) 
-		# Gives angle in radians, so from down 0 is down, 0.5 is to the right, 1 is up
-
+		# Gives angle in radians
 	else:
 		# Jump logic
 		if hangtime:
 			if position.y < jump_y_start - jump_height_max:
 				velocity.y = 0
-		else:
-			#velocity.y += gravity * delta
-			pass
 
 	has_landed = check_if_landing()
 	move_and_slide()
