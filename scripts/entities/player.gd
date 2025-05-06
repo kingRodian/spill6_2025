@@ -13,7 +13,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # Movement vars
 const base_accel : float = 250.0
-const max_speed : float = 300.0
+const max_speed : float = 100.0
 @export var jump_velocity: float = -350.0
 @export var knockback_speed_x : float = - base_accel * 0.4
 var jump_y_start : float = 0
@@ -35,20 +35,26 @@ func _ready():
 	print("player loaded")
 
 func _physics_process(delta):
-	velocity.x += base_accel * delta
-	velocity.x = minf(velocity.x, max_speed)
 
 	# angle to rotate towards
-	var angle = 0
+	var angle := 0
 	# Raycasting to detect the angle to the floor
 	var space_rid = get_world_2d().space
 	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
-	var end = position + Vector2.DOWN * RAY_LEN
+	var end := position + Vector2.DOWN * RAY_LEN
 	var query = PhysicsRayQueryParameters2D.create(position, end)
 	var result = space_state.intersect_ray(query)
 	if result:
-		var normal = result.get("normal")
+		var normal : Vector2 = result.get("normal")
+		var tangent_3d := Vector3(normal.x, normal.y, 0).cross(Vector3.FORWARD)
+		var tangent := Vector2(tangent_3d.x, tangent_3d.y)
 		angle = -normal.angle_to(Vector2.UP)
+		if is_on_floor():
+			# Apply velocity according to surface tangent.
+			# TODO Currently frictionless, we should add friction to limit speed on flat ground.
+			velocity += base_accel * delta * tangent.normalized()
+			velocity.min(Vector2(max_speed, max_speed))
+			
 		#print(str(rad_to_deg(angle)))
 		
 	if is_on_floor():
