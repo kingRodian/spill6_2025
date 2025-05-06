@@ -99,6 +99,7 @@ animations = [{
 radius = 8.0
 
 [node name="Raskeladden" type="CharacterBody2D"]
+floor_stop_on_slope = false
 floor_max_angle = 1.41895
 floor_snap_length = 20.0
 script = ExtResource("1_yh366")

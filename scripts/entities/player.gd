@@ -15,9 +15,10 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const base_accel : float = 250.0
 const max_speed : float = 100.0
 @export var jump_velocity: float = -350.0
-@export var knockback_speed_x : float = - base_accel * 0.4
+@export var knockback_reduction = .7
 var jump_y_start : float = 0
 var jump_height_max : float = 50
+var stored_velocity : Vector2 = Vector2.ZERO
 
 # Flags
 var has_double_jumped : bool = false
@@ -29,7 +30,7 @@ var hangtime : bool = false
 var hearts : int = 3
 
 # Raycast vars
-const RAY_LEN = 500
+const RAY_LEN = 60
 
 func _ready():
 	print("player loaded")
@@ -37,7 +38,7 @@ func _ready():
 func _physics_process(delta):
 
 	# angle to rotate towards
-	var angle := 0
+	var angle := 0.0
 	# Raycasting to detect the angle to the floor
 	var space_rid = get_world_2d().space
 	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
@@ -60,11 +61,9 @@ func _physics_process(delta):
 	if is_on_floor():
 		if not anim_sprite.is_playing():
 			anim_sprite.play("skike")
-		rotation = angle
+		anim_sprite.rotation = angle
 	else:
 		# Jump logic
-		# If in the air, rotate angle more slowly
-		rotation = rotate_toward(rotation, angle, delta)
 		if position.y < jump_y_start - jump_height_max:
 			velocity.y = 0
 
@@ -85,7 +84,8 @@ func _on_hit(entity, body):
 		lost_health.emit(hearts)
 		$KnockbackTimer.start()
 		in_knockback = true
-		velocity.x = knockback_speed_x
+		stored_velocity = velocity
+		velocity = Vector2.ZERO
 		# anim_sprite.play("hurt")
 		anim_sprite.modulate = Color.RED
 		if hearts == 0:
@@ -94,6 +94,9 @@ func _on_hit(entity, body):
 func _on_knockback_timer_timeout() -> void:
 	in_knockback = false
 	anim_sprite.modulate = orig_color
+	# Restore speed but reduced
+	velocity = stored_velocity * knockback_reduction
+	
 	
 func die(body):
 	print('player has died')
@@ -105,7 +108,7 @@ func _on_health_upgrade_detected(amount):
 	hearts += amount
 
 func _on_jump_button_pressed():
-	if is_on_floor():
+	if is_on_floor() and not in_knockback:
 		has_double_jumped = false
 		jump_y_start = position.y
 		$HangTimer.start()
