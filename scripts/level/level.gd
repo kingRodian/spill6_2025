@@ -1,22 +1,8 @@
-@tool
 extends Node2D
 
-var SaveManager = preload("res://scenes/save_manager.tscn")
-
-@onready var player : Player = $Raskeladden
+@onready var player := $Player.get_child(0)
 @onready var health := $HUD/LeftContainer/Health
-@onready var camera : Camera2D = $Camera
-@export_tool_button("First Time Setup") var first_time_setup_button = _first_time_setup
-@export_storage var has_setup := false
-
-
-func _enter_tree() -> void:
-	# This can always be instantiated at runtime
-	var save_manager = SaveManager.instantiate()
-	save_manager.name = "SaveManager"
-	add_child(save_manager)
-	
-	assert(has_setup, "You forgot to run first time setup.")
+@onready var camera := $Camera2D
 
 
 func _ready() -> void:
@@ -25,59 +11,14 @@ func _ready() -> void:
 	
 	health.set_max_health(player.start_health)
 	health.update_health(player.start_health)
-	
-	$HUD/JumpButton.connect("button_down", player._on_jump_button_pressed)
 
 func reset():
 	player.reset()
 
-func _first_time_setup():
-	print("Running first time level setup.\n")
-	has_setup = true
-	
-	if find_child("Camera", false) == null:
-		print("Ingen Camera funnet.")
-		print("Generer ny Camera.")
-		_add_node(Camera2D.new(), "Camera")
-		camera = $Camera
-		
-		# Copy of camera from level 1
-		camera.zoom = Vector2(3, 3)
-		camera.limit_left = -45
-		camera.limit_right = 10600
-		camera.position_smoothing_enabled = true
-		camera.position_smoothing_speed = 7.0
-		camera.drag_vertical_enabled = true
-		camera.drag_horizontal_offset = 1.0
-		camera.drag_vertical_offset = -0.36
-	
-	if find_child("Raskeladden", false) == null:
-		print("Ingen Raskeladden funnet.")
-		print("Generer ny Raskeladden.")
-		var rask : Player = load("res://scenes/game/characters/raskeladden.tscn").instantiate()
-		_add_node(rask, "Raskeladden")
-		
-		# Make remote transform
-		var remote := RemoteTransform2D.new()
-		remote.name = "RemoteTransform2D"
-		rask.add_child(remote)
-		remote.owner = self
-		remote.scale = Vector2(0.6, 0.6)
-		remote.remote_path = remote.get_path_to(camera)
-	
-	if find_child("HUD", false) == null:
-		print("Ingen HUD funnet.")
-		print("Generer ny HUD.")
-		_add_node(load("res://scenes/HUD/hud.tscn").instantiate(),"HUD")
-
 func _on_death(body):
-	# TODO temporary, add retry screen
 	print("level resetting")
-	#camera.position = Vector2(0, 0) # does nothing while RemoteTransform2D is active
-	camera.position_smoothing_enabled = false
+	camera.position = Vector2(0, 0) # does nothing while RemoteTransform2D is active
 	player.reset()
-	camera.position = Vector2(0, 0)
-	camera.position_smoothing_enabled = true
 	
 	# camera.reset()
 	
@@ -91,10 +32,3 @@ func _on_death(body):
 	##get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 	##get_tree().reload_current_scene()
 	#get_tree().reload_current_scene()
-
-## Permanentaly add a node to this node
-func _add_node(node : Node, node_name := ""):
-	if node_name:
-		node.name = node_name
-	add_child(node)
-	node.owner = self
