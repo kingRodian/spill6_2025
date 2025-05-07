@@ -60,7 +60,7 @@ func _physics_process(delta):
 		if is_on_floor():
 			# Apply velocity according to surface tangent.
 			# TODO Currently frictionless, we should add friction to limit speed on flat ground.
-			velocity += base_accel * delta * tangent.normalized() * friction
+			velocity += base_accel * delta * tangent.normalized() * friction  
 		velocity = velocity.min(max_speed)
 		#print(str(rad_to_deg(angle)))
 	if not jumping:
