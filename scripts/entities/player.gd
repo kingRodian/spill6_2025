@@ -4,8 +4,7 @@ class_name Player
 signal has_died(body)
 signal health_changed(new_health)
 # TODO
-# Legg til relevant bevegelse
-# Ask if doublejump is something we should add
+# Doublejump? is something we should add
 # Clean up code and add documentation
 
 @export var start_health := 3
@@ -16,24 +15,68 @@ var start_pos := position
 @export var scroll_speed : float = 0
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+@onready var anim_sprite = $"Sprites/AnimatedSprite2D"
+@onready var orig_color = anim_sprite.modulate
+
+# Movement vars
+const base_accel : float = 250.0
+const max_speed : Vector2 = Vector2(400.0, 600)
+@export var knockback_reduction = .7
+var stored_velocity : Vector2 = Vector2.ZERO
+const jumptime = 0.15
+const hangtime = 0.1
+
+# Flags
 var has_double_jumped : bool = false
 var has_landed : bool = false
-var animation_locked : bool = false
+#var animation_locked : bool = false
+var in_knockback: bool = false
+var jumping : bool = false
+
 
 var health : int = start_health
 
-@onready var anim_sprite = $"Sprites/AnimatedSprite2D"
-
+# Raycast vars
+const RAY_LEN = 600
 
 func _ready():
 	print("player loaded")
+	$HangTimer.wait_time = hangtime
+	$JumpTimer.wait_time = jumptime
 
 func _physics_process(delta):
-	position.x += scroll_speed * delta
-	if not is_on_floor():
+	if Input.is_action_just_pressed(&"jump"):
+		_on_jump_button_pressed()
+	# angle to rotate towards
+	var angle := 0.0
+	# Raycasting to detect the angle to the floor
+	var space_rid = get_world_2d().space
+	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
+	var end := position + Vector2.DOWN * RAY_LEN
+	var query = PhysicsRayQueryParameters2D.create(position, end)
+	var result = space_state.intersect_ray(query)
+	if result:
+		var normal : Vector2 = result.get("normal")
+		var collider = result.get("collider")
+		var friction = 1.0
+		if collider is Terrain:
+			friction = collider.friction
+		var tangent_3d := Vector3(normal.x, normal.y, 0).cross(Vector3.FORWARD)
+		var tangent := Vector2(tangent_3d.x, tangent_3d.y)
+		angle = -normal.angle_to(Vector2.UP)
+		if is_on_floor():
+			# Apply velocity according to surface tangent.
+			# TODO Currently frictionless, we should add friction to limit speed on flat ground.
+			velocity += base_accel * delta * tangent.normalized() * friction
+		velocity = velocity.min(max_speed)
+		#print(str(rad_to_deg(angle)))
+	if not jumping:
 		velocity.y += gravity * delta
-	if not anim_sprite.is_playing() and is_on_floor():
-		anim_sprite.play("skike")
+	if is_on_floor():
+		if not anim_sprite.is_playing():
+			anim_sprite.play("skike")
+		anim_sprite.rotation = angle
 
 	has_landed = check_if_landing()
 	move_and_slide()
@@ -51,15 +94,28 @@ func die(body):
 	print('player has died')
 	emit_signal('has_died', body)
 
+
 func _on_hit(entity, body):
-	print('player hit')
-	health -= 1
-	health_changed.emit(health)
-	# play hit animation
-	# push character back a bit?
-	# invincibility, flashing sprite?
-	if health <= 0:
-		die(body)
+	if not in_knockback:
+		SoundManager.skade_lyd_tromme()
+		print('player hit')
+		health -= 1
+		health_changed.emit(health)
+		$KnockbackTimer.start()
+		in_knockback = true
+		jumping = false
+		stored_velocity = Vector2(velocity.x, 0)
+		velocity = Vector2.ZERO
+		# anim_sprite.play("hurt")
+		anim_sprite.modulate = Color.RED
+		if health <= 0:
+			die(body)
+
+func _on_knockback_timer_timeout() -> void:
+	in_knockback = false
+	anim_sprite.modulate = orig_color
+	# Restore speed but reduced
+	velocity = stored_velocity * knockback_reduction
 
 # Health upgrade?
 # Old relic code
@@ -68,9 +124,16 @@ func _on_health_upgrade_detected(amount):
 	health += amount
 
 func _on_jump_button_pressed():
-	if is_on_floor():
+	if is_on_floor() and not in_knockback:
 		has_double_jumped = false
+		$JumpTimer.start()
+		jumping = true
 		anim_sprite.play("jump")
 		velocity.y = jump_velocity
 
-	
+func _on_jump_timer_timeout() -> void:
+	velocity.y = 0
+	$HangTimer.start()
+
+func _on_hang_timer_timeout() -> void:
+	jumping = false

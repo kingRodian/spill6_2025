@@ -1,11 +1,11 @@
 extends Node2D
 @onready var camera = $Camera2D
 # Viser label og "dreper" om player har sendt ut death signalet
-# body.queue_free() "sletter" spilleren 
+# body.queue_free() "sletter" spilleren
 
 func _ready():
 	SoundManager.play_bird_chirp_loop(false)
-	
+
 
 func _on_player_death(body):
 	pass

@@ -61,6 +61,10 @@ pause={
 ]
 }
 
+[physics]
+
+2d/default_gravity=1100.0
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"
