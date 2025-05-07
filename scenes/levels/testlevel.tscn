@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=26 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
@@ -26,127 +26,85 @@ fill_from = Vector2(0.4, 0.6)
 fill_to = Vector2(0.5, 0.1)
 metadata/_snap_enabled = true
 
-[sub_resource type="Resource" id="Resource_piwj7"]
-script = ExtResource("5_mqgqp")
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id="Resource_0t1b6"]
-script = ExtResource("6_5yrek")
-position = Vector2(-27.7672, 37.7844)
-point_in = Vector2(0, 0)
-point_out = Vector2(0, 0)
-properties = SubResource("Resource_piwj7")
-
-[sub_resource type="Resource" id="Resource_rbirq"]
-script = ExtResource("5_mqgqp")
-texture_idx = 0
-flip = false
-width = 1.0
-
 [sub_resource type="Resource" id="Resource_q32om"]
-script = ExtResource("6_5yrek")
-position = Vector2(-27.7672, 37.7844)
-point_in = Vector2(0, 0)
-point_out = Vector2(0, 0)
-properties = SubResource("Resource_rbirq")
-
-[sub_resource type="Resource" id="Resource_d8cqg"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
+
+[sub_resource type="Resource" id="Resource_piwj7"]
+script = ExtResource("6_5yrek")
+position = Vector2(-29.8325, 43.5496)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_q32om")
 
 [sub_resource type="Resource" id="Resource_lvjd2"]
-script = ExtResource("6_5yrek")
-position = Vector2(200.845, 37.22)
-point_in = Vector2(0, 0)
-point_out = Vector2(0, 0)
-properties = SubResource("Resource_d8cqg")
-
-[sub_resource type="Resource" id="Resource_iqbj7"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
+
+[sub_resource type="Resource" id="Resource_rbirq"]
+script = ExtResource("6_5yrek")
+position = Vector2(4402.91, 77.0817)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_lvjd2")
 
 [sub_resource type="Resource" id="Resource_vbb8y"]
-script = ExtResource("6_5yrek")
-position = Vector2(649.612, 61.79)
-point_in = Vector2(-126.442, 163.133)
-point_out = Vector2(146.968, -161.08)
-properties = SubResource("Resource_iqbj7")
-
-[sub_resource type="Resource" id="Resource_cmb26"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
+
+[sub_resource type="Resource" id="Resource_d8cqg"]
+script = ExtResource("6_5yrek")
+position = Vector2(4385.65, 411.952)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_vbb8y")
 
 [sub_resource type="Resource" id="Resource_qjtnr"]
-script = ExtResource("6_5yrek")
-position = Vector2(921.96, 33.8896)
-point_in = Vector2(-54.1331, -75.6395)
-point_out = Vector2(173.971, 254.578)
-properties = SubResource("Resource_cmb26")
-
-[sub_resource type="Resource" id="Resource_6kch6"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
+
+[sub_resource type="Resource" id="Resource_iqbj7"]
+script = ExtResource("6_5yrek")
+position = Vector2(-62.6742, 363.62)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_qjtnr")
 
 [sub_resource type="Resource" id="Resource_0e30d"]
-script = ExtResource("6_5yrek")
-position = Vector2(1416.67, 132.165)
-point_in = Vector2(-68.3014, 97.3153)
-point_out = Vector2(-4.00781, 35.5619)
-properties = SubResource("Resource_6kch6")
-
-[sub_resource type="Resource" id="Resource_x4re2"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_sywuj"]
+[sub_resource type="Resource" id="Resource_cmb26"]
 script = ExtResource("6_5yrek")
-position = Vector2(1426.6, 327.36)
+position = Vector2(-29.8325, 43.5496)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
-properties = SubResource("Resource_x4re2")
-
-[sub_resource type="Resource" id="Resource_eqf5j"]
-script = ExtResource("5_mqgqp")
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id="Resource_wgrxj"]
-script = ExtResource("6_5yrek")
-position = Vector2(-35.0026, 330.186)
-point_in = Vector2(0, 0)
-point_out = Vector2(0, 0)
-properties = SubResource("Resource_eqf5j")
+properties = SubResource("Resource_0e30d")
 
 [sub_resource type="Resource" id="Resource_lhay1"]
 script = ExtResource("5_q32om")
 _points = {
-0: SubResource("Resource_0t1b6"),
-26: SubResource("Resource_q32om"),
-27: SubResource("Resource_lvjd2"),
-33: SubResource("Resource_vbb8y"),
-34: SubResource("Resource_qjtnr"),
-37: SubResource("Resource_0e30d"),
-40: SubResource("Resource_sywuj"),
-43: SubResource("Resource_wgrxj")
+0: SubResource("Resource_cmb26"),
+45: SubResource("Resource_piwj7"),
+46: SubResource("Resource_rbirq"),
+47: SubResource("Resource_d8cqg"),
+48: SubResource("Resource_iqbj7")
 }
-_point_order = Array[int]([26, 27, 33, 34, 37, 40, 43, 0])
+_point_order = Array[int]([45, 46, 47, 48, 0])
 _constraints = {
-Array[int]([26, 0]): 15
+Array[int]([45, 0]): 15
 }
-_next_key = 45
+_next_key = 49
 _material_overrides = {}
 
 [sub_resource type="Resource" id="Resource_fy0jb"]
@@ -200,7 +158,7 @@ metadata/_custom_type_script = "uid://cvjqi8nvwok8t"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 visible = false
-polygon = PackedVector2Array(-27.8663, 37.6831, 200.848, 37.2063, 253.184, 63.9994, 309.499, 88.0073, 377.813, 110.679, 414.572, 119.543, 452.054, 125.705, 489.499, 128.377, 526.149, 126.772, 543.939, 124.119, 561.245, 120.1, 577.972, 114.616, 594.026, 107.571, 609.312, 98.8637, 623.735, 88.3969, 637.199, 76.0718, 649.612, 61.7897, 701.29, 11.2406, 724.681, -7.08214, 746.556, -21.1625, 766.999, -31.2936, 776.711, -34.9699, 786.097, -37.7693, 795.168, -39.7284, 803.935, -40.8838, 812.408, -41.2723, 820.599, -40.9305, 828.518, -39.8952, 836.176, -38.203, 843.583, -35.8908, 850.75, -32.9952, 857.688, -29.5529, 864.408, -25.601, 877.236, -16.3138, 889.319, -5.42722, 900.744, 6.7645, 921.96, 33.8896, 955.435, 78.0151, 990.365, 115.195, 1026.36, 145.832, 1063.05, 170.329, 1100.03, 189.09, 1136.93, 202.518, 1173.36, 211.016, 1208.94, 214.986, 1243.28, 214.833, 1276, 210.96, 1306.71, 203.769, 1335.02, 193.664, 1360.56, 181.047, 1382.94, 166.324, 1392.82, 158.297, 1401.77, 149.895, 1409.73, 141.167, 1416.77, 131.853, 1426.71, 327.467, -35.1107, 330.292)
+polygon = PackedVector2Array(-29.9194, 43.4527, 4403.02, 76.9761, 4385.74, 412.054, -62.7957, 363.729)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)

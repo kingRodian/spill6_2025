@@ -120,12 +120,17 @@ shape = SubResource("CapsuleShape2D_cqh81")
 
 [node name="KnockbackTimer" type="Timer" parent="."]
 wait_time = 0.4
+one_shot = true
 
 [node name="HangTimer" type="Timer" parent="."]
-wait_time = 0.15
+wait_time = 0.2
+one_shot = true
+
+[node name="JumpTimer" type="Timer" parent="."]
 one_shot = true
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 
 [connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
 [connection signal="timeout" from="HangTimer" to="." method="_on_hang_timer_timeout"]
+[connection signal="timeout" from="JumpTimer" to="." method="_on_jump_timer_timeout"]
