@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 signal has_died(body)
 signal health_changed(new_health)
@@ -8,7 +9,7 @@ signal health_changed(new_health)
 # Clean up code and add documentation
 
 @export var start_health := 3
-@export var start_pos := position
+var start_pos := position
 
 @export var speed : float = 300.0
 @export var jump_velocity: float = -450.0
