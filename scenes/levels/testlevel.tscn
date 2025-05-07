@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=29 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
 [ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="11_q32om"]
+[ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="12_piwj7"]
 
 [sub_resource type="Gradient" id="Gradient_5ykpq"]
 interpolation_mode = 2
@@ -121,6 +122,15 @@ fill_texture_angle_offset = 3.8
 fill_mesh_offset = 0.0
 render_offset = 0.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q32om"]
+size = Vector2(20, 76)
+
+[sub_resource type="Curve2D" id="Curve2D_piwj7"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 270, 22, 0, 0, 0, 0, 196, 24)
+}
+point_count = 2
+
 [node name="Testlevel" type="Node2D"]
 
 [node name="HUD" parent="." instance=ExtResource("1_dxtel")]
@@ -166,6 +176,29 @@ zoom = Vector2(2, 2)
 [node name="GameStateManager" type="Node" parent="."]
 script = ExtResource("11_q32om")
 
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(120, 6)
+shape = SubResource("RectangleShape2D_q32om")
+disabled = true
+
+[node name="NPCs" type="Node" parent="."]
+
+[node name="Path2D" type="Path2D" parent="NPCs"]
+curve = SubResource("Curve2D_piwj7")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/Path2D"]
+position = Vector2(270, 22)
+rotation = 3.11457
+
+[node name="fotgjenger1" parent="NPCs/Path2D" node_paths=PackedStringArray("follower") instance=ExtResource("12_piwj7")]
+position = Vector2(272, 22)
+scale = Vector2(1, 1)
+follower = NodePath("../PathFollow2D")
+
 [connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
+[connection signal="hit" from="NPCs/Path2D/fotgjenger1" to="Player/TestPlayer" method="_on_hit"]
+[connection signal="hit" from="NPCs/Path2D/fotgjenger1" to="Player/TestPlayer" method="_on_fotgjenger_1_hit"]
 
 [editable path="HUD"]

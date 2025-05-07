@@ -1,35 +1,31 @@
-extends AnimatableBody2D
+extends Node2D
 
 signal hit(from, to)
 
-@export var path : PathFollow2D
-
-const speed : float = 20
-
-var target : Vector2 = position
-var direction : Vector2 = Vector2.ZERO
-const target_delta : float = 5.0
+@export var follower : PathFollow2D
+const base_speed : float = 0.2
+var speed = base_speed
+var target : float = 1.0
 
 func _ready():
 	print("fotgjenger 1 loaded")
+	#follower.progress_ratio = 0.0
+	$MovementTimer.start()
 
 func _physics_process(delta):
-	if global_position.distance_to(target) > target_delta:
-		global_position += direction * speed * delta
-
-	
-func _on_area_2d_area_entered(body):
-	# Spilleren treffer hinderet
-	emit_signal('hit', self, body)
-	SoundManager.skade_piano()
+	if not is_equal_approx(follower.progress_ratio, target):
+		follower.progress_ratio += speed * delta
+		position = follower.position
 
 
 func _on_movement_timer_timeout() -> void:
-	# Select a random point along the path
-	path.set_progress_ratio(randf())
-	target = path.global_position
-	print("Fotgjenger path set to: " + str(path.progress_ratio))
-	print(str(target))
-	print("Distance: " + str(global_position.distance_to(target)))
-	direction = global_position.direction_to(target).normalized()
 	$MovementTimer.start()
+	target = abs(target - 1)
+	speed = -speed
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+		# Spilleren treffer hinderet
+	if body is Player:
+		emit_signal('hit', self, body)
+		SoundManager.skade_piano()

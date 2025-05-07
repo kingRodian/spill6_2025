@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 
 signal has_died(body)
 signal lost_health(new_health)
