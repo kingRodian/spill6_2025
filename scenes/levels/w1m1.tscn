@@ -538,9 +538,8 @@ _points = {
 93: SubResource("Resource_t5f7g"),
 94: SubResource("Resource_7upql"),
 95: SubResource("Resource_2oir8"),
-101: SubResource("Resource_5js1m")
 }
-_point_order = Array[int]([0, 24, 36, 101, 27, 35, 28, 23, 32, 33, 34, 37, 38, 26, 94, 95, 92, 44, 45, 79, 80, 93, 90, 89, 57, 60, 64, 61, 59, 63, 88, 65, 71, 48, 3, 4])
+_point_order = Array[int]([0, 24, 36, 27, 35, 28, 23, 32, 33, 34, 37, 38, 26, 94, 95, 92, 44, 45, 79, 80, 93, 90, 89, 57, 60, 64, 61, 59, 63, 88, 65, 71, 48, 3, 4])
 _constraints = {
 Array[int]([0, 4]): 15
 }
