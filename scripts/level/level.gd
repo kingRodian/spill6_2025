@@ -1,6 +1,8 @@
 @tool
 extends Node2D
 
+## To initialize a level in the editor, first press the "First Time Setup" button in the property list and then save.
+
 var SaveManager = preload("res://scenes/save_manager.tscn")
 
 @onready var player : Player = $Raskeladden
@@ -11,21 +13,29 @@ var SaveManager = preload("res://scenes/save_manager.tscn")
 
 
 func _enter_tree() -> void:
+	# Don't run this in editor as tool.
+	if Engine.is_editor_hint():
+		return
+
 	# This can always be instantiated at runtime
 	var save_manager = SaveManager.instantiate()
 	save_manager.name = "SaveManager"
 	add_child(save_manager)
-	
+
 	assert(has_setup, "You forgot to run first time setup.")
 
 
 func _ready() -> void:
+	# Don't run this in editor as tool.
+	if Engine.is_editor_hint():
+		return
+
 	player.connect("has_died", _on_death)
 	player.connect("health_changed", health._on_raskeladden_health_changed)
-	
+
 	health.set_max_health(player.start_health)
 	health.update_health(player.start_health)
-	
+
 	$HUD/JumpButton.connect("button_down", player._on_jump_button_pressed)
 
 func reset():
@@ -34,13 +44,13 @@ func reset():
 func _first_time_setup():
 	print("Running first time level setup.\n")
 	has_setup = true
-	
+
 	if find_child("Camera", false) == null:
 		print("Ingen Camera funnet.")
 		print("Generer ny Camera.")
 		_add_node(Camera2D.new(), "Camera")
 		camera = $Camera
-		
+
 		# Copy of camera from level 1
 		camera.zoom = Vector2(3, 3)
 		camera.limit_left = -45
@@ -50,13 +60,13 @@ func _first_time_setup():
 		camera.drag_vertical_enabled = true
 		camera.drag_horizontal_offset = 1.0
 		camera.drag_vertical_offset = -0.36
-	
+
 	if find_child("Raskeladden", false) == null:
 		print("Ingen Raskeladden funnet.")
 		print("Generer ny Raskeladden.")
 		var rask : Player = load("res://scenes/game/characters/raskeladden.tscn").instantiate()
 		_add_node(rask, "Raskeladden")
-		
+
 		# Make remote transform
 		var remote := RemoteTransform2D.new()
 		remote.name = "RemoteTransform2D"
@@ -64,7 +74,7 @@ func _first_time_setup():
 		remote.owner = self
 		remote.scale = Vector2(0.6, 0.6)
 		remote.remote_path = remote.get_path_to(camera)
-	
+
 	if find_child("HUD", false) == null:
 		print("Ingen HUD funnet.")
 		print("Generer ny HUD.")
@@ -78,9 +88,9 @@ func _on_death(body):
 	player.reset()
 	camera.position = Vector2(0, 0)
 	camera.position_smoothing_enabled = true
-	
+
 	# camera.reset()
-	
+
 	#SoundManager.taper_lyd()
 	##body.queue_free()
 	#player.queue_free()
