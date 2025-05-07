@@ -13,11 +13,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 # Movement vars
 const base_accel : float = 250.0
-const max_speed : float = 100.0
+const max_speed : Vector2 = Vector2(400.0, 600)
 @export var jump_velocity: float = -300.0
 @export var knockback_reduction = .7
 var stored_velocity : Vector2 = Vector2.ZERO
-const jumptime = 0.2
+const jumptime = 0.15
 const hangtime = 0.1
 
 # Flags
@@ -50,14 +50,21 @@ func _physics_process(delta):
 	var result = space_state.intersect_ray(query)
 	if result:
 		var normal : Vector2 = result.get("normal")
+		var collider = result.get("collider")
+		var friction = 1.0
+		if collider is Terrain:
+			friction = collider.friction
 		var tangent_3d := Vector3(normal.x, normal.y, 0).cross(Vector3.FORWARD)
 		var tangent := Vector2(tangent_3d.x, tangent_3d.y)
 		angle = -normal.angle_to(Vector2.UP)
-		# Apply velocity according to surface tangent.
-		# TODO Currently frictionless, we should add friction to limit speed on flat ground.
-		velocity += base_accel * delta * tangent.normalized()
-		velocity.min(Vector2(max_speed, max_speed))
-			
+		if is_on_floor():
+			# Apply velocity according to surface tangent.
+			# TODO Currently frictionless, we should add friction to limit speed on flat ground.
+			velocity += base_accel * delta * tangent.normalized() * friction
+			print("Friction: " + str(friction             ) )
+		else:
+			velocity.x += base_accel * delta
+		velocity = velocity.min(max_speed)
 		#print(str(rad_to_deg(angle)))
 	if not jumping:
 		velocity.y += gravity * delta
@@ -80,7 +87,8 @@ func _on_hit(entity, body):
 		lost_health.emit(hearts)
 		$KnockbackTimer.start()
 		in_knockback = true
-		stored_velocity = velocity
+		jumping = false
+		stored_velocity = Vector2(velocity.x, 0)
 		velocity = Vector2.ZERO
 		# anim_sprite.play("hurt")
 		anim_sprite.modulate = Color.RED
@@ -92,7 +100,6 @@ func _on_knockback_timer_timeout() -> void:
 	anim_sprite.modulate = orig_color
 	# Restore speed but reduced
 	velocity = stored_velocity * knockback_reduction
-	
 	
 func die(body):
 	print('player has died')

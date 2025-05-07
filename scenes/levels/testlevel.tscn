@@ -32,7 +32,7 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_piwj7"]
+[sub_resource type="Resource" id="Resource_cmb26"]
 script = ExtResource("6_5yrek")
 position = Vector2(-29.8325, 43.5496)
 point_in = Vector2(0, 0)
@@ -45,9 +45,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_rbirq"]
+[sub_resource type="Resource" id="Resource_piwj7"]
 script = ExtResource("6_5yrek")
-position = Vector2(4402.91, 77.0817)
+position = Vector2(-29.8325, 43.5496)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_lvjd2")
@@ -58,9 +58,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_d8cqg"]
+[sub_resource type="Resource" id="Resource_rbirq"]
 script = ExtResource("6_5yrek")
-position = Vector2(4385.65, 411.952)
+position = Vector2(4402.91, 77.0817)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_vbb8y")
@@ -71,9 +71,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_iqbj7"]
+[sub_resource type="Resource" id="Resource_d8cqg"]
 script = ExtResource("6_5yrek")
-position = Vector2(-62.6742, 363.62)
+position = Vector2(4385.65, 411.952)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_qjtnr")
@@ -84,9 +84,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_cmb26"]
+[sub_resource type="Resource" id="Resource_iqbj7"]
 script = ExtResource("6_5yrek")
-position = Vector2(-29.8325, 43.5496)
+position = Vector2(-62.6742, 363.62)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_0e30d")
@@ -158,7 +158,7 @@ metadata/_custom_type_script = "uid://cvjqi8nvwok8t"
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 visible = false
-polygon = PackedVector2Array(-29.9194, 43.4527, 4403.02, 76.9761, 4385.74, 412.054, -62.7957, 363.729)
+polygon = PackedVector2Array(-29.9193, 43.4527, 4403.02, 76.9757, 4385.75, 412.053, -62.7958, 363.728)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
