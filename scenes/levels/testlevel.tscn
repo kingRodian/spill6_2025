@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=27 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
 [ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="11_q32om"]
-[ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="12_piwj7"]
+[ext_resource type="PackedScene" uid="uid://bl4g1o6w1rmtq" path="res://scenes/game/obstacles/bird_spawner.tscn" id="12_piwj7"]
 
 [sub_resource type="Gradient" id="Gradient_5ykpq"]
 interpolation_mode = 2
@@ -27,26 +27,13 @@ fill_from = Vector2(0.4, 0.6)
 fill_to = Vector2(0.5, 0.1)
 metadata/_snap_enabled = true
 
-[sub_resource type="Resource" id="Resource_q32om"]
-script = ExtResource("5_mqgqp")
-texture_idx = 0
-flip = false
-width = 1.0
-
-[sub_resource type="Resource" id="Resource_cmb26"]
-script = ExtResource("6_5yrek")
-position = Vector2(-29.8325, 43.5496)
-point_in = Vector2(0, 0)
-point_out = Vector2(0, 0)
-properties = SubResource("Resource_q32om")
-
 [sub_resource type="Resource" id="Resource_lvjd2"]
 script = ExtResource("5_mqgqp")
 texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_piwj7"]
+[sub_resource type="Resource" id="Resource_cmb26"]
 script = ExtResource("6_5yrek")
 position = Vector2(-29.8325, 43.5496)
 point_in = Vector2(0, 0)
@@ -59,9 +46,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_rbirq"]
+[sub_resource type="Resource" id="Resource_piwj7"]
 script = ExtResource("6_5yrek")
-position = Vector2(4402.91, 77.0817)
+position = Vector2(-29.8325, 43.5496)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_vbb8y")
@@ -72,9 +59,9 @@ texture_idx = 0
 flip = false
 width = 1.0
 
-[sub_resource type="Resource" id="Resource_d8cqg"]
+[sub_resource type="Resource" id="Resource_rbirq"]
 script = ExtResource("6_5yrek")
-position = Vector2(4385.65, 411.952)
+position = Vector2(4402.91, 77.0817)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
 properties = SubResource("Resource_qjtnr")
@@ -85,12 +72,25 @@ texture_idx = 0
 flip = false
 width = 1.0
 
+[sub_resource type="Resource" id="Resource_d8cqg"]
+script = ExtResource("6_5yrek")
+position = Vector2(4385.65, 411.952)
+point_in = Vector2(0, 0)
+point_out = Vector2(0, 0)
+properties = SubResource("Resource_0e30d")
+
+[sub_resource type="Resource" id="Resource_sywuj"]
+script = ExtResource("5_mqgqp")
+texture_idx = 0
+flip = false
+width = 1.0
+
 [sub_resource type="Resource" id="Resource_iqbj7"]
 script = ExtResource("6_5yrek")
 position = Vector2(-62.6742, 363.62)
 point_in = Vector2(0, 0)
 point_out = Vector2(0, 0)
-properties = SubResource("Resource_0e30d")
+properties = SubResource("Resource_sywuj")
 
 [sub_resource type="Resource" id="Resource_lhay1"]
 script = ExtResource("5_q32om")
@@ -121,15 +121,6 @@ fill_texture_offset = Vector2(0, 0)
 fill_texture_angle_offset = 3.8
 fill_mesh_offset = 0.0
 render_offset = 0.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q32om"]
-size = Vector2(20, 76)
-
-[sub_resource type="Curve2D" id="Curve2D_piwj7"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 270, 22, 0, 0, 0, 0, 196, 24)
-}
-point_count = 2
 
 [node name="Testlevel" type="Node2D"]
 
@@ -176,29 +167,12 @@ zoom = Vector2(2, 2)
 [node name="GameStateManager" type="Node" parent="."]
 script = ExtResource("11_q32om")
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
-position = Vector2(120, 6)
-shape = SubResource("RectangleShape2D_q32om")
-disabled = true
-
 [node name="NPCs" type="Node" parent="."]
 
-[node name="Path2D" type="Path2D" parent="NPCs"]
-curve = SubResource("Curve2D_piwj7")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/Path2D"]
-position = Vector2(270, 22)
-rotation = 3.11457
-
-[node name="fotgjenger1" parent="NPCs/Path2D" node_paths=PackedStringArray("follower") instance=ExtResource("12_piwj7")]
-position = Vector2(272, 22)
-scale = Vector2(1, 1)
-follower = NodePath("../PathFollow2D")
+[node name="BirdSpawner" parent="." instance=ExtResource("12_piwj7")]
+position = Vector2(107, 66)
 
 [connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
-[connection signal="hit" from="NPCs/Path2D/fotgjenger1" to="Player/TestPlayer" method="_on_hit"]
-[connection signal="hit" from="NPCs/Path2D/fotgjenger1" to="Player/TestPlayer" method="_on_fotgjenger_1_hit"]
 
 [editable path="HUD"]
+[editable path="BirdSpawner"]
