@@ -50,27 +50,24 @@ func _physics_process(delta):
 		_on_jump_button_pressed()
 	# angle to rotate towards
 	var angle := 0.0
+	var tangent := Vector2.RIGHT
+	var friction = 1.0
+
 	# Raycasting to detect the angle to the floor
-	var space_rid = get_world_2d().space
-	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
-	var end := position + Vector2.DOWN * RAY_LEN
-	var query = PhysicsRayQueryParameters2D.create(position, end)
-	var result = space_state.intersect_ray(query)
-	if result:
-		var normal : Vector2 = result.get("normal")
-		var collider = result.get("collider")
-		var friction = 1.0
+	var raycast_result = _raycast()
+	if raycast_result:
+		var normal : Vector2 = raycast_result.get("normal")
+		var collider = raycast_result.get("collider")
 		if collider is Terrain:
 			friction = collider.friction
 		var tangent_3d := Vector3(normal.x, normal.y, 0).cross(Vector3.FORWARD)
-		var tangent := Vector2(tangent_3d.x, tangent_3d.y)
+		tangent = Vector2(tangent_3d.x, tangent_3d.y)
 		angle = -normal.angle_to(Vector2.UP)
-		if is_on_floor():
-			# Apply velocity according to surface tangent.
-			# TODO Currently frictionless, we should add friction to limit speed on flat ground.
-			velocity += base_accel * delta * tangent.normalized() * friction
+
+	if is_on_floor():
+		# Apply velocity according to surface tangent.
+		velocity += base_accel * delta * tangent.normalized() * friction
 		velocity = velocity.min(max_speed)
-		#print(str(rad_to_deg(angle)))
 	if not jumping:
 		velocity.y += gravity * delta
 	if is_on_floor():
@@ -80,6 +77,15 @@ func _physics_process(delta):
 
 	has_landed = check_if_landing()
 	move_and_slide()
+
+func _raycast() -> Dictionary:
+	var space_rid = get_world_2d().space
+	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
+	var end := position + Vector2.DOWN * RAY_LEN
+	var query = PhysicsRayQueryParameters2D.create(position, end)
+	return space_state.intersect_ray(query)
+
+
 
 func check_if_landing():
 	return (not is_on_floor() and velocity.y > 50)
@@ -94,22 +100,32 @@ func die(body):
 	print('player has died')
 	emit_signal('has_died', body)
 
-
 func _on_hit(entity, body):
-	if not in_knockback:
-		SoundManager.skade_lyd_tromme()
-		print('player hit')
-		health -= 1
-		health_changed.emit(health)
-		$KnockbackTimer.start()
-		in_knockback = true
-		jumping = false
-		stored_velocity = Vector2(velocity.x, 0)
-		velocity = Vector2.ZERO
-		# anim_sprite.play("hurt")
-		anim_sprite.modulate = Color.RED
-		if health <= 0:
-			die(body)
+	match entity.entity_type:
+		"enemy", "obstacle":
+			if not in_knockback:
+				_take_damage(entity, body)
+				_get_knocked_back()
+		_:
+			pass
+
+func _take_damage(entity, body):
+	# Different amounts of damage?
+	SoundManager.skade_lyd_tromme()
+	print("Player hit")
+	health -= 1
+	health_changed.emit(health)
+	if health <= 0:
+		die(body)
+
+func _get_knocked_back():
+	$KnockbackTimer.start()
+	in_knockback = true
+	jumping = false
+	stored_velocity = Vector2(velocity.x, 0)
+	velocity = Vector2.ZERO
+	# anim_sprite.play("hurt")
+	anim_sprite.modulate = Color.RED
 
 func _on_knockback_timer_timeout() -> void:
 	in_knockback = false

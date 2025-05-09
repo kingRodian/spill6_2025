@@ -1,5 +1,6 @@
 extends Node2D
 # Placeholder enemy for spillet
+const entity_type := "obstacle"
 
 signal hit(from, to)
 # from: entity (self her). Vi kan sende hit signalen til samme sted og heller kategorisere enemies

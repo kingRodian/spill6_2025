@@ -4,6 +4,7 @@ class_name Bird
 ## Swoops in over the player, hovers around in a circle and then attacks
 ## Spawned by birdspawner
 
+const entity_type := "enemy"
 var player : Node2D
 
 enum State {
