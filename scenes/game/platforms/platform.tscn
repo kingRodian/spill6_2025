@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://chwn7h8l800nb"]
+
+[ext_resource type="Texture2D" uid="uid://g6x8mbocqbfu" path="res://assets/art/environments/skogbane_hinder/wooden_platform.png" id="1_8fvek"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8hhf1"]
+size = Vector2(80, 20)
+
+[node name="Platform" type="StaticBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8hhf1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_8fvek")

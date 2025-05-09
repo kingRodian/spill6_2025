@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=29 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
 [ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="11_q32om"]
 [ext_resource type="PackedScene" uid="uid://bl4g1o6w1rmtq" path="res://scenes/game/obstacles/bird_spawner.tscn" id="12_piwj7"]
+[ext_resource type="PackedScene" uid="uid://c6tb5mm37cegi" path="res://scenes/game/platforms/launchramp.tscn" id="13_lvjd2"]
+[ext_resource type="PackedScene" uid="uid://chwn7h8l800nb" path="res://scenes/game/platforms/platform.tscn" id="14_rbirq"]
 
 [sub_resource type="Gradient" id="Gradient_5ykpq"]
 interpolation_mode = 2
@@ -148,19 +150,6 @@ texture = SubResource("GradientTexture2D_rbirq")
 [node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player/TestPlayer"]
 remote_path = NodePath("../../../Camera2D")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="SS2D_Shape" type="Node2D" parent="StaticBody2D"]
-script = ExtResource("4_5yrek")
-_points = SubResource("Resource_lhay1")
-shape_material = SubResource("Resource_fy0jb")
-collision_polygon_node_path = NodePath("../CollisionPolygon2D")
-metadata/_custom_type_script = "uid://cvjqi8nvwok8t"
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
-visible = false
-polygon = PackedVector2Array(-29.9193, 43.4527, 4403.02, 76.9757, 4385.75, 412.053, -62.7958, 363.728)
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 
@@ -169,10 +158,46 @@ script = ExtResource("11_q32om")
 
 [node name="NPCs" type="Node" parent="."]
 
-[node name="BirdSpawner" parent="." instance=ExtResource("12_piwj7")]
+[node name="BirdSpawner" parent="NPCs" instance=ExtResource("12_piwj7")]
 position = Vector2(107, 66)
+
+[node name="CollisionShape2D" parent="NPCs/BirdSpawner/Area2D" index="0"]
+disabled = true
+
+[node name="MapGeometry" type="Node" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="MapGeometry"]
+
+[node name="SS2D_Shape" type="Node2D" parent="MapGeometry/StaticBody2D"]
+texture_repeat = 2
+script = ExtResource("4_5yrek")
+_points = SubResource("Resource_lhay1")
+shape_material = SubResource("Resource_fy0jb")
+collision_polygon_node_path = NodePath("../CollisionPolygon2D")
+metadata/_custom_type_script = "uid://cvjqi8nvwok8t"
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="MapGeometry/StaticBody2D"]
+visible = false
+polygon = PackedVector2Array(-29.9193, 43.4527, 4403.02, 76.9757, 4385.75, 412.053, -62.7958, 363.728)
+
+[node name="Obstacles" type="Node" parent="."]
+
+[node name="Launchramp" parent="Obstacles" instance=ExtResource("13_lvjd2")]
+position = Vector2(280, 47)
+
+[node name="Platform" parent="Obstacles" instance=ExtResource("14_rbirq")]
+position = Vector2(660, -15)
+
+[node name="Platform2" parent="Obstacles" instance=ExtResource("14_rbirq")]
+position = Vector2(920, -15)
+
+[node name="Platform3" parent="Obstacles" instance=ExtResource("14_rbirq")]
+position = Vector2(1107, -78)
+
+[node name="Platform4" parent="Obstacles" instance=ExtResource("14_rbirq")]
+position = Vector2(1295, -147)
 
 [connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
 
 [editable path="HUD"]
-[editable path="BirdSpawner"]
+[editable path="NPCs/BirdSpawner"]

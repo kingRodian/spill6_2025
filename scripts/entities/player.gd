@@ -106,6 +106,8 @@ func _on_hit(entity, body):
 			if not in_knockback:
 				_take_damage(entity, body)
 				_get_knocked_back()
+		"launch":
+			_get_launched(entity)
 		_:
 			pass
 
@@ -126,6 +128,11 @@ func _get_knocked_back():
 	velocity = Vector2.ZERO
 	# anim_sprite.play("hurt")
 	anim_sprite.modulate = Color.RED
+
+func _get_launched(entity):
+	jumping = true
+	$HangTimer.start()
+	velocity += entity.launch_vector
 
 func _on_knockback_timer_timeout() -> void:
 	in_knockback = false
