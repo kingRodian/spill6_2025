@@ -1,6 +1,6 @@
 extends Node2D
 # TODO
-# Label må vises i midten av cameraet. 
+# Label må vises i midten av cameraet.
 
 signal won_game
 

@@ -7,7 +7,7 @@ var game_paused : bool = false:
 		return game_paused
 	set(value):
 		game_paused = value
-		
+
 		# Vis/Skjul pauseknappen når man pauser
 		var pause_button = get_node("/root/THE-MAP/HUD/RightContainer/PauseButton")
 		if pause_button != null:
@@ -15,7 +15,7 @@ var game_paused : bool = false:
 				pause_button.visible = false
 			else:
 				pause_button.visible = true
-		
+
 		print("Game paused: ",game_paused)
 		get_tree().paused = game_paused
 		toggle_game_paused.emit(game_paused)
@@ -43,9 +43,9 @@ func _notification(what):
 
 func _on_pause_menu_resume():
 	game_paused = !game_paused
-	
+
 func disconnect_pause_function():
 	disconnect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)
-	
+
 func connect_pause_function():
 	connect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)

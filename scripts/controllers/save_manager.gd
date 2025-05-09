@@ -7,7 +7,7 @@ func _ready():
 #
 	print("LOADING FILES")
 	load_game()
-	
+
 
 # Note: This can be called from anywhere inside the tree. This function is
 # path independent.
@@ -18,7 +18,7 @@ func save_game():
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
 	for node in save_nodes:
 		print("saving: "+node.name)
-		
+
 		# Check the node is an instanced scene so it can be instanced again during load.
 		if node.scene_file_path.is_empty():
 			print("persistent node '%s' is not an instanced scene, skipped" % node.name)

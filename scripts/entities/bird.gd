@@ -1,8 +1,10 @@
 extends Node2D
 class_name Bird
-# Swoops in above the player and hovers around in a circle for a while before attacking
+## Bird enemy
+## Swoops in over the player, hovers around in a circle and then attacks
+## Spawned by birdspawner
 
-var player : Node2D 
+var player : Node2D
 
 enum State {
 	swooping,
@@ -10,37 +12,42 @@ enum State {
 	attacking
 }
 
-var _state : State = State.swooping
+var _state := State.swooping
 
 var hovertime_min : float = 2
 var hovertime_max : float = 4
 
-var hover_offset : Vector2 = Vector2(20, -160)
+var hover_offset := Vector2(20, -160)
 var hovercycle_radius : float = 20
 # How far around the hover cycle we are as a vector
-var hovercycle : Vector2 = Vector2(hovercycle_radius, 0)
+var hovercycle := Vector2(hovercycle_radius, 0)
 # We want a 180 degree hover in .5 seconds, so in 30 frames PI, so PI/30 per frame
-var hovercycle_speed: float = PI / 30
+var hovercycle_speed : float = PI / 30
 
-var swoop_offset : Vector2 = Vector2(200, -250)
+var swoop_offset := Vector2(200, -250)
 var swoop_speed : float = 8.0
 var swoop_delta : float = 10.0
 
 var attack_speed : float = swoop_speed
-var attack_offset : Vector2 = Vector2(0, -100)
+var attack_offset := Vector2(0, -100)
 var attack_direction : Vector2
 
 # Current offset relative to the player, basically the offset we want to be at currently
-var relative_position: Vector2
+var relative_position : Vector2
+
+var hovertimer : Timer
 
 func initialize(_player : Node2D):
 	player = _player
 	relative_position = swoop_offset
 
 func _ready():
-	$HoverTimer.wait_time = randf_range(hovertime_min, hovertime_max)
+	hovertimer = Timer.new()
+	add_child(hovertimer)
+	hovertimer.wait_time = randf_range(hovertime_min, hovertime_max)
+	hovertimer.timeout.connect(_on_hover_timer_timeout)
 	position = player.position + relative_position
-	
+
 func _physics_process(delta):
 	match _state:
 		State.swooping:
@@ -49,7 +56,7 @@ func _physics_process(delta):
 			_hover(delta)
 		State.attacking:
 			_attack(delta)
-		
+
 # Swoop in at spawn until we get to where we want to hover
 func _swoop(delta):
 	var distance = relative_position.distance_to(hover_offset)
@@ -60,8 +67,8 @@ func _swoop(delta):
 	else:
 		_state = State.hovering
 		$Sprite2D.play("flap")
-		$HoverTimer.start()
-		
+		hovertimer.start()
+
 	# Fly around in a circle
 func _hover(delta):
 	hovercycle = hovercycle.rotated(hovercycle_speed)
