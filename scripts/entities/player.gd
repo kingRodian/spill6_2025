@@ -35,7 +35,7 @@ var in_knockback: bool = false
 var jumping : bool = false
 
 
-var health : int = start_health
+@onready var health : int = start_health
 
 # Raycast vars
 const RAY_LEN = 600
