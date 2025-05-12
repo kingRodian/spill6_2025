@@ -80,7 +80,7 @@ func _first_time_setup():
 		print("Generer ny HUD.")
 		_add_node(load("res://scenes/HUD/hud.tscn").instantiate(),"HUD")
 
-func _on_death(body):
+func _on_death():
 	# TODO temporary, add retry screen
 	print("level resetting")
 	#camera.position = Vector2(0, 0) # does nothing while RemoteTransform2D is active

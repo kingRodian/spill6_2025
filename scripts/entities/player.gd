@@ -96,9 +96,9 @@ func reset():
 	health = start_health
 	health_changed.emit(health)
 
-func die(body):
+func die():
 	print('player has died')
-	emit_signal('has_died', body)
+	emit_signal('has_died')
 
 func _on_hit(entity, body):
 	match entity.entity_type:
@@ -116,7 +116,7 @@ func _take_damage(entity, body):
 	health -= 1
 	health_changed.emit(health)
 	if health <= 0:
-		die(body)
+		die()
 
 func _get_knocked_back():
 	$KnockbackTimer.start()
