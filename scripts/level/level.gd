@@ -42,6 +42,8 @@ func _ready() -> void:
 
 func reset():
 	player.reset()
+	camera.position = Vector2(0, 0)
+	camera.reset_smoothing()
 
 func _first_time_setup():
 	print("Running first time level setup.\n")
@@ -103,10 +105,7 @@ func _on_death():
 	# TODO temporary, add retry screen
 	print("level resetting")
 	#camera.position = Vector2(0, 0) # does nothing while RemoteTransform2D is active
-	camera.position_smoothing_enabled = false
-	player.reset()
-	camera.position = Vector2(0, 0)
-	camera.position_smoothing_enabled = true
+	reset()
 
 	# camera.reset()
 
