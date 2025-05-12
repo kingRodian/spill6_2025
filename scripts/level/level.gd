@@ -1,5 +1,7 @@
 @tool
+class_name Level
 extends Node2D
+
 
 ## To initialize a level in the editor, first press the "First Time Setup" button in the property list and then save.
 
@@ -79,6 +81,23 @@ func _first_time_setup():
 		print("Ingen HUD funnet.")
 		print("Generer ny HUD.")
 		_add_node(load("res://scenes/HUD/hud.tscn").instantiate(),"HUD")
+
+## Instantly wins the level. Called by goal.gd collision trigger.
+func win():
+	_on_win()
+
+func _on_win():
+	$"HUD/RightContainer/PauseButton".hide() #Hide the pause button from player on win
+	player.set_physics_process(false) # Stops player movement
+
+	# TODO We could eventually add a celebration animation
+	#player.anim_sprite.play('idle')
+	GameManager.disconnect_pause_function()
+	SoundManager.vinn_bane()
+	$"HUD/CenterContainer/you_win".show()
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+
 
 func _on_death():
 	# TODO temporary, add retry screen
