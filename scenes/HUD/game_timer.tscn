@@ -31,14 +31,10 @@ uppercase = true
 [node name="Timer" type="Timer" parent="CenterContainer/Label"]
 process_mode = 1
 process_callback = 0
-wait_time = 90.0
 one_shot = true
-autostart = true
 
 [node name="ColorRect" type="ColorRect" parent="CenterContainer"]
 layout_direction = 1
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
 color = Color(0.329412, 0.631373, 0, 1)
-
-[connection signal="timeout" from="CenterContainer/Label/Timer" to="." method="_on_timer_timeout"]
