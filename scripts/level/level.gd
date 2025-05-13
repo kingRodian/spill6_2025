@@ -142,7 +142,7 @@ func _on_lose():
 	# Stop level
 	SoundManager.taper_lyd()
 	GameManager.disconnect_pause_function()
-	player.set_physics_process(false)
+	player.stop()
 	level_timer.stop()
 
 	# TODO fix bug when pausing at the same time as dying.
@@ -156,7 +156,6 @@ func _on_lose():
 	# TODO We could use a transition screen here.
 	print("level resetting")
 	reset()
-	player.set_physics_process(true)
 	GameManager.connect_pause_function()
 	$HUD/CenterContainer/you_died.hide()
 

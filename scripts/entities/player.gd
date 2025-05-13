@@ -29,10 +29,12 @@ const hangtime = 0.1
 
 # Flags
 var has_double_jumped : bool = false
+var is_skiking := true
 var has_landed : bool = false
 #var animation_locked : bool = false
 var in_knockback: bool = false
 var jumping : bool = false
+var is_alive := true
 
 
 @onready var health : int = start_health
@@ -46,8 +48,11 @@ func _ready():
 	$JumpTimer.wait_time = jumptime
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed(&"jump"):
-		_on_jump_button_pressed()
+	# Check for player actions
+	if is_alive:
+		if Input.is_action_just_pressed(&"jump"):
+			_on_jump_button_pressed()
+
 	# angle to rotate towards
 	var angle := 0.0
 	var tangent := Vector2.RIGHT
@@ -64,18 +69,20 @@ func _physics_process(delta):
 		tangent = Vector2(tangent_3d.x, tangent_3d.y)
 		angle = -normal.angle_to(Vector2.UP)
 
-	if is_on_floor():
-		# Apply velocity according to surface tangent.
+	# Apply velocity according to surface tangent if skiking is allowed.
+	if is_on_floor() and is_skiking:
 		velocity += base_accel * delta * tangent.normalized() * friction
 		velocity = velocity.min(max_speed)
+
 	if not jumping:
 		velocity.y += gravity * delta
+
 	if is_on_floor():
 		if not anim_sprite.is_playing():
 			anim_sprite.play("skike")
 		anim_sprite.rotation = angle
 
-	has_landed = check_if_landing()
+	has_landed = check_if_landing() # TODO We never use this var, remove it
 	move_and_slide()
 
 func _raycast() -> Dictionary:
@@ -85,27 +92,45 @@ func _raycast() -> Dictionary:
 	var query = PhysicsRayQueryParameters2D.create(position, end)
 	return space_state.intersect_ray(query)
 
-
-
 func check_if_landing():
 	return (not is_on_floor() and velocity.y > 50)
+
+## Stops moving.
+func stop():
+	is_skiking = false
+	jumping = false
+	in_knockback = false
+	has_double_jumped = false
+	has_landed = false
+
+	$KnockbackTimer.stop()
+	$HangTimer.stop()
+	$JumpTimer.stop()
 
 func reset():
 	print("Resetting")
 	position = start_pos
+	velocity = Vector2.ZERO
 	health = start_health
 	health_changed.emit(health)
 
+	anim_sprite.modulate = Color.WHITE
+
+	stop()
+	is_skiking = true
+	is_alive = true
+
 func die():
 	print('player has died')
+	is_alive = false
 	emit_signal('has_died')
 
 func _on_hit(entity, body):
 	match entity.entity_type:
 		"enemy", "obstacle":
 			if not in_knockback:
+				_get_knocked_back() # THis needs to happen first, in the case we die, we can easily stop it.
 				_take_damage(entity, body)
-				_get_knocked_back()
 		_:
 			pass
 
