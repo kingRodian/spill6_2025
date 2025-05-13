@@ -1,11 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
+# Raycast vars
+const RAY_LEN = 600
+
 signal has_died(body)
 signal health_changed(new_health)
-# TODO
-# Doublejump? is something we should add
-# Clean up code and add documentation
 
 @export var start_health := 3
 var start_pos := position
@@ -28,19 +28,14 @@ const jumptime = 0.15
 const hangtime = 0.1
 
 # Flags
-var has_double_jumped : bool = false
 var is_skiking := true
-var has_landed : bool = false
 #var animation_locked : bool = false
 var in_knockback: bool = false
-var jumping : bool = false
+var is_jumping : bool = false
 var is_alive := true
-
 
 @onready var health : int = start_health
 
-# Raycast vars
-const RAY_LEN = 600
 
 func _ready():
 	print("player loaded")
@@ -74,7 +69,7 @@ func _physics_process(delta):
 		velocity += base_accel * delta * tangent.normalized() * friction
 		velocity = velocity.min(max_speed)
 
-	if not jumping:
+	if not is_jumping:
 		velocity.y += gravity * delta
 
 	if is_on_floor():
@@ -82,7 +77,6 @@ func _physics_process(delta):
 			anim_sprite.play("skike")
 		anim_sprite.rotation = angle
 
-	has_landed = check_if_landing() # TODO We never use this var, remove it
 	move_and_slide()
 
 func _raycast() -> Dictionary:
@@ -92,16 +86,11 @@ func _raycast() -> Dictionary:
 	var query = PhysicsRayQueryParameters2D.create(position, end)
 	return space_state.intersect_ray(query)
 
-func check_if_landing():
-	return (not is_on_floor() and velocity.y > 50)
-
 ## Stops moving.
 func stop():
 	is_skiking = false
-	jumping = false
+	is_jumping = false
 	in_knockback = false
-	has_double_jumped = false
-	has_landed = false
 
 	$KnockbackTimer.stop()
 	$HangTimer.stop()
@@ -125,6 +114,7 @@ func die():
 	is_alive = false
 	emit_signal('has_died')
 
+## This function gets called by the object the player hit.
 func _on_hit(entity, body):
 	match entity.entity_type:
 		"enemy", "obstacle":
@@ -146,7 +136,7 @@ func _take_damage(entity, body):
 func _get_knocked_back():
 	$KnockbackTimer.start()
 	in_knockback = true
-	jumping = false
+	is_jumping = false
 	stored_velocity = Vector2(velocity.x, 0)
 	velocity = Vector2.ZERO
 	# anim_sprite.play("hurt")
@@ -158,17 +148,10 @@ func _on_knockback_timer_timeout() -> void:
 	# Restore speed but reduced
 	velocity = stored_velocity * knockback_reduction
 
-# Health upgrade?
-# Old relic code
-func _on_health_upgrade_detected(amount):
-	print('player received health upgrade')
-	health += amount
-
 func _on_jump_button_pressed():
 	if is_on_floor() and not in_knockback:
-		has_double_jumped = false
 		$JumpTimer.start()
-		jumping = true
+		is_jumping = true
 		anim_sprite.play("jump")
 		velocity.y = jump_velocity
 
@@ -177,4 +160,4 @@ func _on_jump_timer_timeout() -> void:
 	$HangTimer.start()
 
 func _on_hang_timer_timeout() -> void:
-	jumping = false
+	is_jumping = false
