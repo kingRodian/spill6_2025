@@ -1,4 +1,4 @@
-[gd_scene load_steps=246 format=3 uid="uid://eofl5wch2vi6"]
+[gd_scene load_steps=245 format=3 uid="uid://eofl5wch2vi6"]
 
 [ext_resource type="Script" uid="uid://b2bhagurthg34" path="res://scripts/level/level.gd" id="1_38v6w"]
 [ext_resource type="PackedScene" uid="uid://1ehcmr0xs6rd" path="res://scenes/levels/map_triggers/death_pit.tscn" id="2_6jqgv"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="2_s55mg"]
 [ext_resource type="Texture2D" uid="uid://doysb22dyexen" path="res://assets/art/ui/ui_knapp_pause_tekstur.png" id="3_gyb22"]
 [ext_resource type="PackedScene" uid="uid://b003u3f21kj54" path="res://scenes/levels/map_triggers/goal.tscn" id="3_kn6wk"]
-[ext_resource type="PackedScene" uid="uid://gu6wwha84ye1" path="res://scenes/HUD/game_timer.tscn" id="3_po7op"]
 [ext_resource type="PackedScene" uid="uid://csx4wtb8pnvma" path="res://scenes/game/characters/raskeladden.tscn" id="4_5c7x7"]
 [ext_resource type="PackedScene" uid="uid://w8xictciytjf" path="res://scenes/canvas_layer/canvaslayer_skog_6x_mindre.tscn" id="4_nrwhx"]
 [ext_resource type="Script" uid="uid://cvjqi8nvwok8t" path="res://addons/rmsmartshape/shapes/shape.gd" id="5_ok4dq"]
@@ -1642,8 +1641,6 @@ scale = Vector2(0.5, 0.5)
 text = ""
 icon = ExtResource("3_gyb22")
 flat = true
-
-[node name="GameTimer" parent="HUD" instance=ExtResource("3_po7op")]
 
 [node name="CanvasLayer" parent="." instance=ExtResource("4_nrwhx")]
 

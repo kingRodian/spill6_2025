@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://clgosqujy66ek"]
+[gd_scene load_steps=6 format=3 uid="uid://clgosqujy66ek"]
 
 [ext_resource type="PackedScene" uid="uid://y3wbw06ky8ck" path="res://scenes/HUD/pause_button.tscn" id="1_ikbeo"]
 [ext_resource type="Script" uid="uid://bonv1w1x516bh" path="res://scripts/ui/health.gd" id="1_qp5mj"]
 [ext_resource type="PackedScene" uid="uid://dmtavcoe2qlxt" path="res://scenes/HUD/jump_button.tscn" id="2_j5fn2"]
+[ext_resource type="PackedScene" uid="uid://gu6wwha84ye1" path="res://scenes/HUD/game_timer.tscn" id="4_epp0c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_62xai"]
 font_size = 50
@@ -72,3 +73,5 @@ grow_horizontal = 0
 [node name="PauseButton" parent="RightContainer" instance=ExtResource("1_ikbeo")]
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
+
+[node name="GameTimer" parent="." instance=ExtResource("4_epp0c")]
