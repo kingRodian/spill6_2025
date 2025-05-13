@@ -20,6 +20,9 @@ var level_timer : Timer
 
 @export_storage var has_setup := false
 
+var can_win := true
+var can_lose := true
+
 
 func _enter_tree() -> void:
 	# Don't run this in editor as tool.
@@ -38,7 +41,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 
-	player.connect("has_died", _on_death)
+	player.connect("has_died", lose)
 	player.connect("health_changed", health._on_raskeladden_health_changed)
 
 	health.set_max_health(player.start_health)
@@ -58,6 +61,9 @@ func reset():
 
 	# We add one second so the label shows the time we eant
 	level_timer.start(level_time + 1)
+
+	can_win = true
+	can_lose = true
 
 func _first_time_setup():
 	print("Running first time level setup.\n")
@@ -100,7 +106,12 @@ func _first_time_setup():
 
 ## Instantly wins the level. Called by goal.gd collision trigger.
 func win():
-	_on_win()
+	if can_win:
+		can_lose = false
+		can_win = false
+		_on_win()
+	else:
+		push_warning(false, "Redundant win() call was made.")
 
 func _on_win():
 	$"HUD/RightContainer/PauseButton".hide() #Hide the pause button from player on win
@@ -118,9 +129,14 @@ func _on_win():
 
 ## Immediately lose the level. Called on level_timer timeout.
 func lose():
-	_on_death()
+	if can_lose:
+		can_lose = false
+		can_win = false
+		_on_lose()
+	else:
+		push_warning("Redundant lose() call was made.")
 
-func _on_death():
+func _on_lose():
 	# TODO temporary, add retry button
 
 	# Stop level
