@@ -1826,7 +1826,10 @@ texture = ExtResource("7_0ciha")
 [node name="MAP-TRIGGERS" type="Node2D" parent="."]
 
 [node name="death_pit" parent="MAP-TRIGGERS" instance=ExtResource("2_6jqgv")]
-position = Vector2(2698, 227)
+position = Vector2(4745, -43)
+
+[node name="death_pit2" parent="MAP-TRIGGERS" instance=ExtResource("2_6jqgv")]
+position = Vector2(6377, -181)
 
 [node name="goal" parent="MAP-TRIGGERS" instance=ExtResource("3_kn6wk")]
 position = Vector2(10501, -847)
