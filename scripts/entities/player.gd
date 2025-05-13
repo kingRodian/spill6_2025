@@ -119,21 +119,20 @@ func _on_hit(entity, body):
 	match entity.entity_type:
 		"enemy", "obstacle":
 			if not in_knockback:
-				_get_knocked_back() # THis needs to happen first, in the case we die, we can easily stop it.
-				_take_damage(entity, body)
+				get_knocked_back() # THis needs to happen first, in the case we die, we can easily stop it.
+				take_damage()
 		_:
 			pass
 
-func _take_damage(entity, body):
-	# Different amounts of damage?
+func take_damage(damage := 1):
 	SoundManager.skade_lyd_tromme()
 	print("Player hit")
-	health -= 1
+	health -= damage
 	health_changed.emit(health)
 	if health <= 0:
 		die()
 
-func _get_knocked_back():
+func get_knocked_back():
 	$KnockbackTimer.start()
 	in_knockback = true
 	is_jumping = false
