@@ -143,7 +143,7 @@ func get_knocked_back():
 	anim_sprite.modulate = Color.RED
 
 func get_launched(entity):
-	jumping = true
+	is_jumping = true
 	$HangTimer.start()
 	velocity += entity.launch_vector
 
