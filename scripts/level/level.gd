@@ -1,5 +1,7 @@
 @tool
+class_name Level
 extends Node2D
+
 
 ## To initialize a level in the editor, first press the "First Time Setup" button in the property list and then save.
 
@@ -8,8 +10,18 @@ var SaveManager = preload("res://scenes/save_manager.tscn")
 @onready var player : Player = $Raskeladden
 @onready var health := $HUD/LeftContainer/Health
 @onready var camera : Camera2D = $Camera
+
+var level_timer : Timer
+
 @export_tool_button("First Time Setup") var first_time_setup_button = _first_time_setup
+
+## The amount of time to beat the level in seconds.
+@export var level_time : int = 90
+
 @export_storage var has_setup := false
+
+var can_win := true
+var can_lose := true
 
 
 func _enter_tree() -> void:
@@ -24,13 +36,12 @@ func _enter_tree() -> void:
 
 	assert(has_setup, "You forgot to run first time setup.")
 
-
 func _ready() -> void:
 	# Don't run this in editor as tool.
 	if Engine.is_editor_hint():
 		return
 
-	player.connect("has_died", _on_death)
+	player.connect("has_died", lose)
 	player.connect("health_changed", health._on_raskeladden_health_changed)
 
 	health.set_max_health(player.start_health)
@@ -38,8 +49,21 @@ func _ready() -> void:
 
 	$HUD/JumpButton.connect("button_down", player._on_jump_button_pressed)
 
+	level_timer = $HUD/GameTimer.timer
+	level_timer.connect("timeout", lose)
+	# We add one second so the label shows the time we eant
+	level_timer.start(level_time + 1)
+
 func reset():
 	player.reset()
+	camera.position = Vector2(0, 0)
+	camera.reset_smoothing()
+
+	# We add one second so the label shows the time we eant
+	level_timer.start(level_time + 1)
+
+	can_win = true
+	can_lose = true
 
 func _first_time_setup():
 	print("Running first time level setup.\n")
@@ -80,27 +104,60 @@ func _first_time_setup():
 		print("Generer ny HUD.")
 		_add_node(load("res://scenes/HUD/hud.tscn").instantiate(),"HUD")
 
-func _on_death(body):
-	# TODO temporary, add retry screen
+## Instantly wins the level. Called by goal.gd collision trigger.
+func win():
+	if can_win:
+		can_lose = false
+		can_win = false
+		_on_win()
+	else:
+		push_warning(false, "Redundant win() call was made.")
+
+func _on_win():
+	$"HUD/RightContainer/PauseButton".hide() #Hide the pause button from player on win
+	player.set_physics_process(false) # Stops player movement
+
+	# TODO We could eventually add a celebration animation
+	#player.anim_sprite.play('idle')
+	GameManager.disconnect_pause_function()
+	SoundManager.vinn_bane()
+	$"HUD/CenterContainer/you_win".show()
+	level_timer.stop()
+
+	await get_tree().create_timer(2).timeout
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
+
+## Immediately lose the level. Called on level_timer timeout.
+func lose():
+	if can_lose:
+		can_lose = false
+		can_win = false
+		_on_lose()
+	else:
+		push_warning("Redundant lose() call was made.")
+
+func _on_lose():
+	# TODO temporary, add retry button
+
+	# Stop level
+	SoundManager.taper_lyd()
+	GameManager.disconnect_pause_function()
+	player.stop()
+	level_timer.stop()
+
+	# TODO fix bug when pausing at the same time as dying.
+	# 	Game should automatically unpause when dying.
+	# TODO We could add death/stop/idle animation here
+
+	$HUD/CenterContainer/you_died.show()
+	await get_tree().create_timer(2).timeout
+
+	# Restart level
+	# TODO We could use a transition screen here.
 	print("level resetting")
-	#camera.position = Vector2(0, 0) # does nothing while RemoteTransform2D is active
-	camera.position_smoothing_enabled = false
-	player.reset()
-	camera.position = Vector2(0, 0)
-	camera.position_smoothing_enabled = true
-
-	# camera.reset()
-
-	#SoundManager.taper_lyd()
-	##body.queue_free()
-	#player.queue_free()
-	#GameManager.disconnect_pause_function()
-	#get_node("HUD/RightContainer/PauseButton").queue_free()
-	#$HUD/CenterContainer/you_died.show()
-	#await get_tree().create_timer(2).timeout
-	##get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
-	##get_tree().reload_current_scene()
-	#get_tree().reload_current_scene()
+	reset()
+	GameManager.connect_pause_function()
+	$HUD/CenterContainer/you_died.hide()
 
 ## Permanentaly add a node to this node
 func _add_node(node : Node, node_name := ""):

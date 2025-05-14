@@ -1,11 +1,11 @@
 extends CharacterBody2D
 class_name Player
 
+# Raycast vars
+const RAY_LEN = 600
+
 signal has_died(body)
 signal health_changed(new_health)
-# TODO
-# Doublejump? is something we should add
-# Clean up code and add documentation
 
 @export var start_health := 3
 var start_pos := position
@@ -28,17 +28,14 @@ const jumptime = 0.15
 const hangtime = 0.1
 
 # Flags
-var has_double_jumped : bool = false
-var has_landed : bool = false
+var is_skiking := true
 #var animation_locked : bool = false
 var in_knockback: bool = false
-var jumping : bool = false
+var is_jumping : bool = false
+var is_alive := true
 
+@onready var health : int = start_health
 
-var health : int = start_health
-
-# Raycast vars
-const RAY_LEN = 600
 
 func _ready():
 	print("player loaded")
@@ -46,8 +43,11 @@ func _ready():
 	$JumpTimer.wait_time = jumptime
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed(&"jump"):
-		_on_jump_button_pressed()
+	# Check for player actions
+	if is_alive:
+		if Input.is_action_just_pressed(&"jump"):
+			_on_jump_button_pressed()
+
 	# angle to rotate towards
 	var angle := 0.0
 	var tangent := Vector2.RIGHT
@@ -64,18 +64,19 @@ func _physics_process(delta):
 		tangent = Vector2(tangent_3d.x, tangent_3d.y)
 		angle = -normal.angle_to(Vector2.UP)
 
-	if is_on_floor():
-		# Apply velocity according to surface tangent.
+	# Apply velocity according to surface tangent if skiking is allowed.
+	if is_on_floor() and is_skiking:
 		velocity += base_accel * delta * tangent.normalized() * friction
 		velocity = velocity.min(max_speed)
-	if not jumping:
+
+	if not is_jumping:
 		velocity.y += gravity * delta
+
 	if is_on_floor():
 		if not anim_sprite.is_playing():
 			anim_sprite.play("skike")
 		anim_sprite.rotation = angle
 
-	has_landed = check_if_landing()
 	move_and_slide()
 
 func _raycast() -> Dictionary:
@@ -85,50 +86,63 @@ func _raycast() -> Dictionary:
 	var query = PhysicsRayQueryParameters2D.create(position, end)
 	return space_state.intersect_ray(query)
 
+## Stops moving.
+func stop():
+	is_skiking = false
+	is_jumping = false
+	in_knockback = false
 
-
-func check_if_landing():
-	return (not is_on_floor() and velocity.y > 50)
+	$KnockbackTimer.stop()
+	$HangTimer.stop()
+	$JumpTimer.stop()
 
 func reset():
 	print("Resetting")
 	position = start_pos
+	velocity = Vector2.ZERO
 	health = start_health
 	health_changed.emit(health)
 
-func die(body):
-	print('player has died')
-	emit_signal('has_died', body)
+	anim_sprite.modulate = Color.WHITE
 
+	stop()
+	is_skiking = true
+	is_alive = true
+
+func die():
+	print('player has died')
+	is_alive = false
+	emit_signal('has_died')
+
+## This function gets called by the object the player hit.
 func _on_hit(entity, body):
 	if entity is Enemy or entity is Obstacle:
 		if not in_knockback:
-			_get_knocked_back()
-			_take_damage(entity, body)
+			get_knocked_back()
+			take_damage()
 	if entity is Launcher:
-		_get_launched(entity)
+		get_launched(entity)
 	else:
 		pass
 
-func _take_damage(entity, body):
-	# Different amounts of damage?
+func take_damage(damage := 1):
 	SoundManager.skade_lyd_tromme()
 	print("Player hit")
-	health -= 1
+	health -= damage
 	health_changed.emit(health)
 	if health <= 0:
-		die(body)
+		die()
 
-func _get_knocked_back():
+func get_knocked_back():
 	$KnockbackTimer.start()
 	in_knockback = true
-	jumping = false
+	is_jumping = false
 	stored_velocity = Vector2(velocity.x, 0)
 	velocity = Vector2.ZERO
 	# anim_sprite.play("hurt")
 	anim_sprite.modulate = Color.RED
 
-func _get_launched(entity):
+func get_launched(entity):
 	jumping = true
 	$HangTimer.start()
 	velocity += entity.launch_vector
@@ -139,17 +153,10 @@ func _on_knockback_timer_timeout() -> void:
 	# Restore speed but reduced
 	velocity = stored_velocity * knockback_reduction
 
-# Health upgrade?
-# Old relic code
-func _on_health_upgrade_detected(amount):
-	print('player received health upgrade')
-	health += amount
-
 func _on_jump_button_pressed():
 	if is_on_floor() and not in_knockback:
-		has_double_jumped = false
 		$JumpTimer.start()
-		jumping = true
+		is_jumping = true
 		anim_sprite.play("jump")
 		velocity.y = jump_velocity
 
@@ -158,4 +165,4 @@ func _on_jump_timer_timeout() -> void:
 	$HangTimer.start()
 
 func _on_hang_timer_timeout() -> void:
-	jumping = false
+	is_jumping = false
