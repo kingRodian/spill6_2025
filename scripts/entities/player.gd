@@ -116,13 +116,14 @@ func die():
 
 ## This function gets called by the object the player hit.
 func _on_hit(entity, body):
-	match entity.entity_type:
-		"enemy", "obstacle":
-			if not in_knockback:
-				get_knocked_back() # THis needs to happen first, in the case we die, we can easily stop it.
-				take_damage()
-		_:
-			pass
+	if entity is Enemy or entity is Obstacle:
+		if not in_knockback:
+			get_knocked_back()
+			take_damage()
+	if entity is Launcher:
+		get_launched(entity)
+	else:
+		pass
 
 func take_damage(damage := 1):
 	SoundManager.skade_lyd_tromme()
@@ -140,6 +141,11 @@ func get_knocked_back():
 	velocity = Vector2.ZERO
 	# anim_sprite.play("hurt")
 	anim_sprite.modulate = Color.RED
+
+func get_launched(entity):
+	jumping = true
+	$HangTimer.start()
+	velocity += entity.launch_vector
 
 func _on_knockback_timer_timeout() -> void:
 	in_knockback = false

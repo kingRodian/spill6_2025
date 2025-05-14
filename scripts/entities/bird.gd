@@ -1,10 +1,9 @@
-extends Node2D
+extends Enemy
 class_name Bird
 ## Bird enemy
 ## Swoops in over the player, hovers around in a circle and then attacks
 ## Spawned by birdspawner
 
-const entity_type := "enemy"
 var player : Node2D
 
 enum State {
@@ -92,7 +91,6 @@ func _on_area_2d_body_entered(body):
 	if body is Player:
 		# Spilleren treffer hinderet
 		body._on_hit(self, body)
-		SoundManager.skade_lyd_tromme()
 
 # Delete bird when it exits screen
 func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
