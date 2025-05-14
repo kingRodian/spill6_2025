@@ -1,8 +1,4 @@
-extends Node2D
-
-signal hit(from, to)
-
-const entity_type := "enemy"
+extends Enemy
 
 @export var follower : PathFollow2D
 const base_speed : float = 0.2

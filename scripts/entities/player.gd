@@ -101,15 +101,14 @@ func die(body):
 	emit_signal('has_died', body)
 
 func _on_hit(entity, body):
-	match entity.entity_type:
-		"enemy", "obstacle":
-			if not in_knockback:
-				_take_damage(entity, body)
-				_get_knocked_back()
-		"launch":
-			_get_launched(entity)
-		_:
-			pass
+	if entity is Enemy or entity is Obstacle:
+		if not in_knockback:
+			_get_knocked_back()
+			_take_damage(entity, body)
+	if entity is Launcher:
+		_get_launched(entity)
+	else:
+		pass
 
 func _take_damage(entity, body):
 	# Different amounts of damage?

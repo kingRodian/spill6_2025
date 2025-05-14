@@ -1,6 +1,5 @@
-extends Node2D
+extends Launcher
 
-const entity_type := "launch"
 const launch_speed : float = 600
 @onready var launch_vector:= (Vector2(1, -.75) * launch_speed).rotated(global_rotation)
 
