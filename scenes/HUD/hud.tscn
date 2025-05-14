@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://clgosqujy66ek"]
 
-[ext_resource type="PackedScene" uid="uid://y3wbw06ky8ck" path="res://scenes/HUD/pause_button.tscn" id="1_ikbeo"]
 [ext_resource type="Script" uid="uid://bonv1w1x516bh" path="res://scripts/ui/health.gd" id="1_qp5mj"]
+[ext_resource type="Script" uid="uid://qvty3xy1yit" path="res://scripts/ui/pause_button.gd" id="2_jjobl"]
 [ext_resource type="PackedScene" uid="uid://gu6wwha84ye1" path="res://scenes/HUD/game_timer.tscn" id="4_epp0c"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_62xai"]
@@ -76,8 +76,12 @@ offset_left = -55.0
 offset_bottom = 31.0
 grow_horizontal = 0
 
-[node name="PauseButton" parent="RightContainer" instance=ExtResource("1_ikbeo")]
+[node name="PauseButton" type="Button" parent="RightContainer"]
 custom_minimum_size = Vector2(175, 175)
 layout_mode = 2
+text = "Pause"
+script = ExtResource("2_jjobl")
 
 [node name="GameTimer" parent="." instance=ExtResource("4_epp0c")]
+
+[connection signal="pressed" from="RightContainer/PauseButton" to="RightContainer/PauseButton" method="_on_pressed"]
