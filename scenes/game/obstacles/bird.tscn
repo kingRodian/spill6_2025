@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dl3iuqfioyop3" path="res://scripts/entities/bird.gd" id="1_vdr44"]
 [ext_resource type="Texture2D" uid="uid://b3ifnitlienlh" path="res://assets/art/NPCs/bird/flap/frame0000.png" id="2_67ufi"]
 [ext_resource type="Texture2D" uid="uid://d2td8b08tlb8u" path="res://assets/art/NPCs/bird/attack/bird_attack.png" id="2_wgedl"]
-[ext_resource type="Texture2D" uid="uid://umhjtat0irpd" path="res://assets/art/NPCs/bird/evilbird_swoop.png" id="3_4dxcw"]
+[ext_resource type="Texture2D" uid="uid://mli062qwevtf" path="res://assets/art/NPCs/bird/swoop/evilbird_swoop.png" id="3_4dxcw"]
 [ext_resource type="Texture2D" uid="uid://dbc3x4n481mii" path="res://assets/art/NPCs/bird/flap/frame0001.png" id="3_wgedl"]
 [ext_resource type="Texture2D" uid="uid://d01i537xjy3ce" path="res://assets/art/NPCs/bird/flap/frame0002.png" id="4_wqvt4"]
 [ext_resource type="Texture2D" uid="uid://b11a6bu2jtoe8" path="res://assets/art/NPCs/bird/flap/frame0003.png" id="5_7t7q3"]
