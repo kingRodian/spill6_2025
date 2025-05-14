@@ -47,7 +47,8 @@ func _ready() -> void:
 	health.set_max_health(player.start_health)
 	health.update_health(player.start_health)
 
-	$HUD/JumpButton.connect("button_down", player._on_jump_button_pressed)
+	$HUD/JumpButton.connect("button_down", func(): Input.action_press("jump"))
+	$HUD/JumpButton.connect("button_up", func(): Input.action_release("jump"))
 
 	level_timer = $HUD/GameTimer.timer
 	level_timer.connect("timeout", lose)
