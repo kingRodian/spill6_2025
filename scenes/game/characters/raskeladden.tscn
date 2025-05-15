@@ -24,7 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://c0m8hbkc03ahy" path="res://assets/art/character/skike/raskeladden_skiking_0013.png" id="14_pv7lp"]
 [ext_resource type="Texture2D" uid="uid://ditswsbc65sk5" path="res://assets/art/character/skike/raskeladden_skiking_0014.png" id="15_73f8e"]
 [ext_resource type="Texture2D" uid="uid://ongvxukb61vi" path="res://assets/art/character/skike/raskeladden_skiking_0015.png" id="16_7gqkf"]
-[ext_resource type="Shape2D" uid="uid://ca11vllspi3nw" path="res://scenes/game/characters/raskeladden_hitbox_ducking.tres" id="25_wf5yv"]
+[ext_resource type="Shape2D" uid="uid://bm165trrikp0c" path="res://scenes/game/characters/raskeladden_hitbox.tres" id="25_wf5yv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b5jpa"]
 animations = [{
