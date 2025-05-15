@@ -206,6 +206,7 @@ func _on_jump_button_pressed():
 
 func _on_duck_button_pressed():
 	if not is_jumping and not is_ducking:
+		is_ducking = true
 		collision.shape = ducking_hitbox
 		collision.position = ducking_hitbox_pos
 		anim_sprite.play("duck")
