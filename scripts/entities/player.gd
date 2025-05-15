@@ -55,30 +55,10 @@ var is_ducking := false
 
 func _ready():
 	print("player loaded")
-	jump_timer = Timer.new()
-	jump_timer.wait_time = jump_time
-	jump_timer.one_shot = true
-	jump_timer.timeout.connect(_on_jump_timer_timeout)
-	add_child(jump_timer)
-
-	hang_timer = Timer.new()
-	hang_timer.wait_time = hang_time
-	hang_timer.one_shot = true
-	hang_timer.timeout.connect(_on_hang_timer_timeout)
-	add_child(hang_timer)
-
-	knockback_timer = Timer.new()
-	knockback_timer.wait_time = knockback_time
-	knockback_timer.one_shot = true
-	knockback_timer.timeout.connect(_on_knockback_timer_timeout)
-	add_child(knockback_timer)
-
-	duck_timer = Timer.new()
-	duck_timer.wait_time = duck_time
-	duck_timer.one_shot = true
-	duck_timer.timeout.connect(_on_duck_timer_timeout)
-	add_child(duck_timer)
-
+	jump_timer = create_timer(jump_time, _on_jump_timer_timeout)
+	hang_timer = create_timer(hang_time, _on_hang_timer_timeout)
+	knockback_timer = create_timer(knockback_time, _on_knockback_timer_timeout)
+	duck_timer = create_timer(duck_time, _on_duck_timer_timeout)
 
 func _physics_process(delta):
 	# Check for player actions
@@ -225,3 +205,12 @@ func _on_duck_timer_timeout() -> void:
 	is_ducking = false
 	collision.shape = normal_hitbox
 	collision.position = original_hitbox_pos
+
+## Create a Timer with a timeout callback
+func create_timer(time : float, callback : Callable) -> Timer:
+	var timer := Timer.new()
+	timer.wait_time = time
+	timer.one_shot = true
+	timer.timeout.connect(callback)
+	add_child(timer)
+	return timer
