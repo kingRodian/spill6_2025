@@ -19,34 +19,73 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim_sprite = $"Sprites/AnimatedSprite2D"
 @onready var orig_color = anim_sprite.modulate
 
+@onready var collision := $CollisionShape2D
+@onready var ducking_hitbox_pos := Vector2(0, 10)
+@onready var normal_hitbox : Shape2D = collision.shape
+@onready var ducking_hitbox : Shape2D = load("res://scenes/game/characters/raskeladden_hitbox_ducking.tres")
+
 # Movement vars
 const base_accel : float = 250.0
 const max_speed : Vector2 = Vector2(400.0, 600)
 @export var knockback_reduction = .7
 var stored_velocity : Vector2 = Vector2.ZERO
-const jumptime = 0.15
-const hangtime = 0.1
+
+# Timers
+const jump_time := 0.15
+const hang_time := 0.1
+const knockback_time := 0.4
+const duck_time := 0.6
+
+var jump_timer : Timer
+var hang_timer : Timer
+var knockback_timer : Timer
+var duck_timer : Timer
 
 # Flags
 var is_skiking := true
 #var animation_locked : bool = false
-var in_knockback: bool = false
-var is_jumping : bool = false
+var in_knockback := false
+var is_jumping := false
 var is_alive := true
+var is_ducking := false
 
 @onready var health : int = start_health
 
 
 func _ready():
 	print("player loaded")
-	$HangTimer.wait_time = hangtime
-	$JumpTimer.wait_time = jumptime
+	jump_timer = Timer.new()
+	jump_timer.wait_time = jump_time
+	jump_timer.one_shot = true
+	jump_timer.timeout.connect(_on_jump_timer_timeout)
+	add_child(jump_timer)
+
+	hang_timer = Timer.new()
+	hang_timer.wait_time = hang_time
+	hang_timer.one_shot = true
+	hang_timer.timeout.connect(_on_hang_timer_timeout)
+	add_child(hang_timer)
+
+	knockback_timer = Timer.new()
+	knockback_timer.wait_time = knockback_time
+	knockback_timer.one_shot = true
+	knockback_timer.timeout.connect(_on_knockback_timer_timeout)
+	add_child(knockback_timer)
+
+	duck_timer = Timer.new()
+	duck_timer.wait_time = duck_time
+	duck_timer.one_shot = true
+	duck_timer.timeout.connect(_on_duck_timer_timeout)
+	add_child(duck_timer)
+
 
 func _physics_process(delta):
 	# Check for player actions
 	if is_alive:
 		if Input.is_action_just_pressed(&"jump"):
 			_on_jump_button_pressed()
+		elif Input.is_action_just_pressed(&"duck"):
+			_on_duck_button_pressed()
 
 	# angle to rotate towards
 	var angle := 0.0
@@ -73,7 +112,7 @@ func _physics_process(delta):
 		velocity.y += gravity * delta
 
 	if is_on_floor():
-		if not anim_sprite.is_playing():
+		if not anim_sprite.is_playing() and is_alive:
 			anim_sprite.play("skike")
 		anim_sprite.rotation = angle
 
@@ -91,15 +130,16 @@ func stop():
 	is_skiking = false
 	is_jumping = false
 	in_knockback = false
+	velocity = Vector2.ZERO
 
-	$KnockbackTimer.stop()
-	$HangTimer.stop()
-	$JumpTimer.stop()
+	knockback_timer.stop()
+	hang_timer.stop()
+	jump_timer.stop()
 
 func reset():
 	print("Resetting")
 	position = start_pos
-	velocity = Vector2.ZERO
+
 	health = start_health
 	health_changed.emit(health)
 
@@ -112,6 +152,7 @@ func reset():
 func die():
 	print('player has died')
 	is_alive = false
+	anim_sprite.stop()
 	emit_signal('has_died')
 
 ## This function gets called by the object the player hit.
@@ -134,7 +175,7 @@ func take_damage(damage := 1):
 		die()
 
 func get_knocked_back():
-	$KnockbackTimer.start()
+	knockback_timer.start()
 	in_knockback = true
 	is_jumping = false
 	stored_velocity = Vector2(velocity.x, 0)
@@ -144,7 +185,7 @@ func get_knocked_back():
 
 func get_launched(entity):
 	is_jumping = true
-	$HangTimer.start()
+	hang_timer.start()
 	velocity += entity.launch_vector
 
 func _on_knockback_timer_timeout() -> void:
@@ -155,14 +196,30 @@ func _on_knockback_timer_timeout() -> void:
 
 func _on_jump_button_pressed():
 	if is_on_floor() and not in_knockback:
-		$JumpTimer.start()
+		jump_timer.start()
 		is_jumping = true
 		anim_sprite.play("jump")
 		velocity.y = jump_velocity
+		if is_ducking:
+			# Reset hitbox
+			_on_duck_timer_timeout()
+
+func _on_duck_button_pressed():
+	if not is_jumping and not is_ducking:
+		collision.shape = ducking_hitbox
+		collision.position = ducking_hitbox_pos
+		anim_sprite.play("duck")
+
 
 func _on_jump_timer_timeout() -> void:
 	velocity.y = 0
-	$HangTimer.start()
+	hang_timer.start()
 
 func _on_hang_timer_timeout() -> void:
 	is_jumping = false
+
+func _on_duck_timer_timeout() -> void:
+	is_ducking = false
+	anim_sprite.play("skike")
+	collision.shape = normal_hitbox
+	collision.position = position

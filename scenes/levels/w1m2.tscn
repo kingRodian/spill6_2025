@@ -611,6 +611,13 @@ position = Vector2(3804, 735)
 [node name="Platform" parent="Layout/Section 2/Obstacles" instance=ExtResource("16_msf2m")]
 position = Vector2(3710, 631)
 
+[node name="trestump_4" parent="Layout/Section 2/Obstacles" instance=ExtResource("22_lvmx0")]
+position = Vector2(3249, -85)
+
+[node name="stein_6" parent="Layout/Section 2/Obstacles" instance=ExtResource("20_1xoau")]
+position = Vector2(3461, -302)
+rotation = -0.439938
+
 [node name="Geometry" type="Node" parent="Layout/Section 2"]
 
 [node name="Body2" type="StaticBody2D" parent="Layout/Section 2/Geometry"]

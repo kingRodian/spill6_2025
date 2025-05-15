@@ -27,34 +27,38 @@ var hovercycle := Vector2(hovercycle_radius, 0)
 var hovercycle_speed : float = PI / 30
 
 var warning_timer : Timer
-var warning_time : float = 0.6
+var warning_time : float = 0.3
 
 var swoop_offset := Vector2(200, -250)
 var swoop_speed : float = 8.0
 var swoop_delta : float = 10.0
 
 var attack_speed : float = swoop_speed
-var attack_offset := Vector2(0, -100)
+var attack_offset := Vector2(0, -125)
 var attack_direction : Vector2
 
 # Current offset relative to the player, basically the offset we want to be at currently
 var relative_position : Vector2
 
-var hovertimer : Timer
+var hover_timer : Timer
 
 func initialize(_player : Node2D):
 	player = _player
 	relative_position = swoop_offset
 
 func _ready():
-	hovertimer = Timer.new()
-	hovertimer.wait_time = randf_range(hovertime_min, hovertime_max)
-	hovertimer.timeout.connect(_on_hover_timer_timeout)
-	add_child(hovertimer)
+	hover_timer = Timer.new()
+	hover_timer.wait_time = randf_range(hovertime_min, hovertime_max)
+	hover_timer.one_shot = true
+	hover_timer.timeout.connect(_on_hover_timer_timeout)
+	add_child(hover_timer)
+
 	warning_timer = Timer.new()
 	warning_timer.wait_time = warning_time
+	warning_timer.one_shot = true
 	warning_timer.timeout.connect(_on_warning_timer_timeout)
 	add_child(warning_timer)
+
 	position = player.position + relative_position
 	sprite = $Sprite2D
 
@@ -79,7 +83,7 @@ func _swoop(delta):
 	else:
 		_state = State.hovering
 		sprite.play("flap")
-		hovertimer.start()
+		hover_timer.start()
 
 	# Fly around in a circle
 func _hover(delta):

@@ -13,7 +13,7 @@ func _ready():
 	var file = FileAccess.open("res://version.txt", FileAccess.READ)
 	var content = file.get_as_text(true).replace("\n","")
 	$VersionLabel.text = content
-	
+
 func _on_start_button_pressed():
 	level_select.show()
 	SoundManager.start_button()
