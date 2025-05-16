@@ -160,9 +160,7 @@ script = ExtResource("11_q32om")
 
 [node name="BirdSpawner" parent="NPCs" instance=ExtResource("12_piwj7")]
 position = Vector2(107, 66)
-
-[node name="CollisionShape2D" parent="NPCs/BirdSpawner/Area2D" index="0"]
-disabled = true
+spawns = null
 
 [node name="MapGeometry" type="Node" parent="."]
 
@@ -200,4 +198,5 @@ position = Vector2(1295, -147)
 [connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
 
 [editable path="HUD"]
+[editable path="CanvasLayer"]
 [editable path="NPCs/BirdSpawner"]

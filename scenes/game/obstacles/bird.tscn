@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bv6kwvl2yqpkd"]
+[gd_scene load_steps=12 format=3 uid="uid://bv6kwvl2yqpkd"]
 
 [ext_resource type="Script" uid="uid://dl3iuqfioyop3" path="res://scripts/entities/bird.gd" id="1_vdr44"]
 [ext_resource type="Texture2D" uid="uid://b3ifnitlienlh" path="res://assets/art/NPCs/bird/flap/frame0000.png" id="2_67ufi"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://dbc3x4n481mii" path="res://assets/art/NPCs/bird/flap/frame0001.png" id="3_wgedl"]
 [ext_resource type="Texture2D" uid="uid://d01i537xjy3ce" path="res://assets/art/NPCs/bird/flap/frame0002.png" id="4_wqvt4"]
 [ext_resource type="Texture2D" uid="uid://b11a6bu2jtoe8" path="res://assets/art/NPCs/bird/flap/frame0003.png" id="5_7t7q3"]
+[ext_resource type="Texture2D" uid="uid://is5etv4x7lu1" path="res://assets/art/NPCs/bird/evilbird.png" id="8_7t7q3"]
+[ext_resource type="Texture2D" uid="uid://ckj7rrmijevh2" path="res://assets/art/NPCs/bird/warn/warning.png" id="9_ocv7a"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_mo77b"]
 animations = [{
@@ -51,6 +53,14 @@ animations = [{
 "loop": true,
 "name": &"swoop",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_7t7q3")
+}],
+"loop": true,
+"name": &"warn",
+"speed": 5.0
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vdr44"]
@@ -62,9 +72,8 @@ script = ExtResource("1_vdr44")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.08, 0.08)
 sprite_frames = SubResource("SpriteFrames_mo77b")
-animation = &"attack"
+animation = &"warn"
 autoplay = "swoop"
-frame_progress = 0.130012
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -72,6 +81,12 @@ frame_progress = 0.130012
 shape = SubResource("CircleShape2D_vdr44")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+
+[node name="WarningSprite" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-2, -19)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("9_ocv7a")
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

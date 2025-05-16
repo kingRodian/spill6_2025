@@ -33,7 +33,7 @@ func adjust_sound_effect_volume(value):
 		linear_to_db(value)
 	)
 	print('SFX volume set to ', value)
-	
+
 func fall_fail():
 	$SoundEffects/FallFail.play()
 
@@ -42,13 +42,16 @@ func start_button():
 
 func skade_piano():
 	$SoundEffects/SkadePiano.play()
-	
+
 func skade_lyd_tromme():
 	$SoundEffects/SkadeLydTromme.play()
-	
+
+func bird_warn():
+	$SoundEffects/BirdWarn.play()
+
 func taper_lyd():
 	$SoundEffects/TaperLyd.play()
-	
+
 func vinn_bane():
 	$SoundEffects/VinnBane.play()
 
@@ -57,7 +60,7 @@ func play_background_menu():
 
 func play_bird_chirp():
 	play_background_music($BackgroundMusic/BirdChirp)
-	
+
 func play_bird_chirp_loop(value: bool):
 	if value == true:
 		$BackgroundMusic/BirdChirp.play()

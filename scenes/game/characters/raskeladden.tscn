@@ -1,9 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://csx4wtb8pnvma"]
+[gd_scene load_steps=27 format=3 uid="uid://csx4wtb8pnvma"]
 
 [ext_resource type="Script" uid="uid://r74wnuu6ud12" path="res://scripts/entities/player.gd" id="1_yh366"]
+[ext_resource type="Texture2D" uid="uid://c70e8qyr6jeho" path="res://assets/art/character/duck/raskeladden_duck_0001.png" id="2_b4owm"]
 [ext_resource type="Texture2D" uid="uid://bqn006171fyls" path="res://assets/art/character/skike/raskeladden_skiking_0001.png" id="2_laut3"]
 [ext_resource type="Texture2D" uid="uid://b8uqp5550jaqn" path="res://assets/art/character/skike/raskeladden_skiking_0002.png" id="3_vonc6"]
+[ext_resource type="Texture2D" uid="uid://bjojfpkndr7yd" path="res://assets/art/character/duck/raskeladden_duck_0002.png" id="3_wf5yv"]
 [ext_resource type="Texture2D" uid="uid://dfae8x470hjcq" path="res://assets/art/character/skike/raskeladden_skiking_0003.png" id="4_6syje"]
+[ext_resource type="Texture2D" uid="uid://dgwrwqxutx75u" path="res://assets/art/character/duck/raskeladden_duck_0003.png" id="4_7ihod"]
 [ext_resource type="Texture2D" uid="uid://car7kqh2w3fn6" path="res://assets/art/character/skike/raskeladden_skiking_0004.png" id="5_g2un1"]
 [ext_resource type="Texture2D" uid="uid://de0k2n1ojd2js" path="res://assets/art/character/jump/raskeladden_hopp_0005.png" id="6_5i05u"]
 [ext_resource type="Texture2D" uid="uid://c46442x843tt4" path="res://assets/art/character/skike/raskeladden_skiking_0005.png" id="6_n0yej"]
@@ -21,9 +24,30 @@
 [ext_resource type="Texture2D" uid="uid://c0m8hbkc03ahy" path="res://assets/art/character/skike/raskeladden_skiking_0013.png" id="14_pv7lp"]
 [ext_resource type="Texture2D" uid="uid://ditswsbc65sk5" path="res://assets/art/character/skike/raskeladden_skiking_0014.png" id="15_73f8e"]
 [ext_resource type="Texture2D" uid="uid://ongvxukb61vi" path="res://assets/art/character/skike/raskeladden_skiking_0015.png" id="16_7gqkf"]
+[ext_resource type="Shape2D" uid="uid://bm165trrikp0c" path="res://scenes/game/characters/raskeladden_hitbox.tres" id="25_wf5yv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b5jpa"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_b4owm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wf5yv")
+}, {
+"duration": 10.0,
+"texture": ExtResource("4_7ihod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wf5yv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_b4owm")
+}],
+"loop": false,
+"name": &"duck",
+"speed": 24.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("6_5i05u")
@@ -95,9 +119,6 @@ animations = [{
 "speed": 24.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cqh81"]
-radius = 8.0
-
 [node name="Raskeladden" type="CharacterBody2D"]
 floor_stop_on_slope = false
 floor_max_angle = 1.41895
@@ -110,27 +131,11 @@ script = ExtResource("1_yh366")
 position = Vector2(0, 5)
 scale = Vector2(0.06, 0.06)
 sprite_frames = SubResource("SpriteFrames_b5jpa")
-animation = &"jump"
+animation = &"duck"
 autoplay = "skike"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 9)
-scale = Vector2(0.852, 1)
-shape = SubResource("CapsuleShape2D_cqh81")
-
-[node name="KnockbackTimer" type="Timer" parent="."]
-wait_time = 0.4
-one_shot = true
-
-[node name="HangTimer" type="Timer" parent="."]
-wait_time = 0.2
-one_shot = true
-
-[node name="JumpTimer" type="Timer" parent="."]
-one_shot = true
+shape = ExtResource("25_wf5yv")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
-
-[connection signal="timeout" from="KnockbackTimer" to="." method="_on_knockback_timer_timeout"]
-[connection signal="timeout" from="HangTimer" to="." method="_on_hang_timer_timeout"]
-[connection signal="timeout" from="JumpTimer" to="." method="_on_jump_timer_timeout"]
