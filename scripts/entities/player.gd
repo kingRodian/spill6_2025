@@ -31,11 +31,12 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var anim_sprite = $"Sprites/AnimatedSprite2D"
 @onready var orig_color = anim_sprite.modulate
 
-@onready var collision := $CollisionShape2D
+@onready var collision : CollisionShape2D = $CollisionShape2D
 @onready var original_hitbox_pos = collision.position
 @onready var ducking_hitbox_pos :Vector2 = original_hitbox_pos + Vector2(0, 5)
 @onready var normal_hitbox : Shape2D = load("res://scenes/game/characters/raskeladden_hitbox.tres")
 @onready var ducking_hitbox : Shape2D = load("res://scenes/game/characters/raskeladden_hitbox_ducking.tres")
+const COLLISION_LAYER_PLAYER := 2
 
 # Movement vars
 const base_accel : float = 250.0
@@ -235,8 +236,10 @@ func _on_duck_button_pressed():
 		is_ducking = true
 		collision.shape = ducking_hitbox
 		collision.position = ducking_hitbox_pos
+		set_collision_layer_value(COLLISION_LAYER_PLAYER, false)
 		anim_sprite.play("duck")
 		duck_timer.start()
+
 func _on_jump_timer_timeout() -> void:
 	velocity.y = 0
 	hang_timer.start()
@@ -248,6 +251,7 @@ func _on_duck_timer_timeout() -> void:
 	is_ducking = false
 	collision.shape = normal_hitbox
 	collision.position = original_hitbox_pos
+	set_collision_layer_value(COLLISION_LAYER_PLAYER, true)
 
 ## Create a Timer with a timeout callback
 func create_timer(time : float, callback : Callable) -> Timer:
