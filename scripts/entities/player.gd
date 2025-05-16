@@ -32,10 +32,10 @@ const max_speed : Vector2 = Vector2(400.0, 600)
 var stored_velocity : Vector2 = Vector2.ZERO
 
 # Timers
-const jump_time := 0.15
-const hang_time := 0.1
-const knockback_time := 0.4
-const duck_time := 0.6
+const JUMP_TIME := 0.15
+const HANG_TIME := 0.1
+const KNOCKBACK_TIME := 0.4
+const DUCK_TIME := 0.6
 
 var jump_timer : Timer
 var hang_timer : Timer
@@ -55,10 +55,10 @@ var is_ducking := false
 
 func _ready():
 	print("player loaded")
-	jump_timer = create_timer(jump_time, _on_jump_timer_timeout)
-	hang_timer = create_timer(hang_time, _on_hang_timer_timeout)
-	knockback_timer = create_timer(knockback_time, _on_knockback_timer_timeout)
-	duck_timer = create_timer(duck_time, _on_duck_timer_timeout)
+	jump_timer = create_timer(JUMP_TIME, _on_jump_timer_timeout)
+	hang_timer = create_timer(HANG_TIME, _on_hang_timer_timeout)
+	knockback_timer = create_timer(KNOCKBACK_TIME, _on_knockback_timer_timeout)
+	duck_timer = create_timer(DUCK_TIME, _on_duck_timer_timeout)
 
 func _physics_process(delta):
 	# Check for player actions
@@ -116,6 +116,7 @@ func stop():
 	knockback_timer.stop()
 	hang_timer.stop()
 	jump_timer.stop()
+	duck_timer.stop()
 
 func reset():
 	print("Resetting")
