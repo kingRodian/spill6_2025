@@ -14,7 +14,8 @@ enum State {
 }
 
 var _state := State.swooping
-var sprite : AnimatedSprite2D
+@onready var sprite : AnimatedSprite2D = $Sprite2D
+@onready var warning_sprite : Sprite2D = $WarningSprite
 
 var hovertime_min : float = 2
 var hovertime_max : float = 4
@@ -102,6 +103,7 @@ func _on_hover_timer_timeout() -> void:
 	relative_position = position - player.position
 	warning_timer.start()
 	sprite.play("warn")
+	warning_sprite.visible = true
 	SoundManager.bird_warn()
 
 func _on_warning_timer_timeout() -> void:

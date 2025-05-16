@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxmeu0ny87rl4"
-path="res://.godot/imported/evilbird_warning.png-499b3341a0f7d5862e0d5eac5d97235a.ctex"
+uid="uid://ckj7rrmijevh2"
+path="res://.godot/imported/warning.png-d778262486c93b58e9b4922ef2d0a83a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/NPCs/bird/warn/evilbird_warning.png"
-dest_files=["res://.godot/imported/evilbird_warning.png-499b3341a0f7d5862e0d5eac5d97235a.ctex"]
+source_file="res://assets/art/NPCs/bird/warn/warning.png"
+dest_files=["res://.godot/imported/warning.png-d778262486c93b58e9b4922ef2d0a83a.ctex"]
 
 [params]
 

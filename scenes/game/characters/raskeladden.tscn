@@ -136,7 +136,6 @@ autoplay = "skike"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 9)
-scale = Vector2(0.852, 1)
 shape = ExtResource("25_wf5yv")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
