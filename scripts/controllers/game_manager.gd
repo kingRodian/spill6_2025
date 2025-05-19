@@ -3,6 +3,9 @@ extends Node
 
 signal toggle_game_paused(is_paused : bool)
 
+@onready var pause_menu = get_node("PauseMenu")
+@onready var pause_menu_settings = get_node("PauseMenu/Settings")
+
 var is_pause_enabled := false
 var is_game_retry_enabled := false
 
@@ -26,10 +29,10 @@ var _game_paused := false
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		if get_node("../CutsceneW1m1") != null or get_node("../Menu") != null:
+		if current_level == null:
 			return
-		if $PauseMenu/Settings.visible:
-			$PauseMenu/Settings.hide()
+		if pause_menu_settings.visible:
+			pause_menu_settings.hide()
 		else:
 			toggle_pause()
 	elif event.is_action_pressed("retry"):
@@ -40,11 +43,13 @@ func _notification(what):
 	# TODO wouldn't this mean the game unpauses when you press the home button.
 	if what in [
 		NOTIFICATION_APPLICATION_PAUSED, # home button
-		NOTIFICATION_WM_GO_BACK_REQUEST]: # back button
-		if get_node("../CutsceneW1m1") != null or get_node("../Menu") != null:
+		NOTIFICATION_WM_GO_BACK_REQUEST, # back button
+	]:
+
+		if current_level == null:
 			return
-		if $PauseMenu/Settings.visible:
-			$PauseMenu/Settings.hide()
+		if pause_menu_settings.visible:
+			pause_menu_settings.hide()
 		else:
 			toggle_pause()
 
@@ -59,28 +64,17 @@ func try_retry():
 		level.reset()
 		unpause()
 
-func _on_pause_menu_resume():
-	assert(is_paused(), "Game should be paused when trying to resume.")
-	unpause()
-
-func _on_pause_menu_retry():
-	try_retry()
-
-func disconnect_pause_function():
-	disconnect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)
-
-func connect_pause_function():
-	connect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)
-
 ## Tries to pause the current level if is_pause_enabled.
 func pause():
 	if _game_paused or not is_pause_enabled:
 		return
 
 	_game_paused = true
+	pause_menu.show()
 	toggle_pause_button()
-	print("Game paused!")
 	get_tree().paused = true
+
+	print("Game paused!")
 	toggle_game_paused.emit(true)
 
 ## Unpauses the current level regardless of is_pause_enabled
@@ -89,9 +83,11 @@ func unpause():
 		return
 
 	_game_paused = false
+	pause_menu.hide()
 	toggle_pause_button()
-	print("Game unpaused!")
 	get_tree().paused = false
+
+	print("Game unpaused!")
 	toggle_game_paused.emit(false)
 
 func toggle_pause():
@@ -103,9 +99,15 @@ func toggle_pause():
 func is_paused():
 	return _game_paused
 
-
 ## Hides or shows the touch button used to pause the level dependig on the pause state
 func toggle_pause_button():
 	if current_level:
 		# HUD should always have a PauseButton otherwise we get an error.
 		current_level.get_node("HUD/RightContainer/PauseButton").visible = !is_paused()
+
+func _on_pause_menu_resume():
+	assert(is_paused(), "Game should be paused when trying to resume.")
+	unpause()
+
+func _on_pause_menu_retry():
+	try_retry()

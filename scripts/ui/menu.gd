@@ -5,7 +5,6 @@ extends Node
 @onready var credits = $Credits
 func _ready():
 	print("menu loaded")
-	GameManager.connect_pause_function()
 	GameManager.unpause()
 	SoundManager.play_bird_chirp_loop(false)
 

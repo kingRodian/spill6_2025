@@ -68,7 +68,8 @@ func reset():
 	can_win = true
 	can_lose = true
 
-	GameManager.connect_pause_function()
+	GameManager.is_pause_enabled = true
+	GameManager.is_game_retry_enabled = true
 
 func _first_time_setup():
 	print("Running first time level setup.\n")
@@ -124,7 +125,9 @@ func _on_win():
 
 	# TODO We could eventually add a celebration animation
 	#player.anim_sprite.play('idle')
-	GameManager.disconnect_pause_function()
+	GameManager.is_pause_enabled = false
+	GameManager.is_game_retry_enabled = false
+
 	SoundManager.vinn_bane()
 	$"HUD/CenterContainer/you_win".show()
 	level_timer.stop()
@@ -146,7 +149,8 @@ func _on_lose():
 
 	# Stop level
 	SoundManager.taper_lyd()
-	GameManager.disconnect_pause_function()
+	GameManager.is_pause_enabled = false # TODO TEMPORARY add functions
+	GameManager.is_game_retry_enabled = false
 	player.stop()
 	level_timer.stop()
 
@@ -161,8 +165,15 @@ func _on_lose():
 	# TODO We could use a transition screen here.
 	print("level resetting")
 	reset()
-	GameManager.connect_pause_function()
 	$HUD/CenterContainer/you_died.hide()
+
+## Used by PauseMenu to show progress towards completing the level.
+func calculate_progress() -> int:
+	# TODO Add better goal node retrieval
+	var goal = get_node("MAP-TRIGGERS/goal")
+
+	return round((player.position.x / goal.position.x) * 100)
+
 
 ## Permanentaly add a node to this node
 func _add_node(node : Node, node_name := ""):
