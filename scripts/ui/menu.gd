@@ -6,7 +6,7 @@ extends Node
 func _ready():
 	print("menu loaded")
 	GameManager.connect_pause_function()
-	GameManager.game_paused = false
+	GameManager.unpause()
 	SoundManager.play_bird_chirp_loop(false)
 
 	# henter versjon nummer fra version.txt og oppdaterer VersionLabel

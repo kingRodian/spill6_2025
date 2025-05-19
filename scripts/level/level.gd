@@ -55,6 +55,8 @@ func _ready() -> void:
 	# We add one second so the label shows the time we eant
 	level_timer.start(level_time + 1)
 
+	GameManager.current_level = self
+
 func reset():
 	player.reset()
 	camera.position = Vector2(0, 0)
