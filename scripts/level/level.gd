@@ -66,6 +66,8 @@ func reset():
 	can_win = true
 	can_lose = true
 
+	GameManager.connect_pause_function()
+
 func _first_time_setup():
 	print("Running first time level setup.\n")
 	has_setup = true

@@ -11,5 +11,6 @@ script = ExtResource("1_jjb8o")
 
 [connection signal="toggle_game_paused" from="." to="PauseMenu" method="_on_game_manager_toggle_game_paused"]
 [connection signal="resume" from="PauseMenu" to="." method="_on_pause_menu_resume"]
+[connection signal="retry" from="PauseMenu" to="." method="_on_pause_menu_retry"]
 
 [editable path="PauseMenu"]
