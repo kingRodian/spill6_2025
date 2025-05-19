@@ -11,6 +11,8 @@ var SaveManager = preload("res://scenes/save_manager.tscn")
 @onready var health := $HUD/LeftContainer/Health
 @onready var camera : Camera2D = $Camera
 
+@onready var death_screen = $HUD/CenterContainer/you_died
+
 var level_timer : Timer
 
 @export_tool_button("First Time Setup") var first_time_setup_button = _first_time_setup
@@ -23,6 +25,8 @@ var level_timer : Timer
 var can_win := true
 var can_lose := true
 
+## Set to true on death and set to false on first reset() call
+var _is_reset_queued = false
 
 func _enter_tree() -> void:
 	# Don't run this in editor as tool.
@@ -58,6 +62,8 @@ func _ready() -> void:
 	GameManager.current_level = self
 
 func reset():
+	# TODO We could use a transition screen here.
+	print("level resetting")
 	player.reset()
 	camera.position = Vector2(0, 0)
 	camera.reset_smoothing()
@@ -67,9 +73,11 @@ func reset():
 
 	can_win = true
 	can_lose = true
+	_is_reset_queued = false
 
 	GameManager.is_pause_enabled = true
-	GameManager.is_game_retry_enabled = true
+
+	death_screen.hide()
 
 func _first_time_setup():
 	print("Running first time level setup.\n")
@@ -133,6 +141,8 @@ func _on_win():
 	level_timer.stop()
 
 	await get_tree().create_timer(2).timeout
+
+	# TODO Should signal to GameManager
 	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
 
 ## Immediately lose the level. Called on level_timer timeout.
@@ -145,27 +155,22 @@ func lose():
 		push_warning("Redundant lose() call was made.")
 
 func _on_lose():
-	# TODO temporary, add retry button
-
 	# Stop level
 	SoundManager.taper_lyd()
-	GameManager.is_pause_enabled = false # TODO TEMPORARY add functions
-	GameManager.is_game_retry_enabled = false
+	GameManager.is_pause_enabled = false
+	_is_reset_queued = true
 	player.stop()
 	level_timer.stop()
 
-	# TODO fix bug when pausing at the same time as dying.
-	# 	Game should automatically unpause when dying.
 	# TODO We could add death/stop/idle animation here
 
-	$HUD/CenterContainer/you_died.show()
+	# Wait
+	death_screen.show()
 	await get_tree().create_timer(2).timeout
 
-	# Restart level
-	# TODO We could use a transition screen here.
-	print("level resetting")
-	reset()
-	$HUD/CenterContainer/you_died.hide()
+	# Reset level
+	if _is_reset_queued:
+		reset()
 
 ## Used by PauseMenu to show progress towards completing the level.
 func calculate_progress() -> int:

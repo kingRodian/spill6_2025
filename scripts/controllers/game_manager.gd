@@ -59,7 +59,6 @@ func try_retry():
 	var siblings := get_parent().get_children()
 	var level_index := siblings.find_custom(func(node): return node is Level)
 	if level_index != -1:
-		# TODO When trying to reset after dying, the level will call reset() twice
 		var level : Level = siblings[level_index]
 		level.reset()
 		unpause()
