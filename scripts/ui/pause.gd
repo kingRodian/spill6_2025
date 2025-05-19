@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal resume
 signal retry
+signal quit
 
 func _ready():
 	connect("visibility_changed", _on_visibility_changed)
@@ -22,8 +23,7 @@ func _on_settings_button_pressed():
 	$Settings.show()
 
 func _on_quit_button_pressed():
-	resume.emit()
-	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn") # TODO This should also be in GameManager
+	quit.emit()
 
 func _on_visibility_changed() -> void:
 	if visible:

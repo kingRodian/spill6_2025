@@ -9,7 +9,7 @@ script = ExtResource("1_jjb8o")
 
 [node name="PauseMenu" parent="." instance=ExtResource("2_1bxyl")]
 
-[connection signal="toggle_game_paused" from="." to="PauseMenu" method="_on_game_manager_toggle_game_paused"]
+[connection signal="quit" from="PauseMenu" to="." method="_on_pause_menu_quit"]
 [connection signal="resume" from="PauseMenu" to="." method="_on_pause_menu_resume"]
 [connection signal="retry" from="PauseMenu" to="." method="_on_pause_menu_retry"]
 

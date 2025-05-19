@@ -111,3 +111,9 @@ func _on_pause_menu_resume():
 
 func _on_pause_menu_retry():
 	try_retry()
+
+
+func _on_pause_menu_quit() -> void:
+	unpause()
+
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")
