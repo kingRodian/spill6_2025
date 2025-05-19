@@ -1,51 +1,118 @@
 extends Node
 
+
 signal toggle_game_paused(is_paused : bool)
 
-var game_paused : bool = false:
+@onready var pause_menu = get_node("PauseMenu")
+@onready var pause_menu_settings = get_node("PauseMenu/Settings")
+
+var is_pause_enabled := false
+var is_game_retry_enabled := false
+
+## The current level being played. Only changed when a new level is loaded.
+var current_level : Level:
 	get:
-		return game_paused
+		return current_level
 	set(value):
-		game_paused = value
 
-		# Vis/Skjul pauseknappen når man pauser
-		var pause_button = get_node("/root/THE-MAP/HUD/RightContainer/PauseButton")
-		if pause_button != null:
-			if game_paused == true:
-				pause_button.visible = false
-			else:
-				pause_button.visible = true
+		# If we go to a new level
+		if value != null:
+			is_pause_enabled = true
+			is_game_retry_enabled = true
+		else:
+			is_pause_enabled = false
+			is_game_retry_enabled = false
 
-		print("Game paused: ",game_paused)
-		get_tree().paused = game_paused
-		toggle_game_paused.emit(game_paused)
+		current_level = value
+
+var _game_paused := false
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		if get_node("../CutsceneW1m1") != null or get_node("../Menu") != null:
+		if current_level == null:
 			return
-		if $PauseMenu/Settings.visible:
-			$PauseMenu/Settings.hide()
+		if pause_menu_settings.visible:
+			pause_menu_settings.hide()
 		else:
-			game_paused = !game_paused
+			toggle_pause()
+	elif event.is_action_pressed("retry"):
+		try_retry()
 
 func _notification(what):
 	# pause og fortsett spill med android back button
+	# TODO wouldn't this mean the game unpauses when you press the home button.
 	if what in [
 		NOTIFICATION_APPLICATION_PAUSED, # home button
-		NOTIFICATION_WM_GO_BACK_REQUEST]: # back button
-		if get_node("../CutsceneW1m1") != null or get_node("../Menu") != null:
+		NOTIFICATION_WM_GO_BACK_REQUEST, # back button
+	]:
+
+		if current_level == null:
 			return
-		if $PauseMenu/Settings.visible:
-			$PauseMenu/Settings.hide()
+		if pause_menu_settings.visible:
+			pause_menu_settings.hide()
 		else:
-			game_paused = !game_paused
+			toggle_pause()
+
+## Will attempt to retry the current level if it exists
+func try_retry():
+	# Search if a Level node is the currently active scene.
+	var siblings := get_parent().get_children()
+	var level_index := siblings.find_custom(func(node): return node is Level)
+	if level_index != -1:
+		var level : Level = siblings[level_index]
+		level.reset()
+		unpause()
+
+## Tries to pause the current level if is_pause_enabled.
+func pause():
+	if _game_paused or not is_pause_enabled:
+		return
+
+	_game_paused = true
+	pause_menu.show()
+	toggle_pause_button()
+	get_tree().paused = true
+
+	print("Game paused!")
+	toggle_game_paused.emit(true)
+
+## Unpauses the current level regardless of is_pause_enabled
+func unpause():
+	if not _game_paused:
+		return
+
+	_game_paused = false
+	pause_menu.hide()
+	toggle_pause_button()
+	get_tree().paused = false
+
+	print("Game unpaused!")
+	toggle_game_paused.emit(false)
+
+func toggle_pause():
+	if is_paused():
+		unpause()
+	else:
+		pause()
+
+func is_paused():
+	return _game_paused
+
+## Hides or shows the touch button used to pause the level dependig on the pause state
+func toggle_pause_button():
+	if current_level:
+		# HUD should always have a PauseButton otherwise we get an error.
+		current_level.get_node("HUD/RightContainer/PauseButton").visible = !is_paused()
 
 func _on_pause_menu_resume():
-	game_paused = !game_paused
+	assert(is_paused(), "Game should be paused when trying to resume.")
+	unpause()
 
-func disconnect_pause_function():
-	disconnect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)
+func _on_pause_menu_retry():
+	try_retry()
 
-func connect_pause_function():
-	connect("toggle_game_paused",$PauseMenu._on_game_manager_toggle_game_paused)
+
+func _on_pause_menu_quit() -> void:
+	unpause()
+
+	get_tree().change_scene_to_file("res://scenes/menus/main_menu.tscn")

@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://84a0wyqd3bgc"]
+[gd_scene load_steps=9 format=3 uid="uid://84a0wyqd3bgc"]
 
 [ext_resource type="Script" uid="uid://bhis2n71rei0b" path="res://scripts/ui/pause.gd" id="1_umopw"]
 [ext_resource type="Texture2D" uid="uid://clvhia7kva06d" path="res://assets/art/ui/Ekstra/ui_pause_tau_tekstur01.png" id="2_33mg7"]
 [ext_resource type="PackedScene" uid="uid://cpos7lg6meg4m" path="res://scenes/menus/settings_menu.tscn" id="3_0tmxy"]
 [ext_resource type="Theme" uid="uid://dhcc0oot5rr60" path="res://materials/menu_theme.tres" id="3_igk0i"]
 [ext_resource type="Texture2D" uid="uid://dpeaov7l5ikgy" path="res://assets/art/ui/ui_knapp_skilt_tekstur02.png" id="4_5sfmx"]
+[ext_resource type="Texture2D" uid="uid://bh61rv1x4icmn" path="res://assets/art/ui/ui_knapp_skilt_tekstur04.png" id="5_gqhbq"]
 [ext_resource type="Texture2D" uid="uid://dnd23mxa0mfld" path="res://assets/art/ui/ui_knapp_skilt_tekstur03.png" id="5_rjmm1"]
 [ext_resource type="Texture2D" uid="uid://6oou72223ani" path="res://assets/art/ui/ui_knapp_skilt_tekstur01.png" id="6_m8hf8"]
 
@@ -72,12 +73,40 @@ rotation = 0.00578784
 theme_override_font_sizes/font_size = 60
 text = "Fortsett"
 
+[node name="Retry" type="Button" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 130.0
+offset_top = 229.0
+offset_right = 633.53
+offset_bottom = 321.835
+rotation = -0.0261799
+theme = ExtResource("3_igk0i")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Retry"]
+position = Vector2(250, 46.82)
+rotation = 3.10843
+scale = Vector2(0.579829, 0.652739)
+skew = 0.00935245
+texture = ExtResource("5_gqhbq")
+
+[node name="Label" type="Label" parent="Retry"]
+layout_mode = 0
+offset_left = 73.0
+offset_top = 10.117
+offset_right = 426.0
+offset_bottom = 92.1169
+rotation = -0.0349066
+theme_override_font_sizes/font_size = 60
+text = "Prøv på Nytt"
+
 [node name="SettingsButton" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
-offset_left = 164.0
-offset_top = 272.0
-offset_right = 611.0
-offset_bottom = 380.0
+offset_left = 158.0
+offset_top = 337.0
+offset_right = 605.0
+offset_bottom = 445.0
 rotation = 0.0587404
 theme = ExtResource("3_igk0i")
 
@@ -177,5 +206,6 @@ text = "100% Ferdig"
 visible = false
 
 [connection signal="pressed" from="ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="Retry" to="." method="_on_retry_button_pressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
