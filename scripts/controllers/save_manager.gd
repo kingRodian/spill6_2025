@@ -4,7 +4,7 @@ extends Node
 func _ready():
 	print("SAVING FILES")
 	save_game()
-#
+
 	print("LOADING FILES")
 	load_game()
 
@@ -38,13 +38,12 @@ func save_game():
 		# Store the save dictionary as a new line in the save file.
 		save_file.store_line(json_string)
 
-
-
 # Note: This can be called from anywhere inside the tree. This function
 # is path independent.
 func load_game():
 	if not FileAccess.file_exists("user://savegame.save"):
-		return # Error! We don't have a save to load.
+		push_error("Savegame not found!")
+		return
 
 	# We need to revert the game state so we're not cloning objects
 	# during loading. This will vary wildly depending on the needs of a
@@ -56,16 +55,16 @@ func load_game():
 
 	# Load the file line by line and process that dictionary to restore
 	# the object it represents.
-	var save_game = FileAccess.open("user://savegame.save", FileAccess.READ)
-	while save_game.get_position() < save_game.get_length():
-		var json_string = save_game.get_line()
+	var save_data = FileAccess.open("user://savegame.save", FileAccess.READ)
+	while save_data.get_position() < save_data.get_length():
+		var json_string := save_data.get_line()
 
 		# Creates the helper class to interact with JSON
-		var json = JSON.new()
+		var json := JSON.new()
 
 		# Check if there is any error while parsing the JSON string, skip in case of failure
-		var parse_result = json.parse(json_string)
-		if not parse_result == OK:
+		var parse_result := json.parse(json_string)
+		if parse_result != OK:
 			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
 			continue
 
@@ -77,9 +76,11 @@ func load_game():
 		var new_object = load(node_data["filename"]).instantiate()
 		print(new_object)
 		print(get_node(node_data["parent"]))
-		get_node(node_data["parent"]).add_child(new_object)
+		get_node(node_data["parent"]).add_child.call_deferred(new_object)
+
 		if("pos_x" in node_data and "pos_y" in node_data):
 			new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
+
 		# Now we set the remaining variables.
 		for i in node_data.keys():
 			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
