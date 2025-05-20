@@ -1,12 +1,12 @@
 extends Node
 
-@export var save_data : SaveData
+var save_data : SaveData
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	if save_data == null:
 		load_save()
 
+## Saves the current save_data to disk.
 func save():
 	if save_data == null:
 		push_error("Cannot save missing save_data.")
@@ -15,12 +15,12 @@ func save():
 	print("Saving the game.")
 	ResourceSaver.save(save_data, "user://save_data.res")
 
-
-## Will load a SaveData resource from the user data. Optionally a SaveData object can be given to load instead:
+## Will load a SaveData resource from the user data folder. Optionally a SaveData object can be given to load instead.
 func load_save(data : SaveData = null):
 	if data != null:
 		print("Loading custom save.")
 		save_data = data
+		return
 
 	if not FileAccess.file_exists("user://save_data.res"):
 		# Check for first time setup
