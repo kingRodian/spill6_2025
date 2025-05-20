@@ -1,10 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bxvbcus4651uf"]
+[gd_scene load_steps=9 format=3 uid="uid://bxvbcus4651uf"]
 
 [ext_resource type="Script" uid="uid://wi3ei7pfikci" path="res://scripts/ui/level_select.gd" id="1_n0ap1"]
 [ext_resource type="Texture2D" uid="uid://cr2au6104hwt3" path="res://assets/art/ui/bakgrunn_kart.png" id="2_lxt8a"]
-[ext_resource type="PackedScene" uid="uid://ccw8nj7luquqr" path="res://scenes/save_manager.tscn" id="3_0lr5j"]
 [ext_resource type="Theme" uid="uid://dhcc0oot5rr60" path="res://materials/menu_theme.tres" id="3_fybug"]
-[ext_resource type="PackedScene" uid="uid://djnq1inpljinj" path="res://scenes/levels/level_data.tscn" id="4_88242"]
 [ext_resource type="Texture2D" uid="uid://csy5v6ufun4wb" path="res://assets/art/ui/ui_knapp_tilbake_tekstur.png" id="4_lmajh"]
 [ext_resource type="Texture2D" uid="uid://4aw43cfhqei7" path="res://assets/art/ui/ui_knapp_start_tekstur.png" id="4_wnsey"]
 [ext_resource type="Texture2D" uid="uid://dwq6wkusbffy" path="res://assets/art/ui/ui_knapp_level_blaa.png" id="6_ikj3s"]
@@ -118,10 +116,6 @@ scale = Vector2(0.425, 0.425)
 theme = ExtResource("3_fybug")
 action_mode = 0
 icon = ExtResource("7_katum")
-
-[node name="GameStateManager" parent="." instance=ExtResource("3_0lr5j")]
-
-[node name="LevelData" parent="." instance=ExtResource("4_88242")]
 
 [connection signal="pressed" from="CutsceneButton" to="." method="_on_cutscene_button_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
