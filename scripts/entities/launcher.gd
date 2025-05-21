@@ -1,2 +1,2 @@
-extends Entity
+extends Node2D
 class_name Launcher

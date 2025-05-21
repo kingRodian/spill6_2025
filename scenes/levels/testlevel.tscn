@@ -1,12 +1,14 @@
-[gd_scene load_steps=29 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=31 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
+[ext_resource type="Script" uid="uid://b2bhagurthg34" path="res://scripts/level/level.gd" id="1_vbb8y"]
 [ext_resource type="PackedScene" uid="uid://bp0wo13r77st6" path="res://scenes/canvas_layer/canvaslayer_skog.tscn" id="2_q0ewa"]
 [ext_resource type="PackedScene" uid="uid://csx4wtb8pnvma" path="res://scenes/game/characters/raskeladden.tscn" id="3_mqgqp"]
 [ext_resource type="Script" uid="uid://cvjqi8nvwok8t" path="res://addons/rmsmartshape/shapes/shape.gd" id="4_5yrek"]
 [ext_resource type="Script" uid="uid://bfki4vmjdvaab" path="res://addons/rmsmartshape/vertex_properties.gd" id="5_mqgqp"]
 [ext_resource type="Script" uid="uid://c0uayofvg3lhk" path="res://addons/rmsmartshape/shapes/point_array.gd" id="5_q32om"]
 [ext_resource type="Script" uid="uid://cp50yoa81upfj" path="res://addons/rmsmartshape/shapes/point.gd" id="6_5yrek"]
+[ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="6_fy0jb"]
 [ext_resource type="Script" uid="uid://5vtnn0028d0v" path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" id="6_piwj7"]
 [ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
@@ -125,6 +127,8 @@ fill_mesh_offset = 0.0
 render_offset = 0.0
 
 [node name="Testlevel" type="Node2D"]
+script = ExtResource("1_vbb8y")
+has_setup = true
 
 [node name="HUD" parent="." instance=ExtResource("1_dxtel")]
 
@@ -143,14 +147,8 @@ scale = Vector2(270.23, 22.8594)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_rbirq")
 
-[node name="Player" type="Node2D" parent="."]
-
-[node name="TestPlayer" parent="Player" instance=ExtResource("3_mqgqp")]
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player/TestPlayer"]
-remote_path = NodePath("../../../Camera2D")
-
 [node name="Camera2D" type="Camera2D" parent="."]
+scale = Vector2(0.6, 0.6)
 zoom = Vector2(2, 2)
 
 [node name="GameStateManager" type="Node" parent="."]
@@ -159,12 +157,15 @@ script = ExtResource("11_q32om")
 [node name="NPCs" type="Node" parent="."]
 
 [node name="BirdSpawner" parent="NPCs" instance=ExtResource("12_piwj7")]
-position = Vector2(107, 66)
-spawns = null
+position = Vector2(87, 32)
+
+[node name="fotgjenger1" parent="NPCs" instance=ExtResource("6_fy0jb")]
+position = Vector2(792, 32)
 
 [node name="MapGeometry" type="Node" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="MapGeometry"]
+collision_mask = 27
 
 [node name="SS2D_Shape" type="Node2D" parent="MapGeometry/StaticBody2D"]
 texture_repeat = 2
@@ -195,8 +196,21 @@ position = Vector2(1107, -78)
 [node name="Platform4" parent="Obstacles" instance=ExtResource("14_rbirq")]
 position = Vector2(1295, -147)
 
-[connection signal="pressed" from="HUD/JumpButton" to="Player/TestPlayer" method="_on_jump_button_pressed"]
+[node name="Raskeladden" parent="." instance=ExtResource("3_mqgqp")]
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Raskeladden"]
+scale = Vector2(0.6, 0.6)
+remote_path = NodePath("../../Camera2D")
+
+[node name="Camera" type="Camera2D" parent="."]
+zoom = Vector2(20, 20)
+limit_left = -45
+limit_right = 10600
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+drag_vertical_enabled = true
+drag_horizontal_offset = 1.0
+drag_vertical_offset = -0.36
 
 [editable path="HUD"]
 [editable path="CanvasLayer"]
-[editable path="NPCs/BirdSpawner"]

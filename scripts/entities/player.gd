@@ -36,7 +36,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @onready var ducking_hitbox_pos :Vector2 = original_hitbox_pos + Vector2(0, 5)
 @onready var normal_hitbox : Shape2D = load("res://scenes/game/characters/raskeladden_hitbox.tres")
 @onready var ducking_hitbox : Shape2D = load("res://scenes/game/characters/raskeladden_hitbox_ducking.tres")
-const COLLISION_LAYER_PLAYER := 2
+const COLLISION_LAYER_PLAYER := 3
 
 # Movement vars
 const base_accel : float = 250.0

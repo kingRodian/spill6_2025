@@ -1,28 +1,60 @@
-[gd_scene load_steps=4 format=3 uid="uid://bus4kyo6jf6qk"]
+[gd_scene load_steps=8 format=3 uid="uid://bus4kyo6jf6qk"]
 
 [ext_resource type="Script" uid="uid://dl6kqaypdb8qh" path="res://scripts/entities/fotgjenger_1.gd" id="1_qfcqd"]
 [ext_resource type="Texture2D" uid="uid://ug5v8jbst377" path="res://assets/art/NPCs/Fotgjenger01.PNG" id="2_sax7k"]
+[ext_resource type="Texture2D" uid="uid://bh8c3rap721bx" path="res://assets/art/NPCs/Fotgjenger02.PNG" id="3_khqkr"]
+[ext_resource type="Texture2D" uid="uid://dhd5e1rmv57ey" path="res://assets/art/NPCs/Fotgjenger03.PNG" id="4_h44hl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hji86"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sax7k")
+}],
+"loop": true,
+"name": &"pedestrian1",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_khqkr")
+}],
+"loop": true,
+"name": &"pedestrian2",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_h44hl")
+}],
+"loop": true,
+"name": &"pedestrian3",
+"speed": 5.0
+}]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mnh8p"]
-radius = 8.0
-height = 50.03
+radius = 7.0
+height = 21.9
 
-[node name="fotgjenger1" type="Node2D"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_khqkr"]
+
+[node name="fotgjenger1" type="CharacterBody2D"]
+collision_layer = 16
 script = ExtResource("1_qfcqd")
 
-[node name="Fotgjenger01" type="Sprite2D" parent="."]
-position = Vector2(1, 0)
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.1, 0.1)
-texture = ExtResource("2_sax7k")
+sprite_frames = SubResource("SpriteFrames_hji86")
+animation = &"pedestrian3"
 
-[node name="MovementTimer" type="Timer" parent="."]
-wait_time = 3.0
-autostart = true
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 15)
 shape = SubResource("CapsuleShape2D_mnh8p")
 
-[connection signal="timeout" from="MovementTimer" to="." method="_on_movement_timer_timeout"]
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -3)
+shape = SubResource("CapsuleShape2D_khqkr")

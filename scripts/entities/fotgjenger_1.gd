@@ -1,29 +1,26 @@
 extends Enemy
 
-@export var follower : PathFollow2D
-const base_speed : float = 0.2
-var speed = base_speed
-var target : float = 1.0
+const BASE_SPEED : float = 60
+var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var start_pos : Vector2
+
+@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready():
 	print("fotgjenger 1 loaded")
-	#follower.progress_ratio = 0.0
-	$MovementTimer.start()
+	start_pos = position
+	# Select a random pedestrian sprite to use
+	var pedestrian_sprites = Array(sprite.sprite_frames.get_animation_names())
+	print("%s" % [pedestrian_sprites])
+	sprite.animation = pedestrian_sprites.pick_random()
+	sprite.play()
 
 func _physics_process(delta):
-	if not is_equal_approx(follower.progress_ratio, target):
-		follower.progress_ratio += speed * delta
-		position = follower.position
-
-
-func _on_movement_timer_timeout() -> void:
-	$MovementTimer.start()
-	target = abs(target - 1)
-	speed = -speed
-
+	velocity += Vector2.LEFT * BASE_SPEED * delta
+	velocity.y += gravity * delta
+	move_and_slide()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 		# Spilleren treffer hinderet
 	if body is Player:
-		emit_signal('hit', self, body)
-		SoundManager.skade_piano()
+		body._on_hit(self, body)
