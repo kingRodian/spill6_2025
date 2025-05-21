@@ -1,6 +1,6 @@
 extends Enemy
 
-const BASE_SPEED : float = 60
+const BASE_SPEED : float = 30
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var start_pos : Vector2
 
@@ -11,7 +11,6 @@ func _ready():
 	start_pos = position
 	# Select a random pedestrian sprite to use
 	var pedestrian_sprites = Array(sprite.sprite_frames.get_animation_names())
-	print("%s" % [pedestrian_sprites])
 	sprite.animation = pedestrian_sprites.pick_random()
 	sprite.play()
 
