@@ -557,6 +557,7 @@ scale = Vector2(1.5, 1.5)
 [node name="Geometry" type="Node" parent="Layout/Section 1"]
 
 [node name="Body1" type="StaticBody2D" parent="Layout/Section 1/Geometry"]
+collision_mask = 27
 
 [node name="SS2D_Shape" type="Node2D" parent="Layout/Section 1/Geometry/Body1"]
 texture_repeat = 2
@@ -622,6 +623,7 @@ rotation = -0.439938
 
 [node name="Body2" type="StaticBody2D" parent="Layout/Section 2/Geometry"]
 position = Vector2(1665, 85)
+collision_mask = 27
 
 [node name="SS2D_Shape" type="Node2D" parent="Layout/Section 2/Geometry/Body2"]
 texture_repeat = 2
@@ -636,6 +638,7 @@ visible = false
 polygon = PackedVector2Array(-84.7356, 59.6503, -32.2176, 94.9501, 27.3321, 128.579, 103.865, 163.886, 193.438, 194.076, 241.882, 205.13, 292.107, 212.358, 343.619, 214.909, 395.927, 211.936, 448.536, 202.59, 500.955, 186.021, 593.753, 155.064, 632.241, 146.352, 666.103, 141.515, 695.823, 140.079, 721.888, 141.567, 744.783, 145.504, 764.992, 151.414, 783.003, 158.822, 799.299, 167.252, 857.058, 201.67, 872.067, 208.072, 879.991, 210.615, 888.276, 212.641, 897.407, 214.968, 907.762, 218.403, 931.748, 228.287, 990.046, 257.942, 1125.69, 339.437, 1295.23, 452.257, 1342.8, 493.399, 1398.57, 531.623, 1433.37, 551.297, 1472.37, 569.879, 1515.26, 586.268, 1561.74, 599.365, 1611.49, 608.068, 1664.21, 611.278, 1719.59, 607.894, 1777.32, 596.817, 1837.09, 576.945, 1898.76, 546.966, 1866.21, 772.032, 1854.91, 966.655, 1857.47, 1155.48, -30.2626, 658.672)
 
 [node name="UpperBody 2" type="StaticBody2D" parent="Layout/Section 2/Geometry"]
+collision_mask = 27
 
 [node name="SS2D_Shape" type="Node2D" parent="Layout/Section 2/Geometry/UpperBody 2"]
 texture_repeat = 2

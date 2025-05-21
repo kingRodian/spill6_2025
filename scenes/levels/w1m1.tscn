@@ -1837,6 +1837,7 @@ scale = Vector2(0.648184, 0.648184)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(2038, 137)
+collision_mask = 27
 script = ExtResource("13_5i62i")
 
 [node name="MAP-GEOMATRY01" type="Node2D" parent="StaticBody2D"]
@@ -1854,6 +1855,7 @@ polygon = PackedVector2Array(-2086.34, -147.204, -1884.59, -149.514, -1884.29, -
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
 position = Vector2(1231, -219)
+collision_mask = 27
 script = ExtResource("13_5i62i")
 
 [node name="MAP-GEOMATRY02" type="Node2D" parent="StaticBody2D2"]
@@ -1871,6 +1873,7 @@ polygon = PackedVector2Array(-251.765, 4.50818, -251.368, 3.94363, -250.796, 3.3
 
 [node name="StaticBody2D3" type="StaticBody2D" parent="."]
 position = Vector2(5582, 22)
+collision_mask = 27
 script = ExtResource("13_5i62i")
 
 [node name="MAP-GEOMATRY03" type="Node2D" parent="StaticBody2D3"]
@@ -1888,6 +1891,7 @@ polygon = PackedVector2Array(-10.7723, -262.499, 51.7596, -268.697, 131.606, -28
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
 position = Vector2(7677, 35)
+collision_mask = 27
 script = ExtResource("13_5i62i")
 
 [node name="MAP-GEOMATRY04" type="Node2D" parent="StaticBody2D4"]
@@ -1905,6 +1909,7 @@ polygon = PackedVector2Array(-1265.4, -374.189, -1256.39, -376.95, -1245.36, -37
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="."]
 position = Vector2(8359, -732)
+collision_mask = 27
 script = ExtResource("13_5i62i")
 
 [node name="MAP-GEOMATRY05" type="Node2D" parent="StaticBody2D5"]

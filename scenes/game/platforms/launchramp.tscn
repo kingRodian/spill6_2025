@@ -15,6 +15,8 @@ points = PackedVector2Array(0, 0, 60, -30, 60, -31, 0, -1)
 script = ExtResource("1_bkho5")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 8
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 texture_repeat = 2
@@ -22,6 +24,7 @@ material = SubResource("CanvasItemMaterial_bkho5")
 shape = SubResource("ConvexPolygonShape2D_kp1r4")
 
 [node name="LaunchArea" type="Area2D" parent="."]
+collision_mask = 18
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LaunchArea"]
 shape = SubResource("ConvexPolygonShape2D_07kml")

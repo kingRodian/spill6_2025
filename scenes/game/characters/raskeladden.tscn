@@ -120,8 +120,7 @@ animations = [{
 }]
 
 [node name="Raskeladden" type="CharacterBody2D"]
-collision_layer = 3
-collision_mask = 13
+collision_layer = 6
 floor_stop_on_slope = false
 floor_max_angle = 1.41895
 floor_snap_length = 20.0
