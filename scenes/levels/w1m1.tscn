@@ -2056,6 +2056,7 @@ scale = Vector2(0.6, 0.6)
 zoom = Vector2(3, 3)
 limit_left = -45
 limit_right = 10600
+limit_bottom = 380
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 drag_vertical_enabled = true
