@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://ummqddlik17r"]
+[gd_scene load_steps=16 format=3 uid="uid://ummqddlik17r"]
 
 [ext_resource type="Script" uid="uid://dxioa2yci1cu2" path="res://scripts/ui/menu.gd" id="1_lm4ab"]
 [ext_resource type="Texture2D" uid="uid://bwmqf17eymmwg" path="res://assets/art/environments/bakgrunner/bakgrunn_meny/bakgrunn_startskjerm_placeholder.png" id="2_rrtjx"]
@@ -9,9 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://buocg065dwjp6" path="res://assets/art/ui/ui_knapp_skilt_tekstur10.png" id="7_tib3g"]
 [ext_resource type="Texture2D" uid="uid://dc0beevo3cl16" path="res://assets/art/ui/Ekstra/ui_detalj_spiker_tekstur01.png" id="8_001gl"]
 [ext_resource type="Texture2D" uid="uid://cqp72u8ynxwnb" path="res://assets/art/ui/Ekstra/ui_detalj_spiker_tekstur02.png" id="9_8n8tv"]
-[ext_resource type="PackedScene" uid="uid://ccw8nj7luquqr" path="res://scenes/save_manager.tscn" id="10_eb4md"]
 [ext_resource type="Texture2D" uid="uid://dpeaov7l5ikgy" path="res://assets/art/ui/ui_knapp_skilt_tekstur02.png" id="10_u8p4l"]
-[ext_resource type="PackedScene" uid="uid://djnq1inpljinj" path="res://scenes/levels/level_data.tscn" id="11_1coro"]
 [ext_resource type="Texture2D" uid="uid://comup7kpu1pl3" path="res://assets/art/ui/ui_knapp_skilt_tekstur06.png" id="11_3a1qt"]
 [ext_resource type="Texture2D" uid="uid://0r6stfhi8qv7" path="res://assets/art/ui/ui_knapp_skilt_tekstur07.png" id="12_4maw5"]
 [ext_resource type="PackedScene" uid="uid://bxvbcus4651uf" path="res://scenes/menus/level_select_menu.tscn" id="12_nuqcy"]
@@ -290,10 +288,6 @@ theme_override_font_sizes/font_size = 55
 text = "Error: fant ikke versjon"
 horizontal_alignment = 2
 vertical_alignment = 2
-
-[node name="GameStateManager" parent="." instance=ExtResource("10_eb4md")]
-
-[node name="LevelData" parent="." instance=ExtResource("11_1coro")]
 
 [node name="LevelSelect" parent="." instance=ExtResource("12_nuqcy")]
 visible = false

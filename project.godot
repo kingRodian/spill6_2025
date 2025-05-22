@@ -25,6 +25,7 @@ buses/default_bus_layout="res://materials/default_bus_layout.tres"
 
 SoundManager="*res://scenes/sound_manager.tscn"
 GameManager="*res://scenes/game_manager.tscn"
+SaveManager="*res://scripts/controllers/save_manager.gd"
 
 [display]
 

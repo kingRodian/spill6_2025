@@ -5,8 +5,6 @@ extends Node2D
 
 ## To initialize a level in the editor, first press the "First Time Setup" button in the property list and then save.
 
-var SaveManager = preload("res://scenes/save_manager.tscn")
-
 @onready var player : Player = $Raskeladden
 @onready var health := $HUD/LeftContainer/Health
 @onready var camera : Camera2D = $Camera
@@ -32,11 +30,6 @@ func _enter_tree() -> void:
 	# Don't run this in editor as tool.
 	if Engine.is_editor_hint():
 		return
-
-	# This can always be instantiated at runtime
-	var save_manager = SaveManager.instantiate()
-	save_manager.name = "SaveManager"
-	add_child(save_manager)
 
 	assert(has_setup, "You forgot to run first time setup.")
 

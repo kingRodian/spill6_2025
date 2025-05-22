@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccw8nj7luquqr"]
-
-[ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="1_gwbv6"]
-
-[node name="GameStateManager" type="Node"]
-script = ExtResource("1_gwbv6")
