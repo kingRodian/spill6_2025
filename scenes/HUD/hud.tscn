@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://clgosqujy66ek"]
+[gd_scene load_steps=7 format=3 uid="uid://clgosqujy66ek"]
 
 [ext_resource type="Script" uid="uid://bonv1w1x516bh" path="res://scripts/ui/health.gd" id="1_qp5mj"]
+[ext_resource type="Theme" uid="uid://0hse7hlms77s" path="res://assets/fonts/ar_one_sans_theme.tres" id="1_r7rnh"]
+[ext_resource type="FontFile" uid="uid://b2k2qqu8sk8oe" path="res://assets/fonts/AR_One_Sans/static/AROneSans-Bold.ttf" id="2_j3gwx"]
 [ext_resource type="Script" uid="uid://qvty3xy1yit" path="res://scripts/ui/pause_button.gd" id="2_jjobl"]
 [ext_resource type="PackedScene" uid="uid://gu6wwha84ye1" path="res://scenes/HUD/game_timer.tscn" id="4_epp0c"]
 
@@ -46,6 +48,14 @@ label_settings = SubResource("LabelSettings_62xai")
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
+
+[node name="debug_label" type="Label" parent="CenterContainer"]
+visible = false
+layout_mode = 2
+theme = ExtResource("1_r7rnh")
+theme_override_fonts/font = ExtResource("2_j3gwx")
+theme_override_font_sizes/font_size = 23
+text = "DEBUG_MODE"
 
 [node name="LeftContainer" type="CenterContainer" parent="."]
 offset_left = 20.0

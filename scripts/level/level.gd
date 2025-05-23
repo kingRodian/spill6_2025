@@ -176,8 +176,10 @@ func _on_lose():
 func calculate_progress() -> int:
 	# TODO Add better goal node retrieval
 	var goal = get_node("MAP-TRIGGERS/goal")
-
-	return round((player.position.x / goal.position.x) * 100)
+	if goal:
+		return round((player.position.x / goal.position.x) * 100)
+	else:
+		return 0
 
 
 ## Permanentaly add a node to this node
