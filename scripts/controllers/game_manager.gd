@@ -43,7 +43,7 @@ var _game_paused := false
 
 # Debug movement
 func _physics_process(delta):
-	if is_debug_mode:
+	if is_debug_mode and player != null:
 		var debug_vec := Vector2.ZERO
 		for key in debug_keymap:
 			# If key is being held, add its vector
