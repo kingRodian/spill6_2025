@@ -14,8 +14,8 @@ var camera : Camera2D
 
 var is_debug_mode := false
 var debug_faster := false
-var debug_base_speed : float = 50
-var debug_faster_speed : float = 200
+var debug_base_speed : float = 500
+var debug_faster_speed : float = 2000
 var debug_keymap := {"debug_up" : false, "debug_down" : false,
  "debug_left" : false, "debug_right" : false}
 var debug_dir_vecs := {"debug_up" : Vector2.UP, "debug_down" : Vector2.DOWN,
@@ -41,9 +41,26 @@ var current_level : Level:
 
 var _game_paused := false
 
+# Debug movement
+func _physics_process(delta):
+	if is_debug_mode:
+		var debug_vec := Vector2.ZERO
+		for key in debug_keymap:
+			# If key is being held, add its vector
+			if debug_keymap[key]:
+				debug_vec += debug_dir_vecs[key]
+		debug_vec = debug_vec.normalized()
+
+		var movement : Vector2
+		if debug_faster:
+			movement = debug_vec * debug_faster_speed * delta
+		else:
+			movement = debug_vec * debug_base_speed * delta
+		player.position += movement
+
 func _input(event : InputEvent):
 	if OS.is_debug_build():
-		if event.is_action_pressed("debug_mode"):
+		if event.is_action_pressed("debug_mode") and not _game_paused:
 			toggle_debug_mode()
 		else:
 			if is_debug_mode:
@@ -72,7 +89,6 @@ func debug_mode_input(event : InputEvent):
 	elif event.is_action_released("debug_faster"):
 		debug_faster = false
 
-	var debug_vec := Vector2.ZERO
 	# Update state of key on events
 	for action in debug_keymap.keys():
 		if event.is_action(action):
@@ -80,16 +96,6 @@ func debug_mode_input(event : InputEvent):
 				debug_keymap[action] = true
 			else:
 				debug_keymap[action] = false
-	for key in debug_keymap:
-		# If key is being held, add its vector
-		if debug_keymap[key]:
-			debug_vec += debug_dir_vecs[key]
-	debug_vec = debug_vec.normalized()
-
-	if debug_faster:
-		player.position += debug_vec * debug_faster_speed
-	else:
-		player.position += debug_vec * debug_base_speed
 
 func _notification(what):
 	# pause og fortsett spill med android back button
