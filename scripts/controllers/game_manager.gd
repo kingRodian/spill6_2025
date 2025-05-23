@@ -88,6 +88,9 @@ func debug_mode_input(event : InputEvent):
 		debug_faster = true
 	elif event.is_action_released("debug_faster"):
 		debug_faster = false
+	elif event.is_action_pressed("debug_refill_health"):
+		player.health = player.start_health
+		player.health_changed.emit(player.health)
 
 	# Update state of key on events
 	for action in debug_keymap.keys():
