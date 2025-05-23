@@ -10,6 +10,8 @@ var is_pause_enabled := false
 var is_game_retry_enabled := false
 
 var player : Player
+var camera : Camera2D
+
 var is_debug_mode := false
 var debug_faster := false
 var debug_base_speed : float = 50
@@ -35,6 +37,7 @@ var current_level : Level:
 
 		current_level = value
 		player = current_level.find_child("Raskeladden", true)
+		camera = current_level.find_child("Camera", true)
 
 var _game_paused := false
 
@@ -177,6 +180,7 @@ func toggle_debug_mode():
 			player.set_physics_process(false)
 			get_tree().paused = true
 			toggle_debug_label()
+			camera.position_smoothing_enabled = false
 	else:
 		print("debug_mode off")
 		# We cant enter debug mode in the first place without a player, so no check here
@@ -184,6 +188,7 @@ func toggle_debug_mode():
 		player.set_physics_process(true)
 		get_tree().paused = false
 		toggle_debug_label()
+		camera.position_smoothing_enabled = true
 
 func toggle_debug_label():
 	var debug_label : Label = current_level.find_child("debug_label", true)
