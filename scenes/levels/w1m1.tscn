@@ -2050,6 +2050,14 @@ rotation = 0.767945
 position = Vector2(10100, -529)
 rotation = -0.153589
 
+[node name="Raskeladden" parent="." instance=ExtResource("4_5c7x7")]
+position = Vector2(20, -43)
+scroll_speed = 150.0
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Raskeladden"]
+scale = Vector2(0.6, 0.6)
+remote_path = NodePath("../../Camera")
+
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(20, -43)
 scale = Vector2(0.6, 0.6)
@@ -2061,14 +2069,6 @@ position_smoothing_speed = 7.0
 drag_vertical_enabled = true
 drag_horizontal_offset = 1.0
 drag_vertical_offset = -0.36
-
-[node name="Raskeladden" parent="." instance=ExtResource("4_5c7x7")]
-position = Vector2(20, -43)
-scroll_speed = 150.0
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Raskeladden"]
-scale = Vector2(0.6, 0.6)
-remote_path = NodePath("../../Camera")
 
 [editable path="HUD"]
 [editable path="CanvasLayer"]

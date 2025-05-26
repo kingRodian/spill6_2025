@@ -1,12 +1,20 @@
 extends Node
-# hovedmenyen på spillet
+
+## hovedmenyen på spillet
+
+@export var custom_save : SaveData
+
 @onready var level_select = $LevelSelect
 @onready var settings = $Settings
 @onready var credits = $Credits
+
 func _ready():
 	print("menu loaded")
 	GameManager.unpause()
 	SoundManager.play_bird_chirp_loop(false)
+
+	if custom_save != null:
+		SaveManager.load_save(custom_save)
 
 	# henter versjon nummer fra version.txt og oppdaterer VersionLabel
 	var file = FileAccess.open("res://version.txt", FileAccess.READ)
