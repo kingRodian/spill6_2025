@@ -2054,16 +2054,19 @@ rotation = -0.153589
 
 [node name="Camera" type="Camera2D" parent="."]
 position = Vector2(20, -43)
-zoom = Vector2(3, 3)
 limit_left = -45
 limit_right = 10600
 limit_bottom = 380
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
 drag_horizontal_offset = 1.0
 drag_vertical_offset = -0.36
 script = ExtResource("30_38v6w")
 margins = Vector2(300, 300)
+max_zoom = 8.0
+zoom_in_speed = 2.0
+zoom_out_speed = 2.0
+x_speed = 5.0
+y_speed = 2.0
+max_interpolation = 0.8
 
 [node name="Raskeladden" parent="." instance=ExtResource("4_5c7x7")]
 position = Vector2(20, -43)

@@ -3,29 +3,43 @@ extends Camera2D
 @onready var player : Player = get_parent().get_node("Raskeladden")
 
 ## Margins in world coordinates.
-@export var margins := Vector2(30, 30)
+@export var margins := Vector2(300, 300)
 @export var min_zoom := 0.7
 @export var max_zoom := 10.0
 
 var target_position : Vector2
 var target_zoom : Vector2
-## The time in seconds for the camera to reach is
-@export var speed := 1.0
-var max_extrapolation := 30.0
+
+@export_group("Interpolation")
+## The speed at which the camera will zoom in. Usually a value between 1.0 and 10.0.
+@export var zoom_in_speed := 1.0
+## The speed at which the camera will zoom out. Usually a value between 1.0 and 10.0.
+@export var zoom_out_speed := 1.0
+## The speed at which the camera will change its x coordinate. Usually a value between 1.0 and 10.0.
+@export var x_speed := 6.0
+## The speed at which the camera will change its x coordinate. Usually a value between 1.0 and 10.0.
+@export var y_speed := 1.0
+## A max clamp on how fast all interpolation happens. A value below 1.0 will lower decrease the time to reach rest.
+## A value over 1.0 will allow the camera to go past the target direction.
+@export var max_interpolation := 1.0
+
+var HEIGHT_TO_IGNORE := 20.0
 
 func _process(delta: float) -> void:
-	if GameManager.is_paused():
-		return
+	# Position
+	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, max_interpolation))
+	if position.y - HEIGHT_TO_IGNORE > target_position.y or true:
+		position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, max_interpolation))
 
-	print("Change: ", speed * delta)
-	# position = position.lerp(target_position, clampf(speed * delta, 0.0, max_extrapolation))
-	# zoom = zoom.lerp(target_zoom, clampf(speed * delta, 0.0, max_extrapolation))
-	position = target_position
-	zoom = target_zoom
-	reset_smoothing()
+	# Zoom
+	var zoom_speed := zoom_out_speed
+	if zoom.x < target_zoom.x:
+		zoom_speed = zoom_in_speed
+
+	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, max_interpolation))
 
 func _physics_process(delta: float) -> void:
-	var positions : Array[Vector2] = [player.global_position, player.global_position + Vector2(200, 0)]
+	var positions : Array[Vector2] = [player.global_position, player.global_position + Vector2(200, -100)]
 	var origin := player.global_position
 
 	var add_point := func (start, end):
@@ -41,7 +55,6 @@ func _physics_process(delta: float) -> void:
 
 	fit_to_points(positions)
 
-
 func fit_to_points(points : Array[Vector2]):
 	var minimum := Vector2(points[0])
 	var maximum := Vector2(points[-1])
@@ -49,25 +62,35 @@ func fit_to_points(points : Array[Vector2]):
 		minimum = minimum.min(point)
 		maximum = maximum.max(point)
 
+	print(minimum, ", ", maximum)
+
 	var middle := (minimum + maximum) / 2.0
 	var diff := (minimum - maximum)
+	var diff_x := absf(diff.x)
+	var diff_y := absf(diff.y)
 	# var diff := (minimum - maximum).abs() + margins
 
-
+	var ratio := float(get_window().size.x ) / float(get_window().size.y)
+	# print(ratio)
 	var new_zoom : float
 	if diff.x > diff.y:
-		new_zoom = float(get_window().size.x) / (diff.abs().x + margins.x)
+	# if diff_x > diff_y * ratio:
+		print(diff_x)
+		new_zoom = float(get_window().size.x) / (diff_x + margins.x)
+		# new_zoom = diff_x / float(get_window().size.x)
 	else:
-		new_zoom = float(get_window().size.y) / (diff.abs().y + margins.y)
+		print(diff_y)
+		new_zoom = float(get_window().size.y) / (diff_y+ margins.y)
+		# new_zoom = diff_y / float(get_window().size.y)
+	# new_zoom = 1.0/new_zoom
 
-	target_zoom = (Vector2(new_zoom, new_zoom)).abs()
+	if new_zoom < min_zoom:
+		new_zoom = min_zoom
+	elif new_zoom > max_zoom:
+		new_zoom = max_zoom
 
-	# Make sure zoom is within limits
-	if target_zoom.x < min_zoom or target_zoom.y < min_zoom:
-		target_zoom = Vector2(min_zoom, min_zoom)
-	elif target_zoom.x > max_zoom or target_zoom.y > max_zoom:
-		target_zoom = Vector2(max_zoom, max_zoom)
-
+	print(new_zoom)
+	target_zoom = Vector2(new_zoom, new_zoom).abs()
 	target_position = middle
 
 func _raycast(start : Vector2, direction : Vector2) -> Dictionary:
