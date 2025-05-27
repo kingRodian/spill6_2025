@@ -3,23 +3,22 @@ extends Camera2D
 ## How many units down should be checked for ground.
 const GROUND_CHECK_LENGTH := 200.0
 ## THE height above the ground terrain rays will be cast from.
-const GROUND_RAYS_HEIGHT := 50.0
-## How many units long the ray checks are for finding terrain.
+const GROUND_RAYS_HEIGHT := 70.0
+## How many units long the terrain rays are.
 const RAY_LENGTH := 600.0
 ## The maximum slope that is still considered floor, in radians
 const MAX_FLOOR_ANGLE := PI / 4
+## The margin given to include player
+const PLAYER_MARGIN := 50.0
 
 @onready var player : Player = get_parent().get_node("Raskeladden")
 
 ## Margins in world coordinates.
 @export var margins := Vector2(300, 300)
 @export var min_zoom := 0.7
-@export var max_zoom := 10.0
+@export var max_zoom := 5.0
 ## The zoom value to scale around.
 @export var baseline_zoom = 2.0
-
-var target_position : Vector2
-var target_zoom : Vector2
 
 @export_group("Interpolation")
 ## The speed at which the camera will zoom in. Usually a value between 1.0 and 10.0.
@@ -34,15 +33,15 @@ var target_zoom : Vector2
 ## A value over 1.0 will allow the camera to go past the target direction.
 @export var max_interpolation := 1.0
 
-var HEIGHT_TO_IGNORE := 20.0
+var target_position : Vector2
+var target_zoom : Vector2
 
 var _last_ground : Vector2
 
 func _process(delta: float) -> void:
 	# Position
 	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, max_interpolation))
-	if position.y - HEIGHT_TO_IGNORE > target_position.y or true:
-		position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, max_interpolation))
+	position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, max_interpolation))
 
 	# Zoom
 	var zoom_speed := zoom_out_speed
@@ -52,7 +51,7 @@ func _process(delta: float) -> void:
 	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, max_interpolation))
 
 func _physics_process(delta: float) -> void:
-	var positions : Array[Vector2] = [player.global_position, player.global_position + Vector2(200, -50)]
+	var positions : Array[Vector2] = []
 	var origin := player.global_position
 	var ground := origin
 
@@ -60,9 +59,10 @@ func _physics_process(delta: float) -> void:
 	if ground_res and abs(Vector2.UP.angle_to(ground_res["normal"])) < MAX_FLOOR_ANGLE:
 		ground = ground_res["position"]
 		_last_ground = ground
+		positions.append(ground + Vector2.UP * PLAYER_MARGIN)
 	else:
 		ground = Vector2(origin.x, _last_ground.y)
-		# positions.append(player.global_position)
+		positions.append(player.global_position)
 		print("Ground NOT detected!")
 
 	origin = ground + Vector2.UP * GROUND_RAYS_HEIGHT
