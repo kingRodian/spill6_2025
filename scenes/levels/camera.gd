@@ -1,5 +1,14 @@
 extends Camera2D
 
+## How many units down should be checked for ground.
+const GROUND_CHECK_LENGTH := 200.0
+## THE height above the ground terrain rays will be cast from.
+const GROUND_RAYS_HEIGHT := 50.0
+## How many units long the ray checks are for finding terrain.
+const RAY_LENGTH := 600.0
+## The maximum slope that is still considered floor, in radians
+const MAX_FLOOR_ANGLE := PI / 4
+
 @onready var player : Player = get_parent().get_node("Raskeladden")
 
 ## Margins in world coordinates.
@@ -27,6 +36,8 @@ var target_zoom : Vector2
 
 var HEIGHT_TO_IGNORE := 20.0
 
+var _last_ground : Vector2
+
 func _process(delta: float) -> void:
 	# Position
 	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, max_interpolation))
@@ -41,20 +52,35 @@ func _process(delta: float) -> void:
 	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, max_interpolation))
 
 func _physics_process(delta: float) -> void:
-	var positions : Array[Vector2] = [player.global_position, player.global_position + Vector2(200, -100)]
+	var positions : Array[Vector2] = [player.global_position, player.global_position + Vector2(200, -50)]
 	var origin := player.global_position
+	var ground := origin
+
+	var ground_res := _raycast(origin, origin + Vector2.DOWN * GROUND_CHECK_LENGTH)
+	if ground_res and abs(Vector2.UP.angle_to(ground_res["normal"])) < MAX_FLOOR_ANGLE:
+		ground = ground_res["position"]
+		_last_ground = ground
+	else:
+		ground = Vector2(origin.x, _last_ground.y)
+		# positions.append(player.global_position)
+		print("Ground NOT detected!")
+
+	origin = ground + Vector2.UP * GROUND_RAYS_HEIGHT
 
 	var add_point := func (start, end):
 		var ray := _raycast(start, end)
 		if ray:
 			# If collision is with floor
-			if abs(Vector2.UP.angle_to(ray["normal"])) < PI / 4:
+			if abs(Vector2.UP.angle_to(ray["normal"])) < MAX_FLOOR_ANGLE:
 				positions.append(ray["position"])
 
-	add_point.call(origin, player.global_position + Vector2(1,1) * 600)
-	add_point.call(origin, player.global_position + Vector2(1,0) * 600)
-	add_point.call(origin, player.global_position + Vector2(2,1) * 600)
+	add_point.call(origin, origin + Vector2(1,1) * RAY_LENGTH)
+	add_point.call(origin, origin + Vector2(1,0) * RAY_LENGTH)
+	add_point.call(origin, origin + Vector2(2,1) * RAY_LENGTH)
 
+	if not positions:
+		push_error("No raycasts was hit!")
+		positions = [player.global_position]
 	fit_to_points(positions)
 
 func fit_to_points(points : Array[Vector2]):
