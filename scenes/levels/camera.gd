@@ -6,6 +6,8 @@ extends Camera2D
 @export var margins := Vector2(300, 300)
 @export var min_zoom := 0.7
 @export var max_zoom := 10.0
+## The zoom value to scale around.
+@export var baseline_zoom = 2.0
 
 var target_position : Vector2
 var target_zoom : Vector2
@@ -62,7 +64,7 @@ func fit_to_points(points : Array[Vector2]):
 		minimum = minimum.min(point)
 		maximum = maximum.max(point)
 
-	print(minimum, ", ", maximum)
+	# print(minimum, ", ", maximum)
 
 	var middle := (minimum + maximum) / 2.0
 	var diff := (minimum - maximum)
@@ -70,26 +72,18 @@ func fit_to_points(points : Array[Vector2]):
 	var diff_y := absf(diff.y)
 	# var diff := (minimum - maximum).abs() + margins
 
-	var ratio := float(get_window().size.x ) / float(get_window().size.y)
-	# print(ratio)
 	var new_zoom : float
-	if diff.x > diff.y:
-	# if diff_x > diff_y * ratio:
-		print(diff_x)
-		new_zoom = float(get_window().size.x) / (diff_x + margins.x)
-		# new_zoom = diff_x / float(get_window().size.x)
+	var ratio := float(get_window().size.x ) / float(get_window().size.y)
+	if diff_x > diff_y * ratio:
+		new_zoom = (float(get_window().size.x) / (diff_x + margins.x)) / baseline_zoom
 	else:
-		print(diff_y)
-		new_zoom = float(get_window().size.y) / (diff_y+ margins.y)
-		# new_zoom = diff_y / float(get_window().size.y)
-	# new_zoom = 1.0/new_zoom
+		new_zoom = (float(get_window().size.y) / (diff_y + margins.y)) / baseline_zoom
 
 	if new_zoom < min_zoom:
 		new_zoom = min_zoom
 	elif new_zoom > max_zoom:
 		new_zoom = max_zoom
 
-	print(new_zoom)
 	target_zoom = Vector2(new_zoom, new_zoom).abs()
 	target_position = middle
 
