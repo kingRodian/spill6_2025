@@ -1,5 +1,12 @@
 extends Camera2D
 
+
+## Whether to drawn terrain collision points.
+## The red circles on the ground are intersections with raycasts, and the red circle around the player is where they are cast from.
+## The blue circle is the target_position of the camera.
+## The green circle is the current position of the camera.
+const DRAW_DEBUG := true
+
 ## How many units down should be checked for ground.
 const GROUND_CHECK_LENGTH := 200.0
 ## THE height above the ground terrain rays will be cast from.
@@ -37,6 +44,8 @@ var target_position : Vector2
 var target_zoom : Vector2
 
 var _last_ground : Vector2
+var _points : Array[Vector2]
+
 
 func _process(delta: float) -> void:
 	# Position
@@ -50,7 +59,17 @@ func _process(delta: float) -> void:
 
 	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, max_interpolation))
 
-func _physics_process(delta: float) -> void:
+func _draw() -> void:
+	if OS.is_debug_build() and DRAW_DEBUG:
+		draw_set_transform_matrix(global_transform.affine_inverse())
+
+		if _points:
+			for point in _points:
+				draw_circle((point), 10, "red")
+		draw_circle(target_position, 10, "blue")
+		draw_circle(position, 10, "green")
+
+func _physics_process(_delta: float) -> void:
 	var positions : Array[Vector2] = []
 	var origin := player.global_position
 	var ground := origin
@@ -90,13 +109,14 @@ func fit_to_points(points : Array[Vector2]):
 		minimum = minimum.min(point)
 		maximum = maximum.max(point)
 
-	# print(minimum, ", ", maximum)
+	_points = points.duplicate()
+	if OS.is_debug_build() and DRAW_DEBUG:
+		queue_redraw()
 
 	var middle := (minimum + maximum) / 2.0
 	var diff := (minimum - maximum)
 	var diff_x := absf(diff.x)
 	var diff_y := absf(diff.y)
-	# var diff := (minimum - maximum).abs() + margins
 
 	var new_zoom : float
 	var ratio := float(get_window().size.x ) / float(get_window().size.y)
@@ -113,6 +133,7 @@ func fit_to_points(points : Array[Vector2]):
 	target_zoom = Vector2(new_zoom, new_zoom).abs()
 	target_position = middle
 
+## Only raycasts with ground layer
 func _raycast(start : Vector2, direction : Vector2) -> Dictionary:
 	var space_rid = get_world_2d().space
 	var space_state = PhysicsServer2D.space_get_direct_state(space_rid)
