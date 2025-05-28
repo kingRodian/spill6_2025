@@ -25,7 +25,7 @@ const PLAYER_MARGIN := 50.0
 @export var min_zoom := 0.7
 @export var max_zoom := 5.0
 ## The zoom value to scale around.
-@export var baseline_zoom = 2.0
+@export var baseline_zoom := 2.0
 
 @export_group("Interpolation")
 ## The speed at which the camera will zoom in. Usually a value between 1.0 and 10.0.
@@ -130,6 +130,15 @@ func fit_to_points(points : Array[Vector2]):
 
 	target_zoom = Vector2(new_zoom, new_zoom).abs()
 	target_position = middle
+
+func reset():
+	position = Vector2.ZERO
+	target_position = Vector2.ZERO
+	target_zoom = Vector2(baseline_zoom, baseline_zoom)
+	zoom = Vector2(baseline_zoom, baseline_zoom)
+	_last_ground = Vector2.ZERO
+	_points = []
+
 
 ## Only raycasts with ground layer
 func _raycast(start : Vector2, direction : Vector2) -> Dictionary:

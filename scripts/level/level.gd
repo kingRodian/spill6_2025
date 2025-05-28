@@ -65,8 +65,7 @@ func reset():
 	# TODO We could use a transition screen here.
 	print("level resetting")
 	player.reset()
-	camera.position = Vector2(0, 0)
-	camera.reset_smoothing()
+	camera.reset()
 
 	# We add one second so the label shows the time we eant
 	level_timer.start(level_time + 1)
