@@ -2066,7 +2066,6 @@ zoom_in_speed = 2.0
 zoom_out_speed = 2.0
 x_speed = 4.0
 y_speed = 2.0
-max_interpolation = 0.8
 
 [node name="Raskeladden" parent="." instance=ExtResource("4_5c7x7")]
 position = Vector2(20, -43)

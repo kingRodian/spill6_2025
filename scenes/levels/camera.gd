@@ -36,9 +36,7 @@ const PLAYER_MARGIN := 50.0
 @export var x_speed := 6.0
 ## The speed at which the camera will change its x coordinate. Usually a value between 1.0 and 10.0.
 @export var y_speed := 1.0
-## A max clamp on how fast all interpolation happens. A value below 1.0 will lower decrease the time to reach rest.
-## A value over 1.0 will allow the camera to go past the target direction.
-@export var max_interpolation := 1.0
+
 
 var target_position : Vector2
 var target_zoom : Vector2
@@ -49,15 +47,15 @@ var _points : Array[Vector2]
 
 func _process(delta: float) -> void:
 	# Position
-	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, max_interpolation))
-	position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, max_interpolation))
+	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, 1.0))
+	position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, 1.0))
 
 	# Zoom
 	var zoom_speed := zoom_out_speed
 	if zoom.x < target_zoom.x:
 		zoom_speed = zoom_in_speed
 
-	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, max_interpolation))
+	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, 1.0))
 
 func _draw() -> void:
 	if OS.is_debug_build() and DRAW_DEBUG:
