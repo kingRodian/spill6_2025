@@ -1,11 +1,12 @@
 extends Camera2D
 
 
-## Whether to drawn terrain collision points.
-## The red circles on the ground are intersections with raycasts, and the red circle around the player is where they are cast from.
+## Whether to drawn terrain collision points. Will never draw debug in release mode.
+## The purple circle is where all rays are drawn from.
+## The red circles are intersections with raycasts.
 ## The blue circle is the target_position of the camera.
 ## The green circle is the current position of the camera.
-const DRAW_DEBUG := true
+@export var DRAW_DEBUG := true
 
 ## How many units down should be checked for ground.
 const GROUND_CHECK_LENGTH := 200.0
@@ -64,6 +65,7 @@ func _draw() -> void:
 		if _points:
 			for point in _points:
 				draw_circle((point), 10, "red")
+			draw_circle(_points[0], 10, "purple")
 		draw_circle(target_position, 10, "blue")
 		draw_circle(position, 10, "green")
 
