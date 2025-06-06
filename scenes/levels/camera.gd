@@ -175,6 +175,22 @@ func fit_to_points(points : Array[Vector2]):
 	# We stop the target from going backwards, to not cause any stuttering.
 	target_position = middle.max(Vector2(target_position.x, middle.y))
 
+## Zoom and pan to the player. Called by level on player death.
+func death_zoom():
+	target_zoom = Vector2(max_zoom, max_zoom)
+	target_position = player.global_position
+	x_speed = 1.0
+	y_speed = 1.0
+	drag_horizontal_offset = 0.0
+	drag_vertical_offset = 0.0
+
+	# disable zoom deadzone
+	if signf(zoom.x - target_zoom.x) == _zoom_direction:
+		_zoom_direction *= -1
+	_zoom_slowdown = 1.0
+
+	set_physics_process(false)
+
 func reset():
 	position = Vector2.ZERO
 	target_position = Vector2.ZERO
@@ -182,7 +198,6 @@ func reset():
 	zoom = Vector2(baseline_zoom, baseline_zoom)
 	_last_ground = Vector2.ZERO
 	_points = []
-
 
 ## Only raycasts with ground layer
 func _raycast(start : Vector2, direction : Vector2) -> Dictionary:

@@ -7,7 +7,8 @@ extends Node2D
 
 @onready var player : Player = $Raskeladden
 @onready var health := $HUD/LeftContainer/Health
-@onready var camera : Camera2D = $Camera
+@onready var camera : Camera = $Camera
+var death_camera : Camera
 
 @onready var death_screen = $HUD/CenterContainer/you_died
 
@@ -59,6 +60,8 @@ func reset():
 	print("level resetting")
 	player.reset()
 	camera.reset()
+	if death_camera:
+		death_camera.free()
 
 	# We add one second so the label shows the time we eant
 	level_timer.start(level_time + 1)
@@ -137,6 +140,14 @@ func _on_lose():
 	_is_reset_queued = true
 	player.stop()
 	level_timer.stop()
+
+	# Create a camera to do death zoom. Easier than saving and resetting original camera values.
+	death_camera = Camera.new()
+	add_child(death_camera)
+	death_camera.make_current()
+	death_camera.position = camera.get_screen_center_position()
+	death_camera.zoom = camera.zoom
+	death_camera.death_zoom()
 
 	# TODO We could add death/stop/idle animation here
 
