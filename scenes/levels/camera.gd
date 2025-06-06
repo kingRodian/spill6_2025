@@ -25,8 +25,8 @@ const PLAYER_MARGIN := 50.0
 @export var margins := Vector2(300, 300)
 @export var min_zoom := 0.7
 @export var max_zoom := 5.0
-## The zoom value to scale around.
-@export var baseline_zoom := 2.0
+## The zoom value to scale around. Also default zoom on start and on reset. Manually changing zoom should be avoided.
+@export var baseline_zoom := 2.5
 
 @export_group("Interpolation")
 ## The speed at which the camera will zoom in. Usually a value between 1.0 and 10.0.
@@ -45,6 +45,9 @@ var target_zoom : Vector2
 var _last_ground : Vector2
 var _points : Array[Vector2]
 
+
+func _ready() -> void:
+	zoom = Vector2(baseline_zoom, baseline_zoom)
 
 func _process(delta: float) -> void:
 	# Position
