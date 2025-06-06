@@ -196,19 +196,7 @@ position = Vector2(1295, -147)
 [node name="Raskeladden" parent="." instance=ExtResource("3_mqgqp")]
 
 [node name="Camera" type="Camera2D" parent="."]
-scale = Vector2(0.65, 0.65)
-zoom = Vector2(3, 3)
-limit_left = -45
-limit_right = 10600
-limit_bottom = 800
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-drag_vertical_enabled = true
-drag_horizontal_offset = 1.0
-drag_vertical_offset = -0.36
-editor_draw_limits = true
 script = ExtResource("17_vbb8y")
-margins = Vector2(500, 200)
 
 [editable path="HUD"]
 [editable path="CanvasLayer"]
