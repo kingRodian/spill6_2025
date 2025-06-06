@@ -13,7 +13,7 @@ const GROUND_CHECK_LENGTH := 200.0
 ## THE height above the ground terrain rays will be cast from.
 const GROUND_RAYS_HEIGHT := 70.0
 ## How many units long the terrain rays are.
-const RAY_LENGTH := 600.0
+const RAY_LENGTH := 500.0
 ## The maximum slope that is still considered floor, in radians
 const MAX_FLOOR_ANGLE := PI / 4
 ## The margin given to include player
@@ -22,22 +22,32 @@ const PLAYER_MARGIN := 50.0
 @onready var player : Player = get_parent().get_node("Raskeladden")
 
 ## Margins in world coordinates.
-@export var margins := Vector2(300, 300)
+@export var margins := Vector2(30, 10)
 @export var min_zoom := 0.7
-@export var max_zoom := 5.0
+@export var max_zoom := 3.5
 ## The zoom value to scale around. Also default zoom on start and on reset. Manually changing zoom should be avoided.
 @export var baseline_zoom := 2.5
+## The minimum difference between zoom and target_zoom to immidietaly start to interpolate.
+## Otherwise, a delay given by zoom_deadzone_frames will occur, zoom interpolation fully starts.
+@export var zoom_deadzone := 1.2
+## The number of frames waited before camera zooms normally on zoom direction changed.
+@export var zoom_deadzone_frames := 50
 
 @export_group("Interpolation")
 ## The speed at which the camera will zoom in. Usually a value between 1.0 and 10.0.
-@export var zoom_in_speed := 1.0
+@export var zoom_in_speed := 0.6
 ## The speed at which the camera will zoom out. Usually a value between 1.0 and 10.0.
-@export var zoom_out_speed := 1.0
+@export var zoom_out_speed := 0.8
 ## The speed at which the camera will change its x coordinate. Usually a value between 1.0 and 10.0.
-@export var x_speed := 6.0
+@export var x_speed := 2.75
 ## The speed at which the camera will change its x coordinate. Usually a value between 1.0 and 10.0.
-@export var y_speed := 1.0
+@export var y_speed := 2.75
 
+## Specifies the direction the camera is zooming. In is positive, out is negative.
+var _zoom_direction := 1.0
+## A zoom factor used to slow down zooming during rapid canges between zoom in and out.
+var _zoom_slowdown := 1.0
+var _zoom_frame_count := 0.0
 
 var target_position : Vector2
 var target_zoom : Vector2
@@ -49,17 +59,46 @@ var _points : Array[Vector2]
 func _ready() -> void:
 	zoom = Vector2(baseline_zoom, baseline_zoom)
 
+	# Only change if default is not set
+	if drag_horizontal_offset == 0.0:
+		drag_horizontal_offset = 1.0
+
+	if drag_left_margin == 0.2:
+		drag_left_margin = 0.28
+
+	if drag_vertical_offset == 0.0:
+		drag_vertical_offset = -0.36
+
 func _process(delta: float) -> void:
 	# Position
 	position.x = lerp(position.x, target_position.x, clampf(x_speed * delta, 0.0, 1.0))
 	position.y = lerp(position.y, target_position.y, clampf(y_speed * delta, 0.0, 1.0))
 
 	# Zoom
+	# If directiion of zoom changed, e.g zoom in to zoom out
+	if signf(zoom.x - target_zoom.x) == _zoom_direction:
+		_zoom_direction *= -1
+		_zoom_slowdown = 0.0
+		_zoom_frame_count = 0.0
+
+	# Ignore slowdown if zoom is large enough
+	if absf(zoom.x - target_zoom.x) > zoom_deadzone:
+		_zoom_slowdown = 1.0
+		# print("Deadzone hit!")
+
+	# Exponential easing function. _zoom_slowdown is small for all _zoom_frame_counts except the few last ones.
+	if _zoom_slowdown != 1.0:
+		# Last parameter of pow can be increased for steeper curve, or lower for shallower curve.
+		_zoom_slowdown = clampf(exp(0.7 * pow(_zoom_frame_count / zoom_deadzone_frames, 7.0)) - 1.0, 0.0, 1.0)
+		# print("Zoom slowdown: ", _zoom_slowdown)
+
+	_zoom_frame_count += 1
+
 	var zoom_speed := zoom_out_speed
 	if zoom.x < target_zoom.x:
 		zoom_speed = zoom_in_speed
 
-	zoom = zoom.lerp(target_zoom, clampf(zoom_speed * delta, 0.0, 1.0))
+	zoom = zoom.lerp(target_zoom, clampf(_zoom_slowdown * zoom_speed * delta, 0.0, 1.0))
 
 func _draw() -> void:
 	if OS.is_debug_build() and DRAW_DEBUG:
@@ -85,7 +124,6 @@ func _physics_process(_delta: float) -> void:
 	else:
 		ground = Vector2(origin.x, _last_ground.y)
 		positions.append(player.global_position)
-		print("Ground NOT detected!")
 
 	origin = ground + Vector2.UP * GROUND_RAYS_HEIGHT
 
@@ -96,13 +134,12 @@ func _physics_process(_delta: float) -> void:
 			if abs(Vector2.UP.angle_to(ray["normal"])) < MAX_FLOOR_ANGLE:
 				positions.append(ray["position"])
 
-	add_point.call(origin, origin + Vector2(1,1) * RAY_LENGTH)
-	add_point.call(origin, origin + Vector2(1,0) * RAY_LENGTH)
-	add_point.call(origin, origin + Vector2(2,1) * RAY_LENGTH)
+	# Ordered from most flat to steep. Uses magic numbers for length ratios and angle.
+	add_point.call(origin, origin + Vector2(12, 1).normalized() * RAY_LENGTH )
+	add_point.call(origin, origin + Vector2(1.8, 1).normalized() * RAY_LENGTH * 2.5)
+	add_point.call(origin, origin + Vector2(0.8, 1).normalized() * RAY_LENGTH)
+	add_point.call(origin, origin + Vector2(0, 1).normalized() * RAY_LENGTH)
 
-	if not positions:
-		push_error("No raycasts was hit!")
-		positions = [player.global_position]
 	fit_to_points(positions)
 
 func fit_to_points(points : Array[Vector2]):
@@ -134,7 +171,8 @@ func fit_to_points(points : Array[Vector2]):
 		new_zoom = max_zoom
 
 	target_zoom = Vector2(new_zoom, new_zoom).abs()
-	target_position = middle
+	# We stop the target from going backwards, to not cause any stuttering.
+	target_position = middle.max(Vector2(target_position.x, middle.y))
 
 func reset():
 	position = Vector2.ZERO
