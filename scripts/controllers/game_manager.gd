@@ -187,6 +187,13 @@ func toggle_debug_mode():
 			print("debug_mode on")
 			is_debug_mode = true
 			player.set_physics_process(false)
+
+			if not player.get_node_or_null("DebugCamera"):
+				var cam := Camera2D.new()
+				cam.name = "DebugCamera"
+				player.add_child(cam)
+			player.get_node_or_null("DebugCamera").make_current()
+
 			get_tree().paused = true
 			toggle_debug_label()
 			camera.position_smoothing_enabled = false
@@ -195,6 +202,13 @@ func toggle_debug_mode():
 		# We cant enter debug mode in the first place without a player, so no check here
 		is_debug_mode = false
 		player.set_physics_process(true)
+		current_level.camera.make_current()
+
+		if player.get_node_or_null("DebugCamera"):
+			camera.position = player.get_node_or_null("DebugCamera").global_position
+			camera.target_position = player.get_node_or_null("DebugCamera").global_position
+			camera.reset_smoothing()
+
 		get_tree().paused = false
 		toggle_debug_label()
 		camera.position_smoothing_enabled = true
