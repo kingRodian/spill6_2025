@@ -83,8 +83,8 @@ func _first_time_setup():
 		print("Generer ny Camera.")
 		# NOTE: If the Camera script is instantiated directly it will run in the editor.
 		_add_node(Camera2D.new(), "Camera")
+		$Camera.set_script(Camera)
 		camera = $Camera
-		camera.set_script(Camera)
 
 	if find_child("Raskeladden", false) == null:
 		print("Ingen Raskeladden funnet.")
