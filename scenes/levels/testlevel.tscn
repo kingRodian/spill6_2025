@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://lbt2ufbit10a"]
+[gd_scene load_steps=32 format=3 uid="uid://lbt2ufbit10a"]
 
 [ext_resource type="PackedScene" uid="uid://clgosqujy66ek" path="res://scenes/HUD/hud.tscn" id="1_dxtel"]
 [ext_resource type="Script" uid="uid://b2bhagurthg34" path="res://scripts/level/level.gd" id="1_vbb8y"]
@@ -10,12 +10,13 @@
 [ext_resource type="Script" uid="uid://cp50yoa81upfj" path="res://addons/rmsmartshape/shapes/point.gd" id="6_5yrek"]
 [ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="6_fy0jb"]
 [ext_resource type="Script" uid="uid://5vtnn0028d0v" path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" id="6_piwj7"]
-[ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
+[ext_resource type="Script" uid="uid://cxxnsgcdq485n" path="res://addons/rmsmartshape/materials/shape_material.gd" id="7_lvjd2"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="9_5yrek"]
 [ext_resource type="Script" uid="uid://cah56kj0ekp8f" path="res://scripts/controllers/save_manager.gd" id="11_q32om"]
 [ext_resource type="PackedScene" uid="uid://bl4g1o6w1rmtq" path="res://scenes/game/obstacles/bird_spawner.tscn" id="12_piwj7"]
 [ext_resource type="PackedScene" uid="uid://c6tb5mm37cegi" path="res://scenes/game/platforms/launchramp.tscn" id="13_lvjd2"]
 [ext_resource type="PackedScene" uid="uid://chwn7h8l800nb" path="res://scenes/game/platforms/platform.tscn" id="14_rbirq"]
+[ext_resource type="Script" uid="uid://bfind85rrxj0j" path="res://scenes/levels/camera.gd" id="17_vbb8y"]
 
 [sub_resource type="Gradient" id="Gradient_5ykpq"]
 interpolation_mode = 2
@@ -147,10 +148,6 @@ scale = Vector2(270.23, 22.8594)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_rbirq")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-scale = Vector2(0.6, 0.6)
-zoom = Vector2(2, 2)
-
 [node name="GameStateManager" type="Node" parent="."]
 script = ExtResource("11_q32om")
 
@@ -198,19 +195,8 @@ position = Vector2(1295, -147)
 
 [node name="Raskeladden" parent="." instance=ExtResource("3_mqgqp")]
 
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Raskeladden"]
-scale = Vector2(0.6, 0.6)
-remote_path = NodePath("../../Camera2D")
-
 [node name="Camera" type="Camera2D" parent="."]
-zoom = Vector2(20, 20)
-limit_left = -45
-limit_right = 10600
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-drag_vertical_enabled = true
-drag_horizontal_offset = 1.0
-drag_vertical_offset = -0.36
+script = ExtResource("17_vbb8y")
 
 [editable path="HUD"]
 [editable path="CanvasLayer"]
