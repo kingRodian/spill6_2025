@@ -58,8 +58,7 @@ func reset():
 	# TODO We could use a transition screen here.
 	print("level resetting")
 	player.reset()
-	camera.position = Vector2(0, 0)
-	camera.reset_smoothing()
+	camera.reset()
 
 	# We add one second so the label shows the time we eant
 	level_timer.start(level_time + 1)
@@ -79,32 +78,16 @@ func _first_time_setup():
 	if find_child("Camera", false) == null:
 		print("Ingen Camera funnet.")
 		print("Generer ny Camera.")
+		# NOTE: If the Camera script is instantiated directly it will run in the editor.
 		_add_node(Camera2D.new(), "Camera")
 		camera = $Camera
-
-		# Copy of camera from level 1
-		camera.zoom = Vector2(3, 3)
-		camera.limit_left = -45
-		camera.limit_right = 10600
-		camera.position_smoothing_enabled = true
-		camera.position_smoothing_speed = 7.0
-		camera.drag_vertical_enabled = true
-		camera.drag_horizontal_offset = 1.0
-		camera.drag_vertical_offset = -0.36
+		camera.set_script(Camera)
 
 	if find_child("Raskeladden", false) == null:
 		print("Ingen Raskeladden funnet.")
 		print("Generer ny Raskeladden.")
 		var rask : Player = load("res://scenes/game/characters/raskeladden.tscn").instantiate()
 		_add_node(rask, "Raskeladden")
-
-		# Make remote transform
-		var remote := RemoteTransform2D.new()
-		remote.name = "RemoteTransform2D"
-		rask.add_child(remote)
-		remote.owner = self
-		remote.scale = Vector2(0.6, 0.6)
-		remote.remote_path = remote.get_path_to(camera)
 
 	if find_child("HUD", false) == null:
 		print("Ingen HUD funnet.")
