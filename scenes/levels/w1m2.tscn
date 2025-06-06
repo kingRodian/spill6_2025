@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://fk5lad2vhqi4"]
+[gd_scene load_steps=146 format=3 uid="uid://fk5lad2vhqi4"]
 
 [ext_resource type="Script" uid="uid://b2bhagurthg34" path="res://scripts/level/level.gd" id="1_sjbsv"]
 [ext_resource type="PackedScene" uid="uid://csx4wtb8pnvma" path="res://scenes/game/characters/raskeladden.tscn" id="2_e0ykr"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://5vtnn0028d0v" path="res://addons/rmsmartshape/materials/edge_material_metadata.gd" id="10_vomdp"]
 [ext_resource type="Texture2D" uid="uid://do6k81b27m6fq" path="res://assets/art/environments/texture/dirt_texture.png" id="11_gc8kk"]
 [ext_resource type="Script" uid="uid://ds6qu4pcbqm6g" path="res://addons/rmsmartshape/normal_range.gd" id="12_gc8kk"]
-[ext_resource type="Script" uid="uid://c0jcoh220u7dy" path="res://addons/rmsmartshape/materials/shape_material.gd" id="12_msf2m"]
+[ext_resource type="Script" uid="uid://cxxnsgcdq485n" path="res://addons/rmsmartshape/materials/shape_material.gd" id="12_msf2m"]
 [ext_resource type="PackedScene" uid="uid://vkngktkkeu73" path="res://scenes/game/obstacles/trestump_1.tscn" id="13_3ncnc"]
 [ext_resource type="Texture2D" uid="uid://b57hhy8x1cofw" path="res://assets/art/environments/texture/grass_texture_tiny.png" id="15_78xff"]
 [ext_resource type="PackedScene" uid="uid://chwn7h8l800nb" path="res://scenes/game/platforms/platform.tscn" id="16_msf2m"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://c6tb5mm37cegi" path="res://scenes/game/platforms/launchramp.tscn" id="23_lvmx0"]
 [ext_resource type="PackedScene" uid="uid://bus4kyo6jf6qk" path="res://scenes/game/obstacles/fotgjenger_1.tscn" id="24_78xff"]
 [ext_resource type="Texture2D" uid="uid://cxr3rqiuaur68" path="res://assets/art/environments/materials/w1m0/dirt_background01.png" id="25_e7rlg"]
+[ext_resource type="Script" uid="uid://bfind85rrxj0j" path="res://scenes/levels/camera.gd" id="26_bin10"]
 
 [sub_resource type="Resource" id="Resource_bin10"]
 script = ExtResource("7_yaowv")
@@ -947,22 +948,7 @@ _material_overrides = {}
 script = ExtResource("1_sjbsv")
 has_setup = true
 
-[node name="Camera" type="Camera2D" parent="."]
-scale = Vector2(0.6, 0.6)
-zoom = Vector2(2.5, 2.5)
-limit_left = -45
-limit_right = 10600
-position_smoothing_enabled = true
-position_smoothing_speed = 7.0
-drag_vertical_enabled = true
-drag_horizontal_offset = 1.0
-drag_vertical_offset = -0.36
-
 [node name="Raskeladden" parent="." instance=ExtResource("2_e0ykr")]
-
-[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Raskeladden"]
-scale = Vector2(0.6, 0.6)
-remote_path = NodePath("../../Camera")
 
 [node name="HUD" parent="." instance=ExtResource("4_ciun5")]
 
@@ -1186,3 +1172,6 @@ visible = false
 polygon = PackedVector2Array(724.38, -54.7366, 769.987, -45.675, 811.219, -40.6272, 848.619, -39.2062, 882.783, -41.0784, 914.305, -45.9104, 943.778, -53.3686, 971.798, -63.1195, 998.958, -74.8299, 1110.89, -134.593, 1177.15, -167.559, 1256.61, -199.027, 1259.44, -201.151, 1262.57, -202.921, 1266.01, -204.344, 1269.73, -205.431, 1273.75, -206.193, 1278.04, -206.641, 1287.44, -206.638, 1297.88, -205.507, 1309.31, -203.338, 1334.95, -196.227, 1626.83, -85.5886, 1668.06, -75.4683, 1708.99, -68.4909, 1749.22, -65.3509, 1788.33, -66.7426, 1857.26, -70.8576, 1911.5, -68.7951, 1952.74, -62.2899, 1969.01, -57.9133, 1982.67, -53.0771, 1993.94, -47.9976, 2003.01, -42.8919, 2010.1, -37.9768, 2015.44, -33.4689, 2019.21, -29.5853, 2021.65, -26.5428, 2022.95, -24.5582, 2023.37, -23.8528, 1934.58, 398.611, 1877.95, 377.546, 1732.78, 340.309, 1638.44, 327.524, 1535.72, 325.004, 1482.65, 329.089, 1429.21, 337.533, 1375.97, 350.934, 1323.5, 369.89, 1209.3, 408.509, 1079.34, 436.667, 941.284, 454.419, 802.76, 461.818, 671.412, 458.918, 554.885, 445.774, 504.566, 435.377, 460.818, 422.439, 424.596, 406.967, 409.606, 398.282, 396.856, 388.966, 347.257, 352.458, 293.417, 320.12, 186.396, 268.815, 68.6446, 225.731, -14.1399, 88.9666, -4.21198, 82.8788, 8.69595, 76.6126, 42.965, 63.7434, 138.982, 37.3609, 390.253, -12.3618, 623.981, -47.3246, 698.068, -55.2573, 718.082, -56.1342, 721.006, -55.9976, 723.041, -55.7151, 724.196, -55.3095)
 
 [node name="Obstacles" type="Node" parent="Layout/Section 3 Upper"]
+
+[node name="Camera" type="Camera2D" parent="."]
+script = ExtResource("26_bin10")
